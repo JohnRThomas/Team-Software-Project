@@ -14,14 +14,18 @@ import tsp.game.Player;
 public class Canvas extends JPanel implements KeyListener{
 	Player player = new Player();
 	
-	 Graphics background;
-	 Image backgroundImage = Toolkit.getDefaultToolkit().getImage("baseBackground.png");
-	 Image offScreenImage;
-	 int imageX,imageY =0;
+	private MainWindow mainWindow;
 	
-	public Canvas(){
+	Graphics background;
+	Image backgroundImage = Toolkit.getDefaultToolkit().getImage("baseBackground.png");
+	Image offScreenImage;
+	int imageX,imageY =0;
+	
+	private int enemyX = 400, enemyY = 400;
+	
+	public Canvas(MainWindow mainWindow){
 		super();
-		this.addKeyListener(this);
+		this.mainWindow = mainWindow;
 	}
 	
 	@Override
@@ -33,6 +37,7 @@ public class Canvas extends JPanel implements KeyListener{
 	 * Handles when key is pressed
 	 * 
 	 */
+	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyChar()){
 		case 'a':
@@ -65,8 +70,17 @@ public class Canvas extends JPanel implements KeyListener{
 			if(player.y > 10)player.y -= 10;
 			else player.y = 10;
 			break;	
+		case 'k':
+			end(false);
+			break;
 		}
+		moveEnemy();
 		repaint();
+		if (player.x > enemyX-20 && player.x < enemyX+120){
+			if (player.y > enemyY-20 && player.y < enemyY+120){
+				end(true);
+			}
+		}
 	}
 
 	@Override
@@ -89,6 +103,44 @@ public class Canvas extends JPanel implements KeyListener{
 		
 		g.setColor(Color.GREEN);
 		g.fillOval(player.x, player.y, 20, 20);
+		
+		g.setColor(Color.RED);
+		g.fillRect(enemyX, enemyY, 100, 100);
 
+	}
+	
+	public void end(boolean death){
+		mainWindow.endGame(death);
+		// TODO: Remove player oval from screen, then present EndScreen
+		// TODO: Get fancy by adding a death sound/animation
+	}
+	
+	private void moveEnemy(){
+		
+		if (player.x+10 > enemyX+50){
+			enemyX += (Math.random()*5);
+		}
+		else{
+			enemyX -= (Math.random()*5);
+		}
+		if (player.y+10 > enemyY+50){
+			enemyY += (Math.random()*5);
+		}
+		else{
+			enemyY -= (Math.random()*5);
+		}
+		
+		if (enemyX > 700){
+			enemyX = 700;
+		}
+		if (enemyX < 0){
+			enemyX = 0;
+		}
+		if (enemyY > 500){
+			enemyY = 500;
+		}
+		if (enemyY < 0){
+			enemyY = 0;
+		}
 	}
 }
