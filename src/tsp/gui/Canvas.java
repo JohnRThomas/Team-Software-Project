@@ -1,5 +1,7 @@
 package tsp.gui;
 
+import imageBase.baseImage;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,21 +15,21 @@ import tsp.game.Player;
 
 public class Canvas extends JPanel implements KeyListener{
 	Player player = new Player();
-	
+
 	private MainWindow mainWindow;
-	
+
 	Graphics background;
-	Image backgroundImage = Toolkit.getDefaultToolkit().getImage("baseBackground.png");
+	baseImage backgroundImage = new baseImage(0,0,"baseBackground.jpg",false);
 	Image offScreenImage;
 	int imageX,imageY =0;
-	
+
 	private int enemyX = 400, enemyY = 400;
-	
+
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 
@@ -42,24 +44,24 @@ public class Canvas extends JPanel implements KeyListener{
 		switch(e.getKeyChar()){
 		case 'a':
 			if ((player.x == 390 )
-					&& (imageX < 0) ){
-			imageX +=10;
+					&& (backgroundImage.getX() < 0) ){
+				backgroundImage.setX(backgroundImage.getX() +10);
 			}
 			else{
-			if(player.x > 10)player.x -= 10;
-			else player.x = 10;
+				if(player.x > 10)player.x -= 10;
+				else player.x = 10;
 			}
 			break;
 		case 'd':
 			System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
-			
+
 			if ((player.x == 390 )
-					&& (imageX > -800) ){
-			imageX -=10;
+					&& (backgroundImage.getX() > -800) ){
+				backgroundImage.setX(backgroundImage.getX() -10);
 			}
 			else{
-			if(player.x <= getBounds().width)player.x += 10;
-			else player.x = getBounds().width -20;
+				if(player.x <= getBounds().width)player.x += 10;
+				else player.x = getBounds().width -20;
 			}
 			break;
 		case 's':
@@ -91,32 +93,34 @@ public class Canvas extends JPanel implements KeyListener{
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-	
+
 		//adds background image
 		 if (offScreenImage == null) {
 	            offScreenImage    = createImage(1600, getHeight());
 	            background = offScreenImage.getGraphics();
 	        }
 		 background.clearRect(0, 0,1600, getHeight() + 1);
-		background.drawImage(backgroundImage, 0, 0, this);
-		g.drawImage(offScreenImage, imageX, imageY, this);
+		background.drawImage(backgroundImage.getImage(), backgroundImage.getX(), backgroundImage.getY(), this);
+		background.drawImage(Toolkit.getDefaultToolkit().getImage("basePlatform.jpg"), 0, 400, this);
+		g.drawImage(offScreenImage, backgroundImage.getX(), backgroundImage.getY(),this); 
+				
 		
 		g.setColor(Color.GREEN);
 		g.fillOval(player.x, player.y, 20, 20);
-		
+
 		g.setColor(Color.RED);
 		g.fillRect(enemyX, enemyY, 100, 100);
 
 	}
-	
+
 	public void end(boolean death){
 		mainWindow.endGame(death);
 		// TODO: Remove player oval from screen, then present EndScreen
 		// TODO: Get fancy by adding a death sound/animation
 	}
-	
+
 	private void moveEnemy(){
-		
+
 		if (player.x+10 > enemyX+50){
 			enemyX += (Math.random()*5);
 		}
@@ -129,7 +133,7 @@ public class Canvas extends JPanel implements KeyListener{
 		else{
 			enemyY -= (Math.random()*5);
 		}
-		
+
 		if (enemyX > 700){
 			enemyX = 700;
 		}
