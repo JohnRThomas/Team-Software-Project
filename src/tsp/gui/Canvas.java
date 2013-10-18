@@ -2,6 +2,8 @@ package tsp.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -11,6 +13,12 @@ import tsp.game.Player;
 
 public class Canvas extends JPanel implements KeyListener{
 	Player player = new Player();
+	
+	 Graphics background;
+	 Image backgroundImage = Toolkit.getDefaultToolkit().getImage("baseBackground.png");
+	 Image offScreenImage;
+	 int imageX,imageY =0;
+	
 	public Canvas(){
 		super();
 		this.addKeyListener(this);
@@ -21,16 +29,33 @@ public class Canvas extends JPanel implements KeyListener{
 
 	}
 
-	@Override
+	/**
+	 * Handles when key is pressed
+	 * 
+	 */
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyChar()){
 		case 'a':
+			if ((player.x == 390 )
+					&& (imageX < 0) ){
+			imageX +=10;
+			}
+			else{
 			if(player.x > 10)player.x -= 10;
 			else player.x = 10;
+			}
 			break;
 		case 'd':
+			System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
+			
+			if ((player.x == 390 )
+					&& (imageX > -800) ){
+			imageX -=10;
+			}
+			else{
 			if(player.x <= getBounds().width)player.x += 10;
 			else player.x = getBounds().width -20;
+			}
 			break;
 		case 's':
 			if(player.y <= this.getBounds().height)player.y += 10;
@@ -52,6 +77,16 @@ public class Canvas extends JPanel implements KeyListener{
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+	
+		//adds background image
+		 if (offScreenImage == null) {
+	            offScreenImage    = createImage(1600, getHeight());
+	            background = offScreenImage.getGraphics();
+	        }
+		 background.clearRect(0, 0,1600, getHeight() + 1);
+		background.drawImage(backgroundImage, 0, 0, this);
+		g.drawImage(offScreenImage, imageX, imageY, this);
+		
 		g.setColor(Color.GREEN);
 		g.fillOval(player.x, player.y, 20, 20);
 
