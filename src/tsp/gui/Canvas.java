@@ -17,14 +17,14 @@ public class Canvas extends JPanel implements KeyListener{
 	Player player = new Player();
 
 	private MainWindow mainWindow;
-
+	
 	Graphics background;
 	baseImage backgroundImage = new baseImage(0,0,"baseBackground.jpg",false);
 	Image offScreenImage;
 	int imageX,imageY =0;
 
-	private int enemyX = 400, enemyY = 400;
-
+	int enemyX = 400, enemyY = 400;
+	int counter = 0;
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
@@ -76,13 +76,15 @@ public class Canvas extends JPanel implements KeyListener{
 			end(false);
 			break;
 		}
-		moveEnemy();
+		//moveEnemy();
 		repaint();
-		if (player.x > enemyX-20 && player.x < enemyX+120){
-			if (player.y > enemyY-20 && player.y < enemyY+120){
+		/*
+		if (player.x > enemyX && player.x+20 < enemyX+100){
+			if (player.y > enemyY && player.y+20 < enemyY+100){
 				end(true);
 			}
 		}
+		*/
 	}
 
 	@Override
@@ -119,8 +121,9 @@ public class Canvas extends JPanel implements KeyListener{
 		// TODO: Get fancy by adding a death sound/animation
 	}
 
-	private void moveEnemy(){
-
+	public void moveEnemy(){
+		if (counter == 250) {
+			counter = 0;
 		if (player.x+10 > enemyX+50){
 			enemyX += (Math.random()*5);
 		}
@@ -146,5 +149,7 @@ public class Canvas extends JPanel implements KeyListener{
 		if (enemyY < 0){
 			enemyY = 0;
 		}
+		}
+		counter++;
 	}
 }

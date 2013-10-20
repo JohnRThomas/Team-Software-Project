@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -17,20 +17,33 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import tsp.game.threads.Drawer;
+import tsp.game.threads.Gamer;
+
 
 public class MainWindow extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1L;
+	
+	//GUI components
 	private final JPanel container = new JPanel();
 	private final JMenuBar menu = new JMenuBar();
 	private final Canvas canvas = new Canvas(this);
 	
-	private Clip currentMusic;
+	//Game threads
+	private Drawer drawer;
+	private Gamer gamer;
 	
+	//Audio
+	private Clip currentMusic;
 	private static final String FIRST_SONG = new String("/music/empire.wav");
 	private static final String END_SONG_DEATH = new String("/music/zanarkand.wav");
 	
 	public MainWindow() {
 		super("TSP Game");
+		drawer = new Drawer(canvas);
+		gamer = new Gamer(this);
+		drawer.start();
+		
 		makeMenu();
 		this.setLayout(new BorderLayout());
 		this.getContentPane().add(container, BorderLayout.CENTER);
@@ -41,6 +54,51 @@ public class MainWindow extends JFrame implements KeyListener{
 		setSize(800,600);
 		setLocationRelativeTo(this.getParent());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.addWindowListener(new WindowListener(){
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				drawer.interrupt();
+				gamer.interrupt();
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	private void makeMenu() {
@@ -62,10 +120,12 @@ public class MainWindow extends JFrame implements KeyListener{
 		container.add(canvas);
 		revalidate();
 		playMusic(FIRST_SONG);
+		gamer.start();
 	}
 	
 	protected void endGame(boolean death){
 		container.remove(0);
+		gamer.interrupt();
 		final EndScreen endScreen = new EndScreen(this, death);
 		container.add(endScreen);
 		revalidate();
@@ -109,6 +169,19 @@ public class MainWindow extends JFrame implements KeyListener{
 	        System.out.println("Error with playing sound at: " + path);
 	        ex.printStackTrace();
 	    }
+	}
+
+	public void tick() {
+		
+		canvas.moveEnemy();
+		
+		if (canvas.player.x > canvas.enemyX && canvas.player.x+20 < canvas.enemyX+100){
+			if (canvas.player.y > canvas.enemyY && canvas.player.y+20 < canvas.enemyY+100){
+				canvas.end(true);
+			}
+		}
+		
+		canvas.repaint();
 	}
 	
 }
