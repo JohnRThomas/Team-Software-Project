@@ -122,19 +122,17 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void moveEnemy(){
-		if (counter == 250) {
-			counter = 0;
-		if (player.x+10 > enemyX+50){
-			enemyX += (Math.random()*5);
+		if (player.x+10 >= enemyX+50){
+			enemyX += 1;
 		}
 		else{
-			enemyX -= (Math.random()*5);
+			enemyX -= 1;
 		}
-		if (player.y+10 > enemyY+50){
-			enemyY += (Math.random()*5);
+		if (player.y+10 >= enemyY+50){
+			enemyY += 1;
 		}
 		else{
-			enemyY -= (Math.random()*5);
+			enemyY -= 1;
 		}
 
 		if (enemyX > 700){
@@ -149,7 +147,5 @@ public class Canvas extends JPanel implements KeyListener{
 		if (enemyY < 0){
 			enemyY = 0;
 		}
-		}
-		counter++;
 	}
 }

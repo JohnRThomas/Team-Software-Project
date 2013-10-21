@@ -16,9 +16,10 @@ public class Gamer extends Thread{
 			long time = System.currentTimeMillis();
 			System.out.println("tick");
 			window.tick();
-			if(System.currentTimeMillis() - time < 17){
+			long difference = System.currentTimeMillis() - time;
+			if(difference < 17){
 				try {
-					sleep(System.currentTimeMillis() - time);
+					sleep(17-difference);
 				} catch (InterruptedException e) {}
 			}
 		}
