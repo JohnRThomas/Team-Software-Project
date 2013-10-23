@@ -1,19 +1,15 @@
 package tsp.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class StartScreen extends JPanel {
-
+	private static final long serialVersionUID = 80085L;
+	
 	private MainWindow mainWindow;
 	
 	public StartScreen(MainWindow window){
