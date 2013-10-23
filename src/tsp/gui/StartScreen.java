@@ -16,25 +16,19 @@ public class StartScreen extends JPanel {
 
 	private MainWindow mainWindow;
 	
-	public StartScreen(MainWindow mainWindow){
+	public StartScreen(MainWindow window){
 		super();
-		this.mainWindow = mainWindow;
+		mainWindow = window;
 		JButton start = new JButton("Start Game");
 		this.setLayout(new BorderLayout());
 		add(start, BorderLayout.CENTER);
 		start.setFocusable(false);
-		addStartListener(start);
-	}
-	
-
-	private void addStartListener(JButton start){
+		
 		start.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainWindow.startGame();
 			}
 		});
-	}
-	
-	
+	}	
 }
