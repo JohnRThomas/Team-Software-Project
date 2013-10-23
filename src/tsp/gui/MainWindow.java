@@ -151,7 +151,27 @@ public class MainWindow extends JFrame implements KeyListener{
 			}
 		}
 		
+		//gravity code
+		canvas.player.y -= canvas.player.gravity; // fall according to gravity
+		
+		if (canvas.player.y < 10) { // if at top of screen
+			canvas.player.y = 10; // reset position
+			canvas.player.gravity = -1; // reset gravity
+		}
+		
+		if(canvas.player.y > canvas.getBounds().height - 169) { // if at bottom of screen
+			canvas.player.y = canvas.getBounds().height - 170; // reset position
+			canvas.player.gravity = -1; // reset gravity
+			canvas.jumpCount = 0; // reset jumps
+		}
+		
+		if (canvas.player.gravity > -10) { // if not at terminal velocity
+			canvas.player.gravity = canvas.player.gravity - 1; // increase fall rate
+		}
+			
 		canvas.repaint();
 	}
 	
 }
+
+

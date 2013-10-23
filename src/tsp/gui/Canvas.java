@@ -24,7 +24,8 @@ public class Canvas extends JPanel implements KeyListener{
 	int imageX,imageY =0;
 
 	int enemyX = 400, enemyY = 400;
-	int counter = 0;
+	int gravCounter = 0;
+	int jumpCount = 0;
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
@@ -65,12 +66,15 @@ public class Canvas extends JPanel implements KeyListener{
 			}
 			break;
 		case 's':
-			if(player.y <= this.getBounds().height)player.y += 10;
-			else player.y = getBounds().height - 20;
+			if(player.y <= this.getBounds().height-400)player.y += 10;
+			else player.y = getBounds().height - 420;
 			break;
 		case 'w':
-			if(player.y > 10)player.y -= 10;
-			else player.y = 10;
+			if (jumpCount < 2) {
+				player.gravity = 20;
+				player.y = player.y - 10;
+				jumpCount++;
+			}
 			break;	
 		case 'k':
 			end(false);
@@ -147,5 +151,9 @@ public class Canvas extends JPanel implements KeyListener{
 		if (enemyY < 0){
 			enemyY = 0;
 		}
+		
+		
 	}
 }
+
+
