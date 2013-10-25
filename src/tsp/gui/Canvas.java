@@ -18,6 +18,10 @@ public class Canvas extends JPanel implements KeyListener{
 
 	private MainWindow mainWindow;
 	
+	boolean playerMovePosX =false;
+
+	boolean playerMoveNegX = false;
+	
 	Graphics background;
 	baseImage backgroundImage = new baseImage(0,0,"res/images/baseBackground.jpg",false);
 	baseImage basePlatform = new baseImage(400,0,"res/images/basePlatform.jpg",false);
@@ -48,6 +52,7 @@ public class Canvas extends JPanel implements KeyListener{
 			if ((player.x == 390 )
 					&& (backgroundImage.getX() < 0) ){
 				backgroundImage.setX(backgroundImage.getX() +10);
+				playerMoveNegX = true;
 			}
 			else{
 				if(player.x > 10)player.x -= 10;
@@ -60,6 +65,7 @@ public class Canvas extends JPanel implements KeyListener{
 			if ((player.x == 390 )
 					&& (backgroundImage.getX() > -800) ){
 				backgroundImage.setX(backgroundImage.getX() -10);
+				playerMovePosX = true;
 			}
 			else{
 				if(player.x <= getBounds().width)player.x += 10;
@@ -131,6 +137,7 @@ public class Canvas extends JPanel implements KeyListener{
 	public void moveEnemy(){
 		if (player.x+10 >= enemyX+50){
 			enemyX += 1;
+			
 		}
 		else{
 			enemyX -= 1;
@@ -141,7 +148,14 @@ public class Canvas extends JPanel implements KeyListener{
 		else{
 			enemyY -= 1;
 		}
-
+		if (playerMovePosX){
+			enemyX -= 10;
+			playerMovePosX =false;
+			}
+		if (playerMoveNegX){
+			enemyX += 10;
+			playerMoveNegX =false;
+			}
 		if (enemyX > 700){
 			enemyX = 700;
 		}
