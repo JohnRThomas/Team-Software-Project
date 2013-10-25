@@ -19,11 +19,12 @@ public class Canvas extends JPanel implements KeyListener{
 	private MainWindow mainWindow;
 	
 	Graphics background;
-	baseImage backgroundImage = new baseImage(0,0,"baseBackground.jpg",false);
+	baseImage backgroundImage = new baseImage(0,0,"res/images/baseBackground.jpg",false);
+	baseImage basePlatform = new baseImage(400,0,"res/images/basePlatform.jpg",false);
 	Image offScreenImage;
 	int imageX,imageY =0;
 
-	int enemyX = 400, enemyY = 400;
+	int enemyX = 0, enemyY = 0;
 	int gravCounter = 0;
 	int jumpCount = 0;
 	public Canvas(MainWindow mainWindow){
@@ -106,8 +107,8 @@ public class Canvas extends JPanel implements KeyListener{
 	            background = offScreenImage.getGraphics();
 	        }
 		 background.clearRect(0, 0,1600, getHeight() + 1);
-		background.drawImage(backgroundImage.getImage(), backgroundImage.getX(), backgroundImage.getY(), this);
-		background.drawImage(Toolkit.getDefaultToolkit().getImage("basePlatform.jpg"), 0, 400, this);
+		background.drawImage(backgroundImage.getImage(), 0, 0, this);
+		background.drawImage(basePlatform.getImage(), 0, 400, this);
 		g.drawImage(offScreenImage, backgroundImage.getX(), backgroundImage.getY(),this); 
 				
 		
@@ -116,7 +117,9 @@ public class Canvas extends JPanel implements KeyListener{
 
 		g.setColor(Color.RED);
 		g.fillRect(enemyX, enemyY, 100, 100);
-
+		
+		g.setColor(Color.black);
+		g.fillRect(1500+backgroundImage.getX(), 300, 100, 100);
 	}
 
 	public void end(boolean death){

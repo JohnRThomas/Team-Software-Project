@@ -151,6 +151,10 @@ public class MainWindow extends JFrame implements KeyListener{
 			}
 		}
 		
+		if (canvas.player.x+20 >= 700 && canvas.player.x <= 700+100){
+				canvas.end(false);
+		}
+		
 		//gravity code
 		canvas.player.y -= canvas.player.gravity; // fall according to gravity
 		
