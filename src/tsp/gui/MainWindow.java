@@ -143,15 +143,16 @@ public class MainWindow extends JFrame implements KeyListener{
 
 	public void tick() {
 		
+		canvas.movePlayer();
 		canvas.moveEnemy();
 		
-		if (canvas.player.x+20 >= canvas.enemyX && canvas.player.x <= canvas.enemyX+100){
-			if (canvas.player.y+20 >= canvas.enemyY && canvas.player.y <= canvas.enemyY+100){
+		if (canvas.player.x+ canvas.playerWidth >= canvas.enemyX && canvas.player.x <= canvas.enemyX+100){
+			if (canvas.player.y+ canvas.playerWidth >= canvas.enemyY && canvas.player.y <= canvas.enemyY+100){
 				canvas.end(true);
 			}
 		}
 		
-		if (canvas.player.x+20 >= 700 && canvas.player.x <= 700+100){
+		if (canvas.player.x+ canvas.playerWidth  >= 700 && canvas.player.x <= 700+100){
 				canvas.end(false);
 		}
 		

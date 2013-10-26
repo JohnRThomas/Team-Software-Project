@@ -15,12 +15,18 @@ import tsp.game.Player;
 
 public class Canvas extends JPanel implements KeyListener{
 	Player player = new Player();
-
+	private boolean /*up = false, down = false,*/ left = false, right = false; // should be taken care of in Player
+	boolean playerMovePosX =false, playerMoveNegX = false;
+	boolean gameOver = false;
+	private int jumpMax = 2;
+	private int playerSpeed = 5;
+	protected int playerWidth = 20, playerHeight = 20;
+	private int enemyWidth = 100, enemyHeight = 100;
+	private int counter = 0;
+	
+	
 	private MainWindow mainWindow;
 	
-	boolean playerMovePosX =false;
-
-	boolean playerMoveNegX = false;
 	
 	Graphics background;
 	baseImage backgroundImage = new baseImage(0,0,"res/images/baseBackground.jpg",false);
@@ -28,7 +34,7 @@ public class Canvas extends JPanel implements KeyListener{
 	Image offScreenImage;
 	int imageX,imageY =0;
 
-	int enemyX = 0, enemyY = 0;
+	int enemyX = -40, enemyY = -40;
 	int gravCounter = 0;
 	int jumpCount = 0;
 	public Canvas(MainWindow mainWindow){
@@ -47,59 +53,39 @@ public class Canvas extends JPanel implements KeyListener{
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyChar()){
-		case 'a':
-			if ((player.x == 390 )
-					&& (backgroundImage.getX() < 0) ){
-				backgroundImage.setX(backgroundImage.getX() +10);
-				playerMoveNegX = true;
-			}
-			else{
-				if(player.x > 10)player.x -= 10;
-				else player.x = 10;
-			}
-			break;
-		case 'd':
-			System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
-
-			if ((player.x == 390 )
-					&& (backgroundImage.getX() > -800) ){
-				backgroundImage.setX(backgroundImage.getX() -10);
-				playerMovePosX = true;
-			}
-			else{
-				if(player.x <= getBounds().width)player.x += 10;
-				else player.x = getBounds().width -20;
-			}
-			break;
-		case 's':
-			if(player.y <= this.getBounds().height-400)player.y += 10;
-			else player.y = getBounds().height - 420;
-			break;
-		case 'w':
-			if (jumpCount < 2) {
+		if (e.getKeyCode() == KeyEvent.VK_W){
+			if (jumpCount < jumpMax) {
 				player.gravity = 20;
 				player.y = player.y - 10;
 				jumpCount++;
 			}
-			break;	
-		case 'k':
-			end(false);
-			break;
 		}
-		//moveEnemy();
-		repaint();
-		/*
-		if (player.x > enemyX && player.x+20 < enemyX+100){
-			if (player.y > enemyY && player.y+20 < enemyY+100){
-				end(true);
-			}
+		if (e.getKeyCode() == KeyEvent.VK_A){
+			left = true;
 		}
-		*/
+		if (e.getKeyCode() == KeyEvent.VK_S){
+//			down = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_D){
+			right = true;
+		}
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_W){
+//			up = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_A){
+			left = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_S){
+//			down = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_D){
+			right = false;
+		}
 	}
 
 	@Override
@@ -119,22 +105,53 @@ public class Canvas extends JPanel implements KeyListener{
 				
 		
 		g.setColor(Color.GREEN);
-		g.fillOval(player.x, player.y, 20, 20);
+		g.fillOval(player.x, player.y, playerWidth, playerHeight);
 
 		g.setColor(Color.RED);
-		g.fillRect(enemyX, enemyY, 100, 100);
+		g.fillRect(enemyX, enemyY, enemyWidth, enemyHeight);
 		
 		g.setColor(Color.black);
 		g.fillRect(1500+backgroundImage.getX(), 300, 100, 100);
 	}
 
 	public void end(boolean death){
+		gameOver = true;
 		mainWindow.endGame(death);
 		// TODO: Remove player oval from screen, then present EndScreen
 		// TODO: Get fancy by adding a death sound/animation
 	}
 
+	public void movePlayer(){ // TODO Commit this when convenient
+		
+		if (left){
+			if ((player.x + playerWidth/2 < getBounds().width/2)
+					&& (backgroundImage.getX() < 0) ){
+				backgroundImage.setX(backgroundImage.getX() +playerSpeed);
+				playerMoveNegX = true;
+			}
+			else{
+				if(player.x >= playerSpeed)player.x -= playerSpeed;
+				else player.x = 0;
+			}
+		}
+		if (right){
+			System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
+
+			if ((player.x+playerWidth/2 > getBounds().width/2 )
+					&& (backgroundImage.getX() > -800) ){
+				backgroundImage.setX(backgroundImage.getX() -playerSpeed);
+				playerMovePosX = true;
+			}
+			else{ 
+				if(player.x + playerWidth + playerSpeed <= getBounds().width)player.x += playerSpeed; // player width is 20
+				else player.x = getBounds().width - playerWidth;
+			}
+		}
+	}
+	
 	public void moveEnemy(){
+//		counter += 1;
+		if (gameOver) return;
 		if (player.x+10 >= enemyX+50){
 			enemyX += 1;
 			
@@ -149,28 +166,37 @@ public class Canvas extends JPanel implements KeyListener{
 			enemyY -= 1;
 		}
 		if (playerMovePosX){
-			enemyX -= 10;
+			enemyX -= playerSpeed;
 			playerMovePosX =false;
 			}
 		if (playerMoveNegX){
-			enemyX += 10;
+			enemyX += playerSpeed;
 			playerMoveNegX =false;
 			}
-		if (enemyX > 700){
-			enemyX = 700;
-		}
-		if (enemyX < 0){
-			enemyX = 0;
-		}
-		if (enemyY > 500){
-			enemyY = 500;
-		}
-		if (enemyY < 0){
-			enemyY = 0;
-		}
+		// TODO Hey, look, I can make the enemy grow
+//		if (counter > 120){
+//			counter = 0;
+//			enemyWidth += 10;
+//			enemyHeight += 10;
+//		}
+		
+//		if (enemyX > 700){
+//			enemyX = 700;
+//		}
+//		if (enemyX < 0){
+//			enemyX = 0;
+//		}
+//		if (enemyY > 500){
+//			enemyY = 500;
+//		}
+//		if (enemyY < 0){
+//			enemyY = 0;
+//		}
 		
 		
 	}
 }
+
+
 
 
