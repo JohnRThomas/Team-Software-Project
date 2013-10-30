@@ -1,12 +1,13 @@
 package tsp.game;
 
-import imageBase.baseImage;
+import imageBase.BaseImage;
+
 
 /**
  * Basic Enemy class that can be extended and stuff
  *
  */
-public class Enemy extends baseImage {
+public class Enemy extends BaseImage {
 	private int health ;
 	
 	public Enemy(int xStart, int yStart, int h, String imageName, boolean collide) {

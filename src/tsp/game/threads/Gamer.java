@@ -14,7 +14,6 @@ public class Gamer extends Thread{
 		while(!Thread.interrupted()){
 			//Call the tick method at most x60 per second
 			long time = System.currentTimeMillis();
-			System.out.println("tick");
 			window.tick();
 			long difference = System.currentTimeMillis() - time;
 			if(difference < 17){

@@ -1,23 +1,35 @@
 package tsp.game.threads;
 
-import tsp.gui.Canvas;
+import javax.swing.JPanel;
 
 public class Drawer extends Thread{
-	Canvas canvas;
-	
-	public Drawer(Canvas canvas){
-			this.canvas = canvas;
+	JPanel canvas;
+	int speed = 0;
+
+	public Drawer(JPanel canvas){
+		this.canvas = canvas;
 	}
-	
+
+	public Drawer(JPanel canvas, int speed){
+		this.canvas = canvas;
+		this.speed = speed;
+	}
 	@Override
 	public void run() {
 		while(!Thread.interrupted()){
-			//Draw at most x60 per second
-			long time = System.currentTimeMillis();
-			canvas.repaint();
-			if(System.currentTimeMillis() - time < 17){
+			if(speed == 0){
+				//Draw at most x60 per second
+				long time = System.currentTimeMillis();
+				canvas.repaint();
+				if(System.currentTimeMillis() - time < 17){
+					try {
+						sleep(System.currentTimeMillis() - time);
+					} catch (InterruptedException e) {}
+				}
+			}else{
+				canvas.repaint();
 				try {
-					sleep(System.currentTimeMillis() - time);
+					sleep(speed);
 				} catch (InterruptedException e) {}
 			}
 		}
