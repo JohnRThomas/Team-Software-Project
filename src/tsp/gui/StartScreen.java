@@ -18,7 +18,7 @@ import tsp.game.threads.Drawer;
 
 public class StartScreen extends JPanel {
 	private static final long serialVersionUID = 80085L;
-	
+
 	private MainWindow mainWindow;
 	final Drawer drawer;
 	BufferedImage title;
@@ -35,50 +35,63 @@ public class StartScreen extends JPanel {
 			private static final long serialVersionUID = 717507158886199567L;
 			@Override
 			public void paintComponent(Graphics g){
-					g.drawImage(title, 0,0, null);
+				g.drawImage(title, 0,0, null);
 			}
 		};
 
-		//this.setLayout(new BorderLayout());
-		add(titleLabel);
-		add(start, BorderLayout.CENTER);
+		this.setLayout(null);		
 		start.setFocusable(false);
-		
+
 		start.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mainWindow.startGame();
+				loading = true;
 				drawer.interrupt();
+				repaint();
+				mainWindow.startGame();
 			}
 		});
-		
+
 		drawer = new Drawer(this, 30);
 		drawer.start();
+
+		add(titleLabel);
+		titleLabel.setBounds(0,0,800,100);
+
+		add(start);
+		start.setBounds(400,150,250,25);
 	}
-	
+
 	Star[] stars = new Star[200];
+
+	private boolean loading = false;
 	@Override
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-
-		g.setColor(Color.WHITE);
-		for(int i = 0; i < stars.length; i++){
-			if(stars[i] == null){
-				stars[i] = new Star(new Point((int)(Math.random()*this.getWidth()), (int)(Math.random()*this.getHeight())), (int)(Math.random()*9) + 1);
-			}else{
-				if(stars[i].pt.x + stars[i].speed <= this.getWidth())stars[i].pt.x += stars[i].speed;
-				else{
-					stars[i].pt.y = (int)(Math.random()*this.getHeight());
-					stars[i].pt.x = 0;
+		
+		if(!loading){
+			g.setColor(Color.WHITE);
+			for(int i = 0; i < stars.length; i++){
+				if(stars[i] == null){
+					stars[i] = new Star(new Point((int)(Math.random()*this.getWidth()), (int)(Math.random()*this.getHeight())), (int)(Math.random()*9) + 1);
+				}else{
+					if(stars[i].pt.x + stars[i].speed <= this.getWidth())stars[i].pt.x += stars[i].speed;
+					else{
+						stars[i].pt.y = (int)(Math.random()*this.getHeight());
+						stars[i].pt.x = 0;
+					}
 				}
+				g.fillRect(stars[i].pt.x-1, stars[i].pt.y-1, 2, 2);
 			}
-			g.fillRect(stars[i].pt.x-1, stars[i].pt.y-1, 2, 2);
+		}else{
+			g.setColor(Color.WHITE);
+			g.drawString("Loading...", this.getWidth()/2, this.getHeight()/2);
 		}
 	}
-	
+
 	private class Star{
-		
+
 		int speed;
 		Point pt;
 		public Star(Point pt, int speed){
