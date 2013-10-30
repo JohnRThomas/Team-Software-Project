@@ -26,11 +26,10 @@ public class Canvas extends JPanel implements KeyListener{
 	//protected int playerWidth = 20, playerHeight = 20;
 	//private int enemyWidth = 100, enemyHeight = 100;
 	private int counter = 0;
-	
-	
+
+
 	private MainWindow mainWindow;
-	
-	
+
 	Graphics background;
 	baseImage backgroundImage = new baseImage(0,0,"res/images/baseBackground.jpg",false);
 	baseImage basePlatform = new baseImage(400,0,"res/images/basePlatform.jpg",false);
@@ -67,24 +66,24 @@ public class Canvas extends JPanel implements KeyListener{
 			left = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_S){
-//			down = true;
+			//			down = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_D){
 			right = true;
 		}
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_W){
-//			up = false;
+			//			up = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_A){
 			left = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_S){
-//			down = false;
+			//			down = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_D){
 			right = false;
@@ -97,22 +96,24 @@ public class Canvas extends JPanel implements KeyListener{
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		//adds background image
-		 if (offScreenImage == null) {
-	            offScreenImage    = createImage(1600, getHeight());
-	            background = offScreenImage.getGraphics();
-	        }
-		 background.clearRect(0, 0,1600, getHeight() + 1);
-		background.drawImage(backgroundImage.getImage(), 0, 0, this);
-		background.drawImage(basePlatform.getImage(), 0, 400, this);
+		if (offScreenImage == null) {
+			offScreenImage    = createImage(1600, getHeight());
+			background = offScreenImage.getGraphics();
+		}
+
+		background.clearRect(0, 0,1600, getHeight() + 1);
+		background.drawImage(backgroundImage.getImage(), backgroundImage.getX(), backgroundImage.getY(), this);
+		background.drawImage(Toolkit.getDefaultToolkit().getImage("basePlatform.jpg"), 0, 400, this);
+
 		g.drawImage(offScreenImage, backgroundImage.getX(), backgroundImage.getY(),this); 
-				
-		
+
+
 		g.setColor(Color.GREEN);
 		g.fillOval(player.x, player.y, player.width, player.height);
 
 		g.setColor(Color.RED);
 		g.fillRect(evilRedBox.getX(), evilRedBox.getY(), evilRedBox.getWidth(), evilRedBox.getHeight());
-		
+
 		g.setColor(Color.black);
 		g.fillRect(1500+backgroundImage.getX(), 300, 100, 100);
 	}
@@ -125,7 +126,7 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void movePlayer(){ // TODO Commit this when convenient
-		
+
 		if (left){
 			if ((player.x + player.width/2 < getBounds().width/2)
 					&& (backgroundImage.getX() < 0) ){
@@ -151,9 +152,9 @@ public class Canvas extends JPanel implements KeyListener{
 			}
 		}
 	}
-	
+
 	public void moveEnemy(){
-//		counter += 1;
+		//		counter += 1;
 		if (gameOver) return;
 		if (player.x+10 >= evilRedBox.getX() + 50){
 			evilRedBox.setX(evilRedBox.getX() + 1) ;
@@ -170,32 +171,32 @@ public class Canvas extends JPanel implements KeyListener{
 		if (playerMovePosX){
 			evilRedBox.setX(evilRedBox.getX() - player.speed) ;
 			playerMovePosX =false;
-			}
+		}
 		if (playerMoveNegX){
 			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
 			playerMoveNegX =false;
-			}
+		}
 		// TODO Hey, look, I can make the enemy grow
-//		if (counter > 120){
-//			counter = 0;
-//			evilRedBox.width += 10;
-//			evilRedBox.height += 10;
-//		}
-		
-//		if (evilRedBox.x > 700){
-//			evilRedBox.x = 700;
-//		}
-//		if (evilRedBox.x < 0){
-//			evilRedBox.x = 0;
-//		}
-//		if (evilRedBox.y > 500){
-//			evilRedBox.y = 500;
-//		}
-//		if (evilRedBox.y < 0){
-//			evilRedBox.y = 0;
-//		}
-		
-		
+		//		if (counter > 120){
+		//			counter = 0;
+		//			evilRedBox.width += 10;
+		//			evilRedBox.height += 10;
+		//		}
+
+		//		if (evilRedBox.x > 700){
+		//			evilRedBox.x = 700;
+		//		}
+		//		if (evilRedBox.x < 0){
+		//			evilRedBox.x = 0;
+		//		}
+		//		if (evilRedBox.y > 500){
+		//			evilRedBox.y = 500;
+		//		}
+		//		if (evilRedBox.y < 0){
+		//			evilRedBox.y = 0;
+		//		}
+
+
 	}
 }
 
