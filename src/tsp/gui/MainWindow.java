@@ -43,6 +43,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		drawer = new Drawer(canvas);
 		gamer = new Gamer(this);
 		drawer.start();
+		this.setResizable(false);
 		
 		makeMenu();
 		this.setLayout(new BorderLayout());

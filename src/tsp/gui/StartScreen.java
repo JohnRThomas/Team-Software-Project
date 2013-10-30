@@ -1,6 +1,5 @@
 package tsp.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -45,9 +44,7 @@ public class StartScreen extends JPanel {
 		start.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loading = true;
 				drawer.interrupt();
-				repaint();
 				mainWindow.startGame();
 			}
 		});
@@ -64,29 +61,22 @@ public class StartScreen extends JPanel {
 
 	Star[] stars = new Star[200];
 
-	private boolean loading = false;
 	@Override
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		if(!loading){
-			g.setColor(Color.WHITE);
-			for(int i = 0; i < stars.length; i++){
-				if(stars[i] == null){
-					stars[i] = new Star(new Point((int)(Math.random()*this.getWidth()), (int)(Math.random()*this.getHeight())), (int)(Math.random()*9) + 1);
-				}else{
-					if(stars[i].pt.x + stars[i].speed <= this.getWidth())stars[i].pt.x += stars[i].speed;
-					else{
-						stars[i].pt.y = (int)(Math.random()*this.getHeight());
-						stars[i].pt.x = 0;
-					}
+		g.setColor(Color.WHITE);
+		for(int i = 0; i < stars.length; i++){
+			if(stars[i] == null){
+				stars[i] = new Star(new Point((int)(Math.random()*this.getWidth()), (int)(Math.random()*this.getHeight())), (int)(Math.random()*9) + 1);
+			}else{
+				if(stars[i].pt.x + stars[i].speed <= this.getWidth())stars[i].pt.x += stars[i].speed;
+				else{
+					stars[i].pt.y = (int)(Math.random()*this.getHeight());
+					stars[i].pt.x = -(int)(Math.random()*this.getWidth());
 				}
-				g.fillRect(stars[i].pt.x-1, stars[i].pt.y-1, 2, 2);
 			}
-		}else{
-			g.setColor(Color.WHITE);
-			g.drawString("Loading...", this.getWidth()/2, this.getHeight()/2);
+			g.fillRect(stars[i].pt.x-1, stars[i].pt.y-1, 2, 2);
 		}
 	}
 
