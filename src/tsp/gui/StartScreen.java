@@ -56,7 +56,7 @@ public class StartScreen extends JPanel {
 		titleLabel.setBounds(0,0,800,100);
 
 		add(start);
-		start.setBounds(400,150,250,25);
+		start.setBounds(275,150,250,25);
 	}
 
 	Star[] stars = new Star[200];
