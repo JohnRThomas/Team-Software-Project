@@ -1,0 +1,16 @@
+Background
+"int with number of images"
+
+"image name"   "image X position(offset for non Base Background" "image Y position(offset for non Base Background" "T for can collide, F for Cannot collide"
+
+End
+
+
+
+
+
+
+
+
+
+//extra note, put images in order of layer

@@ -12,6 +12,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 import tsp.game.Player;
+import tsp.imageMaker.buildImages;
+import tsp.imageMaker.makeImages;
 
 public class Canvas extends JPanel implements KeyListener{
 	Player player = new Player();
@@ -23,14 +25,17 @@ public class Canvas extends JPanel implements KeyListener{
 	protected int playerWidth = 20, playerHeight = 20;
 	private int enemyWidth = 100, enemyHeight = 100;
 	private int counter = 0;
-	
-	
+
+
 	private MainWindow mainWindow;
 	
 	
 	Graphics background;
-	BaseImage backgroundImage = new BaseImage(0,0,"res/images/baseBackground.jpg",false);
-	BaseImage basePlatform = new BaseImage(400,0,"res/images/basePlatform.jpg",false);
+	
+
+	buildImages stageMaker;
+	makeImages imageList;
+	
 	Image offScreenImage;
 	int imageX,imageY =0;
 
@@ -40,6 +45,9 @@ public class Canvas extends JPanel implements KeyListener{
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
+		
+		buildImages stageMaker = new buildImages();
+		imageList = stageMaker.getFile("stage1",imageList);
 	}
 
 	@Override
@@ -94,16 +102,19 @@ public class Canvas extends JPanel implements KeyListener{
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		//adds background image
-		 if (offScreenImage == null) {
-	            offScreenImage    = createImage(1600, getHeight());
-	            background = offScreenImage.getGraphics();
-	        }
-		 background.clearRect(0, 0,1600, getHeight() + 1);
-		background.drawImage(backgroundImage.getImage(), 0, 0, this);
-		background.drawImage(basePlatform.getImage(), 0, 400, this);
-		g.drawImage(offScreenImage, backgroundImage.getX(), backgroundImage.getY(),this); 
-				
+		if (offScreenImage == null) {
+			offScreenImage    = createImage(1600, getHeight());
+			background = offScreenImage.getGraphics();
+		}
+		background.clearRect(0, 0,1600, getHeight() + 1);
 		
+		//draws images
+		for(int i =0; i< imageList.getSize(); i++){
+			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
+		
+		}
+		
+		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
 		g.setColor(Color.GREEN);
 		g.fillOval(player.x, player.y, playerWidth, playerHeight);
 
@@ -111,7 +122,7 @@ public class Canvas extends JPanel implements KeyListener{
 		g.fillRect(enemyX, enemyY, enemyWidth, enemyHeight);
 		
 		g.setColor(Color.black);
-		g.fillRect(1500+backgroundImage.getX(), 300, 100, 100);
+		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
 	}
 
 	public void end(boolean death){
@@ -125,8 +136,8 @@ public class Canvas extends JPanel implements KeyListener{
 		
 		if (left){
 			if ((player.x + playerWidth/2 < getBounds().width/2)
-					&& (backgroundImage.getX() < 0) ){
-				backgroundImage.setX(backgroundImage.getX() +playerSpeed);
+					&& (imageList.getBaseBackground().getX() < 0) ){
+				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() +playerSpeed);
 				playerMoveNegX = true;
 			}
 			else{
@@ -138,8 +149,8 @@ public class Canvas extends JPanel implements KeyListener{
 			System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
 
 			if ((player.x+playerWidth/2 > getBounds().width/2 )
-					&& (backgroundImage.getX() > -800) ){
-				backgroundImage.setX(backgroundImage.getX() -playerSpeed);
+					&& (imageList.getBaseBackground().getX() > -800) ){
+				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() -playerSpeed);
 				playerMovePosX = true;
 			}
 			else{ 
