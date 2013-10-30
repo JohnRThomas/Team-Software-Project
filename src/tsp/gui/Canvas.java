@@ -1,6 +1,6 @@
 package tsp.gui;
 
-import imageBase.baseImage;
+import imageBase.BaseImage;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -29,8 +29,8 @@ public class Canvas extends JPanel implements KeyListener{
 	
 	
 	Graphics background;
-	baseImage backgroundImage = new baseImage(0,0,"res/images/baseBackground.jpg",false);
-	baseImage basePlatform = new baseImage(400,0,"res/images/basePlatform.jpg",false);
+	BaseImage backgroundImage = new BaseImage(0,0,"res/images/baseBackground.jpg",false);
+	BaseImage basePlatform = new BaseImage(400,0,"res/images/basePlatform.jpg",false);
 	Image offScreenImage;
 	int imageX,imageY =0;
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class baseImage {
+public class BaseImage {
 	private int xPoint,yPoint =0;
 	private int xSize, ySize;
 	private Image usedImage;
@@ -20,7 +20,7 @@ public class baseImage {
 	 * @param String imageName:	name of image to import, "(filename).(filetype)"
 	 * @param boolean collide:	say if player can collide with the image
 	 */
-	public baseImage(int xStart,int yStart, String imageName, boolean collide){
+	public BaseImage(int xStart,int yStart, String imageName, boolean collide){
 		xPoint = xStart;
 		yPoint = yStart;
 		usedImage = Toolkit.getDefaultToolkit().getImage(imageName);
