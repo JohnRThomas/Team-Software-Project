@@ -64,7 +64,7 @@ public class baseImage {
 		yPoint = y;
 		return yPoint;
 	}
-	/**
+	/**y+50
 	 * @param int x: new x position
 	 * @return x position
 	 */

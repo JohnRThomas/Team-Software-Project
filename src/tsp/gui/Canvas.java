@@ -11,17 +11,20 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import tsp.game.Enemy;
 import tsp.game.Player;
 
 public class Canvas extends JPanel implements KeyListener{
-	Player player = new Player();
+	Player player = new Player(0, 400, 20, 20, -1, 5);
+	//Enemy evilRedBox = new Enemy(-40, -40, 100, 100, 5);
+	Enemy evilRedBox = new Enemy(-40, -40, 3, "res/images/evilRedBox.png", true);
 	private boolean /*up = false, down = false,*/ left = false, right = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
 	private int jumpMax = 2;
-	private int playerSpeed = 5;
-	protected int playerWidth = 20, playerHeight = 20;
-	private int enemyWidth = 100, enemyHeight = 100;
+	//private int playerSpeed = 5;
+	//protected int playerWidth = 20, playerHeight = 20;
+	//private int enemyWidth = 100, enemyHeight = 100;
 	private int counter = 0;
 	
 	
@@ -34,7 +37,7 @@ public class Canvas extends JPanel implements KeyListener{
 	Image offScreenImage;
 	int imageX,imageY =0;
 
-	int enemyX = -40, enemyY = -40;
+	//int enemyX = -40, enemyY = -40;
 	int gravCounter = 0;
 	int jumpCount = 0;
 	public Canvas(MainWindow mainWindow){
@@ -105,10 +108,10 @@ public class Canvas extends JPanel implements KeyListener{
 				
 		
 		g.setColor(Color.GREEN);
-		g.fillOval(player.x, player.y, playerWidth, playerHeight);
+		g.fillOval(player.x, player.y, player.width, player.height);
 
 		g.setColor(Color.RED);
-		g.fillRect(enemyX, enemyY, enemyWidth, enemyHeight);
+		g.fillRect(evilRedBox.getX(), evilRedBox.getY(), evilRedBox.getWidth(), evilRedBox.getHeight());
 		
 		g.setColor(Color.black);
 		g.fillRect(1500+backgroundImage.getX(), 300, 100, 100);
@@ -124,27 +127,27 @@ public class Canvas extends JPanel implements KeyListener{
 	public void movePlayer(){ // TODO Commit this when convenient
 		
 		if (left){
-			if ((player.x + playerWidth/2 < getBounds().width/2)
+			if ((player.x + player.width/2 < getBounds().width/2)
 					&& (backgroundImage.getX() < 0) ){
-				backgroundImage.setX(backgroundImage.getX() +playerSpeed);
+				backgroundImage.setX(backgroundImage.getX() +player.speed);
 				playerMoveNegX = true;
 			}
 			else{
-				if(player.x >= playerSpeed)player.x -= playerSpeed;
+				if(player.x >= player.speed)player.x -= player.speed;
 				else player.x = 0;
 			}
 		}
 		if (right){
 			System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
 
-			if ((player.x+playerWidth/2 > getBounds().width/2 )
+			if ((player.x+player.width/2 > getBounds().width/2 )
 					&& (backgroundImage.getX() > -800) ){
-				backgroundImage.setX(backgroundImage.getX() -playerSpeed);
+				backgroundImage.setX(backgroundImage.getX() -player.speed);
 				playerMovePosX = true;
 			}
 			else{ 
-				if(player.x + playerWidth + playerSpeed <= getBounds().width)player.x += playerSpeed; // player width is 20
-				else player.x = getBounds().width - playerWidth;
+				if(player.x + player.width + player.speed <= getBounds().width)player.x += player.speed; // player width is 20
+				else player.x = getBounds().width - player.width;
 			}
 		}
 	}
@@ -152,45 +155,44 @@ public class Canvas extends JPanel implements KeyListener{
 	public void moveEnemy(){
 //		counter += 1;
 		if (gameOver) return;
-		if (player.x+10 >= enemyX+50){
-			enemyX += 1;
-			
+		if (player.x+10 >= evilRedBox.getX() + 50){
+			evilRedBox.setX(evilRedBox.getX() + 1) ;
 		}
 		else{
-			enemyX -= 1;
+			evilRedBox.setX(evilRedBox.getX() - 1) ;
 		}
-		if (player.y+10 >= enemyY+50){
-			enemyY += 1;
+		if (player.y+10 >= evilRedBox.getY() + 50){
+			evilRedBox.setY(evilRedBox.getY() + 1) ;
 		}
 		else{
-			enemyY -= 1;
+			evilRedBox.setY(evilRedBox.getY() - 1) ;
 		}
 		if (playerMovePosX){
-			enemyX -= playerSpeed;
+			evilRedBox.setX(evilRedBox.getX() - player.speed) ;
 			playerMovePosX =false;
 			}
 		if (playerMoveNegX){
-			enemyX += playerSpeed;
+			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
 			playerMoveNegX =false;
 			}
 		// TODO Hey, look, I can make the enemy grow
 //		if (counter > 120){
 //			counter = 0;
-//			enemyWidth += 10;
-//			enemyHeight += 10;
+//			evilRedBox.width += 10;
+//			evilRedBox.height += 10;
 //		}
 		
-//		if (enemyX > 700){
-//			enemyX = 700;
+//		if (evilRedBox.x > 700){
+//			evilRedBox.x = 700;
 //		}
-//		if (enemyX < 0){
-//			enemyX = 0;
+//		if (evilRedBox.x < 0){
+//			evilRedBox.x = 0;
 //		}
-//		if (enemyY > 500){
-//			enemyY = 500;
+//		if (evilRedBox.y > 500){
+//			evilRedBox.y = 500;
 //		}
-//		if (enemyY < 0){
-//			enemyY = 0;
+//		if (evilRedBox.y < 0){
+//			evilRedBox.y = 0;
 //		}
 		
 		
