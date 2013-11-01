@@ -10,10 +10,12 @@ import javax.swing.JPanel;
 
 import tsp.game.Enemy;
 import tsp.game.Player;
-import tsp.imageMaker.buildImages;
-import tsp.imageMaker.makeImages;
+import tsp.imageMaker.BuildImages;
+import tsp.imageMaker.MakeImages;
 
 public class Canvas extends JPanel implements KeyListener{
+	private static final long serialVersionUID = 1L;
+	
 	Player player = new Player(0, 400, 20, 20, -1, 5);
 	//Enemy evilRedBox = new Enemy(-40, -40, 100, 100, 5);
 	Enemy evilRedBox = new Enemy(-40, -40, 3, "res/images/evilRedBox.png", true);
@@ -24,7 +26,7 @@ public class Canvas extends JPanel implements KeyListener{
 	//private int playerSpeed = 5;
 	//protected int playerWidth = 20, playerHeight = 20;
 	//private int enemyWidth = 100, enemyHeight = 100;
-	private int counter = 0;
+	//private int counter = 0;
 
 
 	private MainWindow mainWindow;
@@ -32,8 +34,8 @@ public class Canvas extends JPanel implements KeyListener{
 	Graphics background;
 
 
-	buildImages stageMaker;
-	makeImages imageList;
+	BuildImages stageMaker;
+	MakeImages imageList;
 
 	Image offScreenImage;
 	int imageX,imageY =0;
@@ -45,7 +47,7 @@ public class Canvas extends JPanel implements KeyListener{
 		super();
 		this.mainWindow = mainWindow;
 
-		buildImages stageMaker = new buildImages();
+		BuildImages stageMaker = new BuildImages();
 		imageList = stageMaker.getFile("stage1",imageList);
 	}
 

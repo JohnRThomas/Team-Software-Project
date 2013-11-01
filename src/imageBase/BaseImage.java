@@ -24,7 +24,7 @@ public class BaseImage {
 		xPoint = xStart;
 		yPoint = yStart;
 		usedImage = Toolkit.getDefaultToolkit().getImage(imageName);
-		canCollide = collide;
+		setCanCollide(collide);
 		BufferedImage bimg = null;
 		try {
 			bimg = ImageIO.read(new File(imageName));
@@ -84,6 +84,14 @@ public class BaseImage {
 	 */
 	public int getHeight(){
 		return ySize;
+	}
+
+	public boolean canCollide() {
+		return canCollide;
+	}
+
+	public void setCanCollide(boolean canCollide) {
+		this.canCollide = canCollide;
 	}
 	
 	

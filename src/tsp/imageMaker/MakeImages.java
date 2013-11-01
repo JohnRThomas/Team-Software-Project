@@ -1,15 +1,14 @@
 package tsp.imageMaker;
 
-import java.awt.Image;
+import imageBase.BaseImage;
 
-import imageBase.BaseImage;
-import imageBase.BaseImage;
+import java.awt.Image;
 /**
  * 
  * @author Matthew Johnson
  *
  */
-public class makeImages {
+public class MakeImages {
 	BaseImage listOfImages [];
 	
 //	/**

@@ -2,8 +2,6 @@ package tsp.imageMaker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -12,7 +10,7 @@ import java.util.Scanner;
  *loads a file and gets background info
  *
  */
-public class buildImages {
+public class BuildImages {
 	
 	public int imageCount = 0;
 	
@@ -22,7 +20,7 @@ public class buildImages {
 	 * @param imageMaker	the imageMaker that is going to have the list of images
 	 * @return				set imageMaker input == to this to update it
 	 */
-	public makeImages getFile(String name, makeImages imageMaker){
+	public MakeImages getFile(String name, MakeImages imageMaker){
 		String	fileName = "res/stages/" + name;
 		Scanner wordScanner = null;
 		try {
@@ -81,7 +79,7 @@ public class buildImages {
 					i+=1;
 					
 				}
-				imageMaker = new makeImages();
+				imageMaker = new MakeImages();
 				imageMaker.setSize(imageCount);
 				
 				for(int k =0; k <j; k++){
