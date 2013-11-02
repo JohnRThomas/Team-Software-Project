@@ -1,6 +1,7 @@
 package imageBase;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,11 +9,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class BaseImage {
-	private int xPoint,yPoint =0;
+import tsp.game.Collisions;
+
+public abstract class BaseImage {
+	private int xPoint,yPoint = 0;
 	private int xSize, ySize;
 	private Image usedImage;
-	private boolean canCollide;
+	private boolean canCollide;	
+	
 	/**
 	 * 
 	 * @param int xStart: 		x Start Position
@@ -92,7 +96,17 @@ public class BaseImage {
 
 	public void setCanCollide(boolean canCollide) {
 		this.canCollide = canCollide;
+		if(canCollide){
+			Collisions.entities.add(this);
+		}else{
+			Collisions.entities.remove(this);
+		}
 	}
 	
+	public Rectangle getBounds() {
+		return new Rectangle(xPoint, yPoint, xSize, ySize);
+	}
+	
+	public abstract void collideWith(BaseImage entity);
 	
 }

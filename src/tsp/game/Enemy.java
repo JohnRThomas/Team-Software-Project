@@ -31,4 +31,14 @@ public class Enemy extends BaseImage {
 	public int setHealth(int h) {
 		return health = h;
 	}
+
+	@Override
+	public void collideWith(BaseImage entity) {
+		/*if(entity instanceof Player){
+			//TODO collide with player
+		}else */if(entity instanceof Enemy){
+			
+		}
+		// TODO Auto-generated method stub
+	}
 }

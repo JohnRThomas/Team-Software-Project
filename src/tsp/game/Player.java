@@ -1,5 +1,6 @@
 package tsp.game;
 
+
 /**
  * Basic Player Class
  *		Needs more variables and stuff
@@ -17,6 +18,7 @@ public class Player {
 	public int width;
 	public int height;
 	public int speed;
+
 	
 	public Player(int x, int y, int width, int height, int gravity, int health, int speed, int hitTimer, Color color) {
 		this.x = x;
@@ -29,6 +31,7 @@ public class Player {
 		this.hitTimer = hitTimer;
 		this.color = color;
 	}
+
 }
 
 

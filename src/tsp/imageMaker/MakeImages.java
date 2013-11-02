@@ -3,6 +3,8 @@ package tsp.imageMaker;
 import imageBase.BaseImage;
 
 import java.awt.Image;
+
+import tsp.game.Background;
 /**
  * 
  * @author Matthew Johnson
@@ -34,7 +36,7 @@ public class MakeImages {
 	 */
 	public BaseImage setBaseBackgroundImage(int layerPosition,int x, int y, String name, boolean canColide){
 		String namePath = "res/images/" + name;
-		listOfImages[layerPosition] = new BaseImage(x,y,namePath,canColide);
+		listOfImages[layerPosition] = new Background(x,y,namePath,canColide);
 		return listOfImages[layerPosition];
 	}
 	/**
@@ -45,7 +47,7 @@ public class MakeImages {
 	 */
 	public BaseImage setBaseBackgroundImage(String name, boolean canColide){
 		String namePath = "res/images/" + name;
-		listOfImages[0] = new BaseImage(0,0,namePath,canColide);
+		listOfImages[0] = new Background(0,0,namePath,canColide);
 		return listOfImages[0];
 	}
 	
@@ -61,7 +63,7 @@ public class MakeImages {
 	 */
 	public BaseImage setBackgroundImage(int layerPosition,int xOffset, int yOffset, String name, boolean canColide){
 		String namePath = "res/images/" + name;
-		listOfImages[layerPosition] = new BaseImage(listOfImages[0].getX()+xOffset,listOfImages[0].getX()+xOffset,namePath,canColide);
+		listOfImages[layerPosition] = new Background(listOfImages[0].getX()+xOffset,listOfImages[0].getX()+xOffset,namePath,canColide);
 		return listOfImages[layerPosition];
 	}
 	
