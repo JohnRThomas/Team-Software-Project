@@ -1,6 +1,7 @@
 package tsp.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -16,7 +17,7 @@ import tsp.imageMaker.MakeImages;
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 	
-	Player player = new Player(0, 400, 20, 20, -1, 5);
+	Player player = new Player(0, 400, 20, 20, -1, 100, 5, 60, Color.GREEN);
 	//Enemy evilRedBox = new Enemy(-40, -40, 100, 100, 5);
 	Enemy evilRedBox = new Enemy(-40, -40, 3, "res/images/evilRedBox.png", true);
 	private boolean /*up = false, down = false,*/ left = false, right = false; // should be taken care of in Player
@@ -116,14 +117,24 @@ public class Canvas extends JPanel implements KeyListener{
 		}
 
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
-		g.setColor(Color.GREEN);
-		g.fillOval(player.x, player.y, player.width, player.height);
 
+		//draw enemy
 		g.setColor(Color.RED);
 		g.fillRect(evilRedBox.getX(), evilRedBox.getY(), evilRedBox.getWidth(), evilRedBox.getHeight());
-
+		
+		//draw player
+		g.setColor(player.color);
+		g.fillOval(player.x, player.y, player.width, player.height);
+		
 		g.setColor(Color.black);
 		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
+
+		// draw health value
+		// TODO make more visible
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("default", Font.BOLD, 16));
+		g.drawString(player.health.toString(), this.getWidth()-40, 20);
+
 	}
 
 	public void end(boolean death){

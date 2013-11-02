@@ -1,5 +1,6 @@
 package tsp.gui;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,8 @@ public class MainWindow extends JFrame implements KeyListener{
 	private Clip currentMusic;
 	private static final String FIRST_SONG = new String("/music/empire.wav");
 	private static final String END_SONG_DEATH = new String("/music/zanarkand.wav");
+
+	
 	
 	public MainWindow() {
 		super("TSP Game");
@@ -143,13 +146,22 @@ public class MainWindow extends JFrame implements KeyListener{
 	}
 
 	public void tick() {
-		
+
+		if (canvas.player.health <= 0) {
+			canvas.end(true); // death
+		}
+
 		canvas.movePlayer();
 		canvas.moveEnemy();
-		
-		if (canvas.player.x+ canvas.player.width >= canvas.evilRedBox.getX() && canvas.player.x <= canvas.evilRedBox.getX()+100){
-			if (canvas.player.y+ canvas.player.width >= canvas.evilRedBox.getY() && canvas.player.y <= canvas.evilRedBox.getY()+100){
-				canvas.end(true);
+
+		if (canvas.player.hitTimer == 0) {
+			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
+			if (canvas.player.x+ canvas.player.width >= canvas.evilRedBox.getX() && canvas.player.x <= canvas.evilRedBox.getX()+100){
+				if (canvas.player.y+ canvas.player.width >= canvas.evilRedBox.getY() && canvas.player.y <= canvas.evilRedBox.getY()+100){
+					canvas.player.health = canvas.player.health - 25; //TODO add damage values for enemies
+					System.out.println(canvas.player.health);
+					canvas.player.hitTimer = 60;
+				}
 			}
 		}
 		
@@ -174,7 +186,13 @@ public class MainWindow extends JFrame implements KeyListener{
 		if (canvas.player.gravity > -10) { // if not at terminal velocity
 			canvas.player.gravity = canvas.player.gravity - 1; // increase fall rate
 		}
-			
+		
+		if (canvas.player.hitTimer > 0) { // if in hit invulnerability
+			canvas.player.color = Color.BLUE; // change color 
+			canvas.player.hitTimer--; // decrease time remaining
+			System.out.println("hit");
+		}
+		
 		canvas.repaint();
 	}
 	
