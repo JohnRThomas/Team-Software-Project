@@ -18,7 +18,6 @@ public class Player {
 	public int width;
 	public int height;
 	public int speed;
-
 	
 	public Player(int x, int y, int width, int height, int gravity, int health, int speed, int hitTimer, Color color) {
 		this.x = x;
