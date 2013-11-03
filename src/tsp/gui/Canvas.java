@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 import tsp.game.Enemy;
+import tsp.game.MoveUnit;
 import tsp.game.Player;
 import tsp.imageMaker.BuildImages;
 import tsp.imageMaker.MakeImages;
@@ -28,7 +29,8 @@ public class Canvas extends JPanel implements KeyListener{
 	//protected int playerWidth = 20, playerHeight = 20;
 	//private int enemyWidth = 100, enemyHeight = 100;
 	//private int counter = 0;
-
+	MoveUnit mover = new MoveUnit();
+	
 
 	private MainWindow mainWindow;
 
@@ -145,79 +147,24 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void movePlayer(){ // TODO Commit this when convenient
-
-		if (left){
-
-			if ((player.x + player.width/2 < getBounds().width/2)
-					&& (imageList.getBaseBackground().getX() < 0) ){
-				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() +player.speed);
-				playerMoveNegX = true;
-			}
-			else{
-				if(player.x >= player.speed)player.x -= player.speed;
-				else player.x = 0;
-			}
+		
+		int direction = mover.movePlayer(player, imageList, left, right, getBounds().width);
+		if (direction ==0 ){
+			playerMovePosX = false;
+			playerMoveNegX = false;
 		}
-		if (right){
-			//System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
-
-
-			if ((player.x+player.width/2 > getBounds().width/2 )
-					&& (imageList.getBaseBackground().getX() > -800) ){
-				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() -player.speed);
-				playerMovePosX = true;
-			}
-			else{ 
-				if(player.x + player.width + player.speed <= getBounds().width)player.x += player.speed; // player width is 20
-				else player.x = getBounds().width - player.width;
-			}
+		if (direction <0){
+			playerMoveNegX = true;
+			playerMovePosX = false;
+		}
+		if (direction >0){
+			playerMoveNegX = false;
+			playerMovePosX = true;
 		}
 	}
 
 	public void moveEnemy(){
-		//		counter += 1;
-		if (gameOver) return;
-		if (player.x+10 >= evilRedBox.getX() + 50){
-			evilRedBox.setX(evilRedBox.getX() + 1) ;
-		}
-		else{
-			evilRedBox.setX(evilRedBox.getX() - 1) ;
-		}
-		if (player.y+10 >= evilRedBox.getY() + 50){
-			evilRedBox.setY(evilRedBox.getY() + 1) ;
-		}
-		else{
-			evilRedBox.setY(evilRedBox.getY() - 1) ;
-		}
-		if (playerMovePosX){
-			evilRedBox.setX(evilRedBox.getX() - player.speed) ;
-			playerMovePosX =false;
-		}
-		if (playerMoveNegX){
-			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
-			playerMoveNegX =false;
-		}
-		// TODO Hey, look, I can make the enemy grow
-		//		if (counter > 120){
-		//			counter = 0;
-		//			evilRedBox.width += 10;
-		//			evilRedBox.height += 10;
-		//		}
-
-		//		if (evilRedBox.x > 700){
-		//			evilRedBox.x = 700;
-		//		}
-		//		if (evilRedBox.x < 0){
-		//			evilRedBox.x = 0;
-		//		}
-		//		if (evilRedBox.y > 500){
-		//			evilRedBox.y = 500;
-		//		}
-		//		if (evilRedBox.y < 0){
-		//			evilRedBox.y = 0;
-		//		}
-
-
+		mover.moveEnemy(gameOver, player, evilRedBox, playerMovePosX, playerMoveNegX);
 	}
 }
 
