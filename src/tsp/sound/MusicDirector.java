@@ -12,7 +12,7 @@ public class MusicDirector {
 
 	private Clip currentMusic;
 	private File currentFile;
-	private MainWindow mainWindow;
+	private MainWindow mainWindow; // Possible irrelevant
 	
 	public MusicDirector(MainWindow mainWindow){
 		this.mainWindow = mainWindow;
@@ -30,7 +30,7 @@ public class MusicDirector {
 			currentMusic.start();
 			currentMusic.loop(Clip.LOOP_CONTINUOUSLY);
 		}catch(Exception ex){
-			System.out.println("Error with playing sound at: " + path);
+			System.out.println("Error with playing music at: " + path);
 			ex.printStackTrace();
 		}
 	}

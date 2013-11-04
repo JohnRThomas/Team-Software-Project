@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import tsp.game.threads.Drawer;
 import tsp.game.threads.Gamer;
 import tsp.sound.MusicDirector;
+import tsp.sound.SoundConstants;
 
 
 public class MainWindow extends JFrame implements KeyListener{
@@ -37,8 +38,6 @@ public class MainWindow extends JFrame implements KeyListener{
 
 	//Audio
 	private MusicDirector music;
-	private static final String FIRST_SONG = new String("res/music/empire.wav/");
-	private static final String END_SONG_DEATH = new String("res/music/zanarkand.wav/");
 
 
 
@@ -94,7 +93,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		container.remove(0);
 		container.add(canvas);
 		revalidate();
-		music.playMusic(FIRST_SONG);
+		music.playMusic(SoundConstants.SONG_01);
 		gamer.start();
 	}
 
@@ -106,7 +105,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		revalidate();
 		endScreen.repaint();
 		if (death){
-			music.playMusic(END_SONG_DEATH);
+			music.playMusic(SoundConstants.END_SONG_DEATH);
 		}
 		//		long startTime = System.currentTimeMillis();
 		//		while(!endScreen.isLabelWhite){
