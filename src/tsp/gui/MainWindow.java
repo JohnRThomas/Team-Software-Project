@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 
 import tsp.game.threads.Drawer;
 import tsp.game.threads.Gamer;
+import tsp.sound.MusicDirector;
 
 
 public class MainWindow extends JFrame implements KeyListener{
@@ -35,9 +36,9 @@ public class MainWindow extends JFrame implements KeyListener{
 	private Gamer gamer;
 
 	//Audio
-	private Clip currentMusic;
-	private static final String FIRST_SONG = new String("/music/empire.wav");
-	private static final String END_SONG_DEATH = new String("/music/zanarkand.wav");
+	private MusicDirector music;
+	private static final String FIRST_SONG = new String("res/music/empire.wav/");
+	private static final String END_SONG_DEATH = new String("res/music/zanarkand.wav/");
 
 
 
@@ -47,7 +48,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		gamer = new Gamer(this);
 		drawer.start();
 		this.setResizable(false);
-
+		music = new MusicDirector(this);
 		makeMenu();
 		this.setLayout(new BorderLayout());
 		this.getContentPane().add(container, BorderLayout.CENTER);
@@ -93,7 +94,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		container.remove(0);
 		container.add(canvas);
 		revalidate();
-		playMusic(FIRST_SONG);
+		music.playMusic(FIRST_SONG);
 		gamer.start();
 	}
 
@@ -105,7 +106,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		revalidate();
 		endScreen.repaint();
 		if (death){
-			playMusic(END_SONG_DEATH);
+			music.playMusic(END_SONG_DEATH);
 		}
 		//		long startTime = System.currentTimeMillis();
 		//		while(!endScreen.isLabelWhite){
@@ -127,22 +128,6 @@ public class MainWindow extends JFrame implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		canvas.keyTyped(e);
-	}
-
-	private void playMusic(String path){
-		if (null != currentMusic){
-			currentMusic.stop();
-		}
-		try{
-			AudioInputStream audio = AudioSystem.getAudioInputStream(MainWindow.class.getResource(path));
-			currentMusic = AudioSystem.getClip();
-			currentMusic.open(audio);
-			currentMusic.start();
-			currentMusic.loop(Clip.LOOP_CONTINUOUSLY);
-		}catch(Exception ex){
-			System.out.println("Error with playing sound at: " + path);
-			ex.printStackTrace();
-		}
 	}
 
 	public void tick() {
