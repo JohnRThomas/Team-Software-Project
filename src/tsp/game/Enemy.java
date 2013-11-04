@@ -8,13 +8,34 @@ import imageBase.BaseImage;
  *
  */
 public class Enemy extends BaseImage {
+	private int damage ;
 	private int health ;
-	
-	public Enemy(int xStart, int yStart, int h, String imageName, boolean collide) {
+	private int gravity ;
+
+	public Enemy(int xStart, int yStart, int d, int h, int g, String imageName, boolean collide) {
 		super(xStart, yStart, imageName, collide);
+		damage = d ;
 		health = h ;
+		gravity = g ;
 	}
-	
+
+	/**
+	 * 
+	 * @return damage
+	 */
+	public int getDamage() {
+		return damage ;
+	}
+
+	/**
+	 * 
+	 * @param d
+	 * @return the new damage d
+	 */
+	public int setDamage(int d) {
+		return damage = d;
+	}
+
 	/**
 	 * 
 	 * @return health
@@ -22,7 +43,7 @@ public class Enemy extends BaseImage {
 	public int getHealth() {
 		return health ;
 	}
-	
+
 	/**
 	 * 
 	 * @param h
@@ -39,6 +60,22 @@ public class Enemy extends BaseImage {
 		}else */if(entity instanceof Enemy){
 			
 		}
-		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * 
+	 * @return gravity
+	 */
+	public int getGravity() {
+		return gravity ;
+	}
+
+	/**
+	 * 
+	 * @param g
+	 * @return the new gravity g
+	 */
+	public int setGravity(int g) {
+		return gravity = g;
 	}
 }

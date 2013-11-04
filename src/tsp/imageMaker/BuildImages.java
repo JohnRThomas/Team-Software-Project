@@ -35,7 +35,9 @@ public class BuildImages {
 		int j = 0;
 		int x[];
 		int y[];
+		int damage[];
 		int health[];
+		int gravity[];
 		String imageNames[];
 		boolean collide[];
 		while(wordScanner.hasNext()){
@@ -49,7 +51,9 @@ public class BuildImages {
 				imageCount = Integer.parseInt(word);
 				x  = new int[imageCount];
 				y  = new int[imageCount];
+				damage = new int[imageCount];
 				health  = new int[imageCount];
+				gravity = new int[imageCount];
 				imageNames = new String[imageCount];
 				collide = new boolean[imageCount];
 				
@@ -88,7 +92,7 @@ public class BuildImages {
 				MakeEnemies enemies = new MakeEnemies();
 				enemies.setSize(imageCount);
 				for(int k =0; k <j; k++){
-					enemies.setEnemy(k, x[k], y[k],health[k], imageNames[k], collide[k]);
+					enemies.setEnemy(k, x[k], y[k], damage[k], health[k], gravity[k], imageNames[k], collide[k]);
 				}
 
 				objects.setEnemies(enemies);
