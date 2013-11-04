@@ -7,7 +7,7 @@ public class AllObjects {
 	MakeImages images;
 	Player player;
 	
-	AllObjects(){	}
+	public AllObjects(){	}
 	AllObjects(MakeEnemies enemy,MakeImages image,Player players){
 		enemies = enemy;
 		images = image;

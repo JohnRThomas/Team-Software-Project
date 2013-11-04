@@ -1,28 +1,26 @@
 package tsp.imageMaker;
 
-import imageBase.BaseImage;
+import tsp.game.Background;
 
 import java.awt.Image;
-
-import tsp.game.Background;
 /**
  * 
  * @author Matthew Johnson
  *
  */
 public class MakeImages {
-	BaseImage listOfImages [];
+	Background listOfImages [];
 	
 //	/**
 //	 * 
 //	 * @param numImages number of images to be used
 //	 */
 //	public makeImages(int numImages){
-//		listOfImages = new BaseImage[numImages];
+//		listOfImages = new Background[numImages];
 //	}
 	
 	public void setSize(int numImages){
-		listOfImages = new BaseImage[numImages];
+		listOfImages = new Background[numImages];
 	}
 	/**
 	 * 
@@ -34,7 +32,7 @@ public class MakeImages {
 	 * @param canColide: 	boolean of saying if image can collide with other objects
 	 * @return
 	 */
-	public BaseImage setBaseBackgroundImage(int layerPosition,int x, int y, String name, boolean canColide){
+	public Background setImage(int layerPosition,int x, int y, String name, boolean canColide){
 		String namePath = "res/images/" + name;
 		listOfImages[layerPosition] = new Background(x,y,namePath,canColide);
 		return listOfImages[layerPosition];
@@ -45,7 +43,7 @@ public class MakeImages {
 	 * @param canColide: 	boolean of saying if image can collide with other objects
 	 * @return
 	 */
-	public BaseImage setBaseBackgroundImage(String name, boolean canColide){
+	public Background setBaseBackgroundImage(String name, boolean canColide){
 		String namePath = "res/images/" + name;
 		listOfImages[0] = new Background(0,0,namePath,canColide);
 		return listOfImages[0];
@@ -61,7 +59,7 @@ public class MakeImages {
 	 * @param canColide: 	boolean of saying if image can collide with other objects
 	 * @return
 	 */
-	public BaseImage setBackgroundImage(int layerPosition,int xOffset, int yOffset, String name, boolean canColide){
+	public Background setBackgroundImage(int layerPosition,int xOffset, int yOffset, String name, boolean canColide){
 		String namePath = "res/images/" + name;
 		listOfImages[layerPosition] = new Background(listOfImages[0].getX()+xOffset,listOfImages[0].getX()+xOffset,namePath,canColide);
 		return listOfImages[layerPosition];
@@ -73,17 +71,17 @@ public class MakeImages {
 	
 	
 	/**
-	 * @return: get the BaseImage(not the actual image)
+	 * @return: get the Background(not the actual image)
 	 */
-	public BaseImage getBaseBackground(){
+	public Background getBaseBackground(){
 		return listOfImages[0];
 	}
 	/**
 	 * 
-	 * @param layerPosition layer position of BaseImage
-	 * @return: get the BaseImage(not the actual image)
+	 * @param layerPosition layer position of Background
+	 * @return: get the Background(not the actual image)
 	 */
-	public BaseImage getImageBase(int layerPosition){
+	public Background getImageBase(int layerPosition){
 		return listOfImages[layerPosition];
 	}
 	
@@ -98,7 +96,7 @@ public class MakeImages {
 	}
 	/**
 	 * 
-	 * @param layerPosition layer position of BaseImage
+	 * @param layerPosition layer position of Background
 	 * @return: get the Image of an object
 	 */
 	public Image getImage(int layerPosition){

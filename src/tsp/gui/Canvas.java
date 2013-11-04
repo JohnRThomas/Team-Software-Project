@@ -12,15 +12,16 @@ import javax.swing.JPanel;
 import tsp.game.Enemy;
 import tsp.game.MoveUnit;
 import tsp.game.Player;
+import tsp.imageMaker.AllObjects;
 import tsp.imageMaker.BuildImages;
+import tsp.imageMaker.MakeEnemies;
 import tsp.imageMaker.MakeImages;
 
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
-	
+
 	Player player = new Player(0, 400, 20, 20, -1, 100, 5, 60, Color.GREEN);
-	//Enemy evilRedBox = new Enemy(-40, -40, 100, 100, 5);
-	Enemy evilRedBox = new Enemy(-40, -40, 3, "res/images/evilRedBox.png", true);
+	
 	private boolean /*up = false, down = false,*/ left = false, right = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
@@ -30,7 +31,7 @@ public class Canvas extends JPanel implements KeyListener{
 	//private int enemyWidth = 100, enemyHeight = 100;
 	//private int counter = 0;
 	MoveUnit mover = new MoveUnit();
-	
+
 
 	private MainWindow mainWindow;
 
@@ -39,6 +40,8 @@ public class Canvas extends JPanel implements KeyListener{
 
 	BuildImages stageMaker;
 	MakeImages imageList;
+	MakeEnemies enemyList;
+	AllObjects objectMaker;
 
 	Image offScreenImage;
 	int imageX,imageY =0;
@@ -49,9 +52,11 @@ public class Canvas extends JPanel implements KeyListener{
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
-
+		objectMaker = new AllObjects();
 		BuildImages stageMaker = new BuildImages();
-		imageList = stageMaker.getFile("stage1",imageList);
+		objectMaker = stageMaker.getFile("stage1",objectMaker);
+		imageList = objectMaker.getImages();
+		enemyList = objectMaker.getEnemies();
 	}
 
 	@Override
@@ -117,17 +122,17 @@ public class Canvas extends JPanel implements KeyListener{
 			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
 
 		}
+		for(int i =0; i< enemyList.getSize(); i++){
+			background.drawImage(enemyList.getEnemyImage(i), enemyList.getEnemy(i).getX(), enemyList.getEnemy(i).getY(), this);
+
+		}
 
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
 
-		//draw enemy
-		g.setColor(Color.RED);
-		g.fillRect(evilRedBox.getX(), evilRedBox.getY(), evilRedBox.getWidth(), evilRedBox.getHeight());
-		
 		//draw player
 		g.setColor(player.color);
 		g.fillOval(player.x, player.y, player.width, player.height);
-		
+
 		g.setColor(Color.black);
 		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
 
@@ -147,7 +152,7 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void movePlayer(){ // TODO Commit this when convenient
-		
+
 		int direction = mover.movePlayer(player, imageList, left, right, getBounds().width);
 		if (direction ==0 ){
 			playerMovePosX = false;
@@ -164,7 +169,9 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void moveEnemy(){
-		mover.moveEnemy(gameOver, player, evilRedBox, playerMovePosX, playerMoveNegX);
+		for(int i =0; i< enemyList.getSize(); i++){
+			mover.moveEnemy(gameOver, player, enemyList.getEnemy(i), playerMovePosX, playerMoveNegX);
+		}
 	}
 }
 

@@ -20,7 +20,7 @@ public class BuildImages {
 	 * @param imageMaker	the imageMaker that is going to have the list of images
 	 * @return				set imageMaker input == to this to update it
 	 */
-	public MakeImages getFile(String name, MakeImages imageMaker){
+	public AllObjects getFile(String name, AllObjects objects){
 		String	fileName = "res/stages/" + name;
 		Scanner wordScanner = null;
 		try {
@@ -35,6 +35,7 @@ public class BuildImages {
 		int j = 0;
 		int x[];
 		int y[];
+		int health[];
 		String imageNames[];
 		boolean collide[];
 		while(wordScanner.hasNext()){
@@ -42,6 +43,59 @@ public class BuildImages {
 			int i = 0;
 			String word = wordScanner.nextLine();
 			
+			if (word.compareTo("Enemy")==0){
+				word = wordScanner.next();
+				
+				imageCount = Integer.parseInt(word);
+				x  = new int[imageCount];
+				y  = new int[imageCount];
+				health  = new int[imageCount];
+				imageNames = new String[imageCount];
+				collide = new boolean[imageCount];
+				
+				while(true){
+					word = wordScanner.next();
+					
+					if(word.compareTo("End") ==0)break;
+					
+					if (i == 0){
+						imageNames[j] = word;
+					}
+					else if (i == 1){
+						x[j] = Integer.parseInt(word);
+					}
+					else if (i == 2){
+						y[j] = Integer.parseInt(word);
+
+					}
+					else if (i == 3){
+						health[j] = Integer.parseInt(word);
+
+					}
+					else if (i == 4){
+						if(word.compareTo("T") == 0){
+							collide[j] = true;
+						}
+						else if(word.compareTo("F") ==0){
+							collide[j] = false;
+						}
+						i = -1;
+						j+=1;
+					}
+					i+=1;
+					
+				}
+				MakeEnemies enemies = new MakeEnemies();
+				enemies.setSize(imageCount);
+				for(int k =0; k <j; k++){
+					enemies.setEnemy(k, x[k], y[k],health[k], imageNames[k], collide[k]);
+				}
+
+				objects.setEnemies(enemies);
+				
+			}//end of if
+			j=0;
+			i=0;
 			if (word.compareTo("Background")==0){
 				word = wordScanner.next();
 				
@@ -57,6 +111,7 @@ public class BuildImages {
 					if(word.compareTo("End") ==0)break;
 					
 					if (i == 0){
+						System.out.println("here" + imageNames.length + word);
 						imageNames[j] = word;
 					}
 					else if (i == 1){
@@ -79,19 +134,20 @@ public class BuildImages {
 					i+=1;
 					
 				}
-				imageMaker = new MakeImages();
-				imageMaker.setSize(imageCount);
-				
+				MakeImages images = new MakeImages();
+				images.setSize(imageCount);
 				for(int k =0; k <j; k++){
-					imageMaker.setBaseBackgroundImage(k, x[k], y[k], imageNames[k], collide[k]);
+					images.setImage(k, x[k], y[k], imageNames[k], collide[k]);
 				}
+
+				objects.setImages(images);
 				
 			}//end of if
 			
 		}// end of scanner
 		
 		wordScanner.close();
-		return imageMaker;	
+		return objects;	
 		
 
 	}

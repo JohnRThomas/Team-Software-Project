@@ -1,3 +1,9 @@
+Enemy
+2
+evilRedBox.png 0 0 3 T
+evilRedBox.png 400 0 3 T
+End
+
 Background
 3
 baseBackground.jpg 0 0 F
