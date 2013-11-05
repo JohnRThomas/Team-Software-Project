@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import tsp.game.Collisions;
 import tsp.game.threads.Drawer;
 import tsp.game.threads.Gamer;
 import tsp.sound.MusicDirector;
@@ -39,7 +40,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	//Audio
 	private MusicDirector music;
 
-
+	Collisions colider = new Collisions();
 
 	public MainWindow() {
 		super("TSP Game");
@@ -140,31 +141,33 @@ public class MainWindow extends JFrame implements KeyListener{
 
 		if (canvas.player.hitTimer == 0) {
 			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
-			for(int i =0; i< canvas.enemyList.getSize(); i++){
-				if (canvas.player.x+ canvas.player.width >= canvas.enemyList.getEnemy(i).getX() && canvas.player.x <= canvas.enemyList.getEnemy(i).getX()+100){
-					if (canvas.player.y+ canvas.player.width >= canvas.enemyList.getEnemy(i).getY() && canvas.player.y <= canvas.enemyList.getEnemy(i).getY()+100){
-						canvas.player.health = canvas.player.health - 25; //TODO add damage values for enemies
-						System.out.println(canvas.player.health);
-						canvas.player.hitTimer = 60;
-					}
-				}
-			}
+			
+				Collisions.runCollisions(canvas.player);
+				
+//				if (canvas.player.x+ canvas.player.width >= canvas.enemyList.getEnemy(i).getX() && canvas.player.x <= canvas.enemyList.getEnemy(i).getX()+100){
+//					if (canvas.player.y+ canvas.player.width >= canvas.enemyList.getEnemy(i).getY() && canvas.player.y <= canvas.enemyList.getEnemy(i).getY()+100){
+//						canvas.player.health = canvas.player.health - 25; //TODO add damage values for enemies
+//						System.out.println(canvas.player.health);
+//						canvas.player.hitTimer = 60;
+//					}
+//				}
+			
 		}
 
-		if (canvas.player.x+ canvas.player.width  >= 700 && canvas.player.x <= 700+100){
+		if (canvas.player.getX()+ canvas.player.getWidth()  >= 700 && canvas.player.getX() <= 700+100){
 			canvas.end(false);
 		}
 
 		//gravity code
-		canvas.player.y -= canvas.player.gravity; // fall according to gravity
+		canvas.player.setY(canvas.player.getY()-canvas.player.gravity); // fall according to gravity
 
-		if (canvas.player.y < 10) { // if at top of screen
-			canvas.player.y = 10; // reset position
+		if (canvas.player.getY() < 10) { // if at top of screen
+			canvas.player.setY(10); // reset position
 			canvas.player.gravity = -1; // reset gravity
 		}
 
-		if(canvas.player.y > canvas.getBounds().height - 169) { // if at bottom of screen
-			canvas.player.y = canvas.getBounds().height - 170; // reset position
+		if(canvas.player.getY() > canvas.getBounds().height - 169) { // if at bottom of screen
+			canvas.player.setY(canvas.getBounds().height - 170); // reset position
 			canvas.player.gravity = -1; // reset gravity
 			canvas.jumpCount = 0; // reset jumps
 		}

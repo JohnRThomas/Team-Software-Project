@@ -73,7 +73,7 @@ public class Canvas extends JPanel implements KeyListener{
 		if (e.getKeyCode() == KeyEvent.VK_W){
 			if (jumpCount < jumpMax) {
 				player.gravity = 20;
-				player.y = player.y - 10;
+				player.setY(player.getY() - 10);
 				jumpCount++;
 			}
 		}
@@ -131,8 +131,9 @@ public class Canvas extends JPanel implements KeyListener{
 
 		//draw player
 		g.setColor(player.color);
-		g.fillOval(player.x, player.y, player.width, player.height);
-
+		g.fillOval(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+		System.out.println(player.getY());
+		
 		g.setColor(Color.black);
 		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
 

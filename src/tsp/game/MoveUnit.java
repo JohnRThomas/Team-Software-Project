@@ -9,29 +9,29 @@ public class MoveUnit {
 		int playerDirection = 0; //if 0 not in center, if 1 center right, if -1 center left
 		if (left){
 
-			if ((player.x + player.width/2 < boundsWidth/2)
+			if ((player.getX() + player.getWidth()/2 < boundsWidth/2)
 					&& (imageList.getBaseBackground().getX() < 0) ){
 				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() +player.speed);
 				playerDirection = -1;
 			}
 			else{
-				if(player.x >= player.speed)player.x -= player.speed;
-				else player.x = 0;
+				if(player.getX() >= player.speed)player.setX(player.getX() - player.speed);
+				else player.setX(0);
 			}
 		}
 		
 		if (right){
-			//System.out.println(imageX +" " + player.x + " " +getBounds().width/2);
+			//System.out.println(imageX +" " + player.getX() + " " +getBounds().width/2);
 
 
-			if ((player.x+player.width/2 > boundsWidth/2 )
+			if ((player.getX()+player.getWidth()/2 > boundsWidth/2 )
 					&& (imageList.getBaseBackground().getX() > -800) ){
 				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() -player.speed);
 				playerDirection = 1;
 			}
 			else{ 
-				if(player.x + player.width + player.speed <= boundsWidth)player.x += player.speed; // player width is 20
-				else player.x = boundsWidth - player.width;
+				if(player.getX() + player.getWidth() + player.speed <= boundsWidth)player.setX(player.getX() + player.speed); // player width is 20
+				else player.setX(boundsWidth - player.getWidth());
 			}
 		}
 		
@@ -43,13 +43,13 @@ public class MoveUnit {
 	public void moveEnemy(boolean gameOver, Player player, Enemy evilRedBox, boolean playerMovePosX, boolean playerMoveNegX){
 		//		counter += 1;
 		if (gameOver) return;
-		if (player.x+10 >= evilRedBox.getX() + 50){
+		if (player.getX()+10 >= evilRedBox.getX() + 50){
 			evilRedBox.setX(evilRedBox.getX() + 1) ;
 		}
 		else{
 			evilRedBox.setX(evilRedBox.getX() - 1) ;
 		}
-		if (player.y+10 >= evilRedBox.getY() + 50){
+		if (player.getY()+10 >= evilRedBox.getY() + 50){
 			evilRedBox.setY(evilRedBox.getY() + 1) ;
 		}
 		else{

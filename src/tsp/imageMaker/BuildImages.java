@@ -73,10 +73,15 @@ public class BuildImages {
 
 					}
 					else if (i == 3){
-						health[j] = Integer.parseInt(word);
-
+						damage[j] = Integer.parseInt(word);
 					}
 					else if (i == 4){
+						health[j] = Integer.parseInt(word);
+					}
+					else if (i == 5){
+						gravity[j] = Integer.parseInt(word);
+					}
+					else if (i == 6){
 						if(word.compareTo("T") == 0){
 							collide[j] = true;
 						}
