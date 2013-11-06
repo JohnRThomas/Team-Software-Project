@@ -11,5 +11,6 @@ public class SoundConstants {
 	public static final String END_SONG_DEATH = new String("res/music/zanarkand.wav/");
 	
 	// Sound Effects
+	public static final String JUMP_SOUND = new String("res/sounds/jumpsound.wav/");
 	// TODO make something for this
 }

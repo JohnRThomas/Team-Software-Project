@@ -16,6 +16,9 @@ import tsp.imageMaker.AllObjects;
 import tsp.imageMaker.BuildImages;
 import tsp.imageMaker.MakeEnemies;
 import tsp.imageMaker.MakeImages;
+import tsp.sound.MusicDirector;
+import tsp.sound.SFXDirector;
+import tsp.sound.SoundConstants;
 
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
@@ -32,6 +35,8 @@ public class Canvas extends JPanel implements KeyListener{
 	//private int counter = 0;
 	MoveUnit mover = new MoveUnit();
 
+	//Audio
+	private SFXDirector soundEffects;
 
 	private MainWindow mainWindow;
 
@@ -52,6 +57,7 @@ public class Canvas extends JPanel implements KeyListener{
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
+		soundEffects = new SFXDirector(this.mainWindow);
 		objectMaker = new AllObjects();
 		BuildImages stageMaker = new BuildImages();
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
@@ -75,6 +81,7 @@ public class Canvas extends JPanel implements KeyListener{
 				player.gravity = 20;
 				player.setY(player.getY() - 10);
 				jumpCount++;
+				soundEffects.playSound(SoundConstants.JUMP_SOUND);
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_A){
