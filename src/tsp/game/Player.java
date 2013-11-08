@@ -34,7 +34,7 @@ public class Player extends BaseImage {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }
 
 

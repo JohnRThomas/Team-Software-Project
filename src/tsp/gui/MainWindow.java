@@ -138,6 +138,7 @@ public class MainWindow extends JFrame implements KeyListener{
 
 		canvas.movePlayer();
 		canvas.moveEnemy();
+		canvas.moveProjectile();
 
 		if (canvas.player.hitTimer == 0) {
 			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
