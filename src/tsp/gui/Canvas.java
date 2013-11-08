@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import tsp.game.Enemy;
 import tsp.game.MoveUnit;
 import tsp.game.Player;
 import tsp.game.Projectile;
@@ -29,6 +30,10 @@ public class Canvas extends JPanel implements KeyListener{
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
 	private int jumpMax = 2;
+	//private int playerSpeed = 5;
+	//protected int playerWidth = 20, playerHeight = 20;
+	//private int enemyWidth = 100, enemyHeight = 100;
+	//private int counter = 0;
 	MoveUnit mover = new MoveUnit();
 
 	//Audio
@@ -48,6 +53,7 @@ public class Canvas extends JPanel implements KeyListener{
 	Image offScreenImage;
 	int imageX,imageY =0;
 
+	//int enemyX = -40, enemyY = -40;
 	int gravCounter = 0;
 	int jumpCount = 0;
 	int shotCount = 0;
@@ -133,6 +139,7 @@ public class Canvas extends JPanel implements KeyListener{
 
 		//draws images
 		for(int i =0; i< imageList.getSize(); i++){
+			System.out.println("imageX"+imageList.getImageBase(i).getX());
 			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
 
 		}
@@ -140,6 +147,13 @@ public class Canvas extends JPanel implements KeyListener{
 			background.drawImage(enemyList.getEnemyImage(i), enemyList.getEnemy(i).getX(), enemyList.getEnemy(i).getY(), this);
 
 		}
+
+		System.out.println("player"+player.getX());
+		background.drawImage(player.getImage(), player.getX(), player.getY(), this);
+		
+		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
+
+
 		
 		for(int i =0; i< shotCount; i++){
 			background.drawImage(projectileList[i].getImage(), projectileList[i].getX(), projectileList[i].getY(), this);
@@ -147,11 +161,7 @@ public class Canvas extends JPanel implements KeyListener{
 
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
 
-		//draw player
-		g.setColor(player.color);
-		g.fillOval(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-		System.out.println(player.getY());
-
+	
 		g.setColor(Color.black);
 		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
 
@@ -190,6 +200,8 @@ public class Canvas extends JPanel implements KeyListener{
 	public void moveEnemy(){
 		for(int i =0; i< enemyList.getSize(); i++){
 			mover.moveEnemy(gameOver, player, enemyList.getEnemy(i), playerMovePosX, playerMoveNegX);
+			System.out.println(enemyList.getEnemy(i).getBounds());
+			System.out.println(player.getBounds());
 		}
 	}
 

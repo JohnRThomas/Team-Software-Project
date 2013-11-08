@@ -155,7 +155,7 @@ public class MainWindow extends JFrame implements KeyListener{
 			
 		}
 
-		if (canvas.player.getX()+ canvas.player.getWidth()  >= 700 && canvas.player.getX() <= 700+100){
+		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
 			canvas.end(false);
 		}
 
@@ -180,7 +180,6 @@ public class MainWindow extends JFrame implements KeyListener{
 		if (canvas.player.hitTimer > 0) { // if in hit invulnerability
 			canvas.player.color = Color.BLUE; // change color 
 			canvas.player.hitTimer--; // decrease time remaining
-			System.out.println("hit");
 		}
 
 		canvas.repaint();

@@ -10,6 +10,9 @@ public class Collisions {
 	
 	public static void runCollisions(BaseImage entity){
 		for(int i = 0; i < entities.size(); i++){
+//			System.out.println(i+" " +entities.get(i).getBounds());
+//			System.out.println(i+" " +entity.getBounds());
+//			System.out.println(entities.get(i).getImage());
 			if(entities.get(i).getBounds().intersects(entity.getBounds()) && entities.get(i) != entity)entities.get(i).collideWith(entity);
 		}
 	}

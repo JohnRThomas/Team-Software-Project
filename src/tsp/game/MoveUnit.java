@@ -9,9 +9,11 @@ public class MoveUnit {
 		int playerDirection = 0; //if 0 not in center, if 1 center right, if -1 center left
 		if (left){
 
-			if ((player.getX() + player.getWidth()/2 < boundsWidth/2)
+			if ((player.getX() + player.getWidth()/2+imageList.getBaseBackground().getX() < boundsWidth/2)
 					&& (imageList.getBaseBackground().getX() < 0) ){
 				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() +player.speed);
+				if(player.getX() >= player.speed)player.setX(player.getX() - player.speed);
+				else player.setX(0);
 				playerDirection = -1;
 			}
 			else{
@@ -27,10 +29,11 @@ public class MoveUnit {
 			if ((player.getX()+player.getWidth()/2 > boundsWidth/2 )
 					&& (imageList.getBaseBackground().getX() > -800) ){
 				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() -player.speed);
+				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed ); // player width is 20
 				playerDirection = 1;
 			}
 			else{ 
-				if(player.getX() + player.getWidth() + player.speed <= boundsWidth)player.setX(player.getX() + player.speed); // player width is 20
+				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed); // player width is 20
 				else player.setX(boundsWidth - player.getWidth());
 			}
 		}
@@ -43,6 +46,15 @@ public class MoveUnit {
 	public void moveEnemy(boolean gameOver, Player player, Enemy evilRedBox, boolean playerMovePosX, boolean playerMoveNegX){
 		//		counter += 1;
 		if (gameOver) return;
+		if (playerMovePosX){
+			evilRedBox.setX(evilRedBox.getX() - player.speed) ;
+			playerMovePosX =false;
+		}
+		else if (playerMoveNegX){
+			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
+			playerMoveNegX =false;
+		}
+		else{
 		if (player.getX()+10 >= evilRedBox.getX() + 50){
 			evilRedBox.setX(evilRedBox.getX() + 1) ;
 		}
@@ -55,14 +67,8 @@ public class MoveUnit {
 		else{
 			evilRedBox.setY(evilRedBox.getY() - 1) ;
 		}
-		if (playerMovePosX){
-			evilRedBox.setX(evilRedBox.getX() - player.speed) ;
-			playerMovePosX =false;
 		}
-		if (playerMoveNegX){
-			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
-			playerMoveNegX =false;
-		}
+		
 		// TODO Hey, look, I can make the enemy grow
 		//		if (counter > 120){
 		//			counter = 0;
