@@ -108,11 +108,6 @@ public class MainWindow extends JFrame implements KeyListener{
 		if (death){
 			music.playMusic(SoundConstants.END_SONG_DEATH);
 		}
-		//		long startTime = System.currentTimeMillis();
-		//		while(!endScreen.isLabelWhite){
-		//			endScreen.lighterLabel(startTime, System.currentTimeMillis());
-		//			endScreen.repaint();
-		//		}
 	}
 
 	@Override
