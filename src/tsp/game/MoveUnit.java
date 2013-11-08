@@ -88,8 +88,13 @@ public class MoveUnit {
 		//		if (evilRedBox.y < 0){
 		//			evilRedBox.y = 0;
 		//		}
-
-
 	}
+
+	public void moveProjectile(boolean gameOver, Projectile projectile) {
+		if (gameOver) return;
+		
+		projectile.setX(projectile.getX() + projectile.getXSpeed()) ;
+	}
+	
 	
 }

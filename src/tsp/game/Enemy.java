@@ -19,6 +19,16 @@ public class Enemy extends BaseImage {
 		gravity = g ;
 	}
 
+	@Override
+	public void collideWith(BaseImage entity) {
+		if(entity instanceof Player){
+			((Player)entity).health = ((Player)entity).health - 25;
+			((Player)entity).hitTimer = 60;
+		}else if(entity instanceof Enemy){
+			
+		}
+	}
+	
 	/**
 	 * 
 	 * @return damage
@@ -51,16 +61,6 @@ public class Enemy extends BaseImage {
 	 */
 	public int setHealth(int h) {
 		return health = h;
-	}
-
-	@Override
-	public void collideWith(BaseImage entity) {
-		if(entity instanceof Player){
-			((Player)entity).health = ((Player)entity).health - 25;
-			((Player)entity).hitTimer = 60;
-		}else if(entity instanceof Enemy){
-			
-		}
 	}
 
 	/**
