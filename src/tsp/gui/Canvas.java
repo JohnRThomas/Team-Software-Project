@@ -163,7 +163,8 @@ public class Canvas extends JPanel implements KeyListener{
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));
 		g.drawString(player.health.toString(), this.getWidth()-40, 20);
-
+		
+		HUD.draw(g, this);
 	}
 
 	public void end(boolean death){
