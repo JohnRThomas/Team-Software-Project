@@ -11,14 +11,25 @@ public class Enemy extends BaseImage {
 	private int damage ;
 	private int health ;
 	private int gravity ;
-
-	public Enemy(int xStart, int yStart, int d, int h, int g, String imageName, boolean collide) {
-		super(xStart, yStart, imageName, collide);
+	private String enemyImages[];
+	private int usedImage = 0;
+	public Enemy(int xStart, int yStart, int d, int h, int g, String imageName[], boolean collide) {
+		super(xStart, yStart, imageName[0], collide);
+		enemyImages = imageName;
 		damage = d ;
 		health = h ;
 		gravity = g ;
 	}
 
+	public void incrementImage(){
+
+		usedImage+=1;
+		if(usedImage >= enemyImages.length){
+			usedImage =0;
+		}
+		super.setImage(enemyImages[usedImage]);
+	}
+	
 	@Override
 	public void collideWith(BaseImage entity) {
 		if(entity instanceof Player){

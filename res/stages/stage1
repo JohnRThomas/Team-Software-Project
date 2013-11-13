@@ -1,7 +1,6 @@
 Enemy
-2
-angry_ball_1.png 0 0 25 3 0 T
-angry_ball_0.png 0 0 25 3 0 T
+1
+2 angry_ball_ .png 0 0 25 3 0 T
 End
 
 Background

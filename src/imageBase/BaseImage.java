@@ -47,6 +47,18 @@ public abstract class BaseImage {
 	public Image getImage(){
 		return usedImage;
 	}
+	public Image setImage(String newImage){
+		usedImage = Toolkit.getDefaultToolkit().getImage(newImage);
+		BufferedImage bimg = null;
+		try {
+			bimg = ImageIO.read(new File(newImage));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		xSize = bimg.getWidth();
+		ySize = bimg.getHeight();
+		return usedImage;
+	}
 	
 	/**
 	 * @return y position

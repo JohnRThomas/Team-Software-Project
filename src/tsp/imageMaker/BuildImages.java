@@ -55,33 +55,46 @@ public class BuildImages {
 				health  = new int[imageCount];
 				gravity = new int[imageCount];
 				imageNames = new String[imageCount];
+				String enemyImages[][] =null;
 				collide = new boolean[imageCount];
-				
+				String tempEnemyImage =null;
+				int enemyAnimations =0;
 				while(true){
 					word = wordScanner.next();
 					
 					if(word.compareTo("End") ==0)break;
 					
 					if (i == 0){
-						imageNames[j] = word;
+						enemyAnimations = Integer.parseInt(word);
+						enemyImages = new String[imageCount][enemyAnimations];
+						
 					}
 					else if (i == 1){
-						x[j] = Integer.parseInt(word);
+						tempEnemyImage = word;
 					}
 					else if (i == 2){
+						for (int k =0; k<enemyAnimations; k++){
+						enemyImages[j][k] = (tempEnemyImage + k + word);
+						System.out.println(enemyImages[j][k]);
+						}
+					}
+					else if (i == 3){
+						x[j] = Integer.parseInt(word);
+					}
+					else if (i == 4){
 						y[j] = Integer.parseInt(word);
 
 					}
-					else if (i == 3){
+					else if (i == 5){
 						damage[j] = Integer.parseInt(word);
 					}
-					else if (i == 4){
+					else if (i == 6){
 						health[j] = Integer.parseInt(word);
 					}
-					else if (i == 5){
+					else if (i == 7){
 						gravity[j] = Integer.parseInt(word);
 					}
-					else if (i == 6){
+					else if (i == 8){
 						if(word.compareTo("T") == 0){
 							collide[j] = true;
 						}
@@ -97,7 +110,7 @@ public class BuildImages {
 				MakeEnemies enemies = new MakeEnemies();
 				enemies.setSize(imageCount);
 				for(int k =0; k <j; k++){
-					enemies.setEnemy(k, x[k], y[k], damage[k], health[k], gravity[k], imageNames[k], collide[k]);
+					enemies.setEnemy(k, x[k], y[k], damage[k], health[k], gravity[k], enemyImages[k], collide[k]);
 				}
 
 				objects.setEnemies(enemies);

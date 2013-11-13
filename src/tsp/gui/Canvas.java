@@ -132,7 +132,6 @@ public class Canvas extends JPanel implements KeyListener{
 
 		//draws images
 		for(int i =0; i< imageList.getSize(); i++){
-			System.out.println("imageX"+imageList.getImageBase(i).getX());
 			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
 
 		}
@@ -140,8 +139,6 @@ public class Canvas extends JPanel implements KeyListener{
 			background.drawImage(enemyList.getEnemyImage(i), enemyList.getEnemy(i).getX(), enemyList.getEnemy(i).getY(), this);
 
 		}
-
-		System.out.println("player"+player.getX());
 		background.drawImage(player.getImage(), player.getX(), player.getY(), this);
 		
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
@@ -194,8 +191,6 @@ public class Canvas extends JPanel implements KeyListener{
 	public void moveEnemy(){
 		for(int i =0; i< enemyList.getSize(); i++){
 			mover.moveEnemy(gameOver, player, enemyList.getEnemy(i), playerMovePosX, playerMoveNegX);
-			System.out.println(enemyList.getEnemy(i).getBounds());
-			System.out.println(player.getBounds());
 		}
 	}
 
