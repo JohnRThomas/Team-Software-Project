@@ -1,3 +1,8 @@
+Enemy
+"int with number of enemies"
+"number of enemy animations" "name" "fileType" "x start" "y Start" "damage" "health" "gravity" "canColide"
+End
+
 Background
 "int with number of images"
 
@@ -14,3 +19,4 @@ End
 
 
 //extra note, put images in order of layer
+//			  Enemies are always drawn above background	

@@ -97,8 +97,8 @@ public class MainWindow extends JFrame implements KeyListener{
 		revalidate();
 		music.playMusic(SoundConstants.SONG_01);
 		gamer.start();
-	}
-
+	}	
+	
 	protected void endGame(boolean death){
 		container.remove(0);
 		gamer.interrupt();
@@ -143,7 +143,10 @@ public class MainWindow extends JFrame implements KeyListener{
 		canvas.movePlayer();
 		canvas.moveEnemy();
 		canvas.moveProjectile();
-
+		
+		//test code for movement
+		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
+		
 		if (canvas.player.hitTimer == 0) {
 			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
 			

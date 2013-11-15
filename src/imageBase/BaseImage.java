@@ -31,6 +31,7 @@ public abstract class BaseImage {
 		setCanCollide(collide);
 		BufferedImage bimg = null;
 		try {
+			System.out.println(imageName);
 			bimg = ImageIO.read(new File(imageName));
 		} catch (IOException e) {
 			e.printStackTrace();

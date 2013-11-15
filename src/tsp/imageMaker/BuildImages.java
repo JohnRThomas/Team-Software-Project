@@ -40,6 +40,7 @@ public class BuildImages {
 		int gravity[];
 		String imageNames[];
 		boolean collide[];
+		
 		while(wordScanner.hasNext()){
 			
 			int i = 0;
