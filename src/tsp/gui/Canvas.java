@@ -13,6 +13,7 @@ import tsp.game.Enemy;
 import tsp.game.MoveUnit;
 import tsp.game.Player;
 import tsp.game.Projectile;
+import tsp.game.Shoot;
 import tsp.imageMaker.AllObjects;
 import tsp.imageMaker.BuildImages;
 import tsp.imageMaker.MakeEnemies;
@@ -23,15 +24,12 @@ public class Canvas extends JPanel implements KeyListener{
 
 	Player player = new Player(0, 400, 20, 20, -1, 100, 5, 60, Color.GREEN);
 
-	private boolean /*up = false, down = false,*/ left = false, right = false, shoot = false; // should be taken care of in Player
+	private boolean leftShoot = false, rightShoot = false, upShoot = false, downShoot = false, left = false, right = false, shoot = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
 	private int jumpMax = 2;
-	//private int playerSpeed = 5;
-	//protected int playerWidth = 20, playerHeight = 20;
-	//private int enemyWidth = 100, enemyHeight = 100;
-	//private int counter = 0;
 	MoveUnit mover = new MoveUnit();
+	Shoot shooter = new Shoot() ;
 
 
 	private MainWindow mainWindow;
@@ -65,7 +63,7 @@ public class Canvas extends JPanel implements KeyListener{
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
-		projectileList = new Projectile[20];
+		projectileList = new Projectile[1000];
 	}
 
 	@Override
@@ -79,6 +77,7 @@ public class Canvas extends JPanel implements KeyListener{
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		//MOVEMENT KEYS
 		if (e.getKeyCode() == KeyEvent.VK_W){
 			if (jumpCount < jumpMax) {
 				player.gravity = 20;
@@ -95,17 +94,33 @@ public class Canvas extends JPanel implements KeyListener{
 		if (e.getKeyCode() == KeyEvent.VK_D){
 			right = true;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+		
+		//SHOOT KEYS
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			if (shotCount < projectileList.length) {
-				projectileList[shotCount] = new Projectile((player.getX()+player.getWidth()/2), (player.getY()+player.getHeight()/4), 15, 0, "res/images/40x10greenLaser.png", false) ;
-				//background.drawImage(projectileList[shotCount].getImage(), projectileList[shotCount].getX(), projectileList[shotCount].getY(), this);
-				shotCount++;
+				leftShoot = true ;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			if (shotCount < projectileList.length) {
+				rightShoot = true ;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			if (shotCount < projectileList.length) {
+				upShoot = true ;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			if (shotCount < projectileList.length) {
+				downShoot = true ;
 			}
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		//MOVEMENT KEYS
 		if (e.getKeyCode() == KeyEvent.VK_W){
 			//			up = false;
 		}
@@ -118,8 +133,19 @@ public class Canvas extends JPanel implements KeyListener{
 		if (e.getKeyCode() == KeyEvent.VK_D){
 			right = false;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			//shoot = false ;
+		
+		//SHOOT KEYS
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			leftShoot = false ;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rightShoot = false ;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			upShoot = false ;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			downShoot = false ;
 		}
 	}
 
@@ -181,6 +207,12 @@ public class Canvas extends JPanel implements KeyListener{
 		player.setX(0);
 		// TODO: Remove player oval from screen, then present EndScreen
 		// TODO: Get fancy by adding a death sound/animation
+	}
+	
+	public void shoot() {
+		if(shooter.shoot(player, projectileList, shotCount, leftShoot, rightShoot, upShoot, downShoot)) {
+			shotCount++ ;
+		}
 	}
 
 	public void movePlayer(){ // TODO Commit this when convenient
