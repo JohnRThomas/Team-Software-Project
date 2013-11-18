@@ -16,4 +16,8 @@ public class Collisions {
 			if(entities.get(i).getBounds().intersects(entity.getBounds()) && entities.get(i) != entity)entities.get(i).collideWith(entity);
 		}
 	}
+	
+	public static void clearCollisions(){
+		entities = new ArrayList<BaseImage>();
+	}
 }

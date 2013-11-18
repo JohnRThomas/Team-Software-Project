@@ -19,7 +19,7 @@ public class Player extends BaseImage {
 	public int height;
 	public int speed;
 	
-	public Player(int x, int y, int width, int height, int gravity, int health, int speed, int hitTimer, Color color) {
+	public Player(int x, int y, int gravity, int health, int speed, int hitTimer, Color color) {
 		super(x, y, "res/images/player0.png", true);
 		
 		this.gravity = gravity;
