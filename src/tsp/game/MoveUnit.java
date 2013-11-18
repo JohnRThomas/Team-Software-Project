@@ -68,8 +68,9 @@ public class MoveUnit {
 
 	public void moveProjectile(boolean gameOver, Projectile projectile) {
 		if (gameOver) return;
-
+		
 		projectile.setX(projectile.getX() + projectile.getXSpeed()) ;
+		projectile.setY(projectile.getY() + projectile.getYSpeed()) ;
 	}
 
 

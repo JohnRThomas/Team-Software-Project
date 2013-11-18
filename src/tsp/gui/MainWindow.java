@@ -146,6 +146,8 @@ public class MainWindow extends JFrame implements KeyListener{
 		canvas.moveEnemy();
 		canvas.moveProjectile();
 		
+		canvas.shoot() ;
+		
 		//test code for movement
 		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
 		
