@@ -23,15 +23,10 @@ import tsp.imageMaker.MakeImages;
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
-<<<<<<< HEAD
-	Player player = new Player(0, 400, 20, 20, -1, 100, 5, 60, Color.GREEN);
-	
-	private boolean /*up = false, down = false,*/ left = false, right = false, shoot = false; // should be taken care of in Player
-=======
+
 	Player player = new Player(0, 400, -1, 100, 5, 60, Color.GREEN);
 
 	private boolean leftShoot = false, rightShoot = false, upShoot = false, downShoot = false, left = false, right = false, shoot = false; // should be taken care of in Player
->>>>>>> e0c312713ea662a6bae37e06a7d59aed2eb7ac90
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
 	private int jumpMax = 2;
@@ -73,12 +68,9 @@ public class Canvas extends JPanel implements KeyListener{
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
-<<<<<<< HEAD
 		projectileList = new Projectile[20];
 		myHUD = new HUD();
-=======
-		projectileList = new Projectile[1000];
->>>>>>> e0c312713ea662a6bae37e06a7d59aed2eb7ac90
+
 	}
 
 	@Override
@@ -201,14 +193,9 @@ public class Canvas extends JPanel implements KeyListener{
 		// TODO make more visible
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));
-		g.drawString(player.health.toString(), this.getWidth()-40, 20);
-<<<<<<< HEAD
-		
+		g.drawString(player.health.toString(), this.getWidth()-40, 20);		
 		myHUD.draw(g, this);
-=======
 
-		HUD.draw(g, this);
->>>>>>> e0c312713ea662a6bae37e06a7d59aed2eb7ac90
 	}
 
 	public void end(boolean death){
