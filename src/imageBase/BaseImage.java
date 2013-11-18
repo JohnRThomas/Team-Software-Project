@@ -1,5 +1,7 @@
 package imageBase;
-
+/**
+ *@author Matthew Johnson
+ */
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -16,6 +18,7 @@ public abstract class BaseImage {
 	private int xSize, ySize;
 	private Image usedImage[];
 	private boolean canCollide;	
+	private int currentImage;
 	
 	/**
 	 * 
@@ -36,6 +39,7 @@ public abstract class BaseImage {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		currentImage=0;
 		xSize = bimg.getWidth();
 		ySize = bimg.getHeight();
 	}
@@ -50,7 +54,9 @@ public abstract class BaseImage {
 	public BaseImage(int xStart,int yStart, String imageName[], boolean collide){
 		xPoint = xStart;
 		yPoint = yStart;
-		usedImage[0] = Toolkit.getDefaultToolkit().getImage(imageName[0]);
+		for(int i =0; i< imageName.length; i+=1){
+		usedImage[i] = Toolkit.getDefaultToolkit().getImage(imageName[i]);
+		}
 		setCanCollide(collide);
 		BufferedImage bimg = null;
 		try {
@@ -69,6 +75,33 @@ public abstract class BaseImage {
 	public Image getImage(){
 		return usedImage[0];
 	}
+	/**
+	 * 
+	 * @param int of image
+	 * @return Image to display
+	 */
+	public Image getImage(int i){
+		currentImage =i;
+		return usedImage[i];
+		
+	}
+	/**
+	 * assumes next image has same dimensions of previous image.
+	 * @return nextImage
+	 */
+	public Image getNextImage(){
+		
+		currentImage +=1;
+		if(currentImage == usedImage.length){
+			currentImage =0;
+		}
+		return usedImage[currentImage];
+	}
+	/**
+	 * 
+	 * @param newImage name with directory location
+	 * @return image assosiated with the name
+	 */
 	public Image setImage(String newImage){
 		usedImage[0] = Toolkit.getDefaultToolkit().getImage(newImage);
 		BufferedImage bimg = null;
@@ -124,10 +157,18 @@ public abstract class BaseImage {
 		return ySize;
 	}
 
+	/**
+	 * 
+	 * @return boolean of whether or not this object can collide
+	 */
 	public boolean canCollide() {
 		return canCollide;
 	}
 
+	/**
+	 * adds object to list of collidable objects
+	 * @param boolean of whether or not this object can collide
+	 */
 	public void setCanCollide(boolean canCollide) {
 		this.canCollide = canCollide;
 		if(canCollide){
@@ -136,7 +177,10 @@ public abstract class BaseImage {
 			Collisions.entities.remove(this);
 		}
 	}
-	
+	/**
+	 * 
+	 * @return rectagle of x position and bounds
+	 */
 	public Rectangle getBounds() {
 		return new Rectangle(xPoint, yPoint, xSize, ySize);
 	}
