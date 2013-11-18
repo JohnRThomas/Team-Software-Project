@@ -1,0 +1,9 @@
+Enemy
+1
+2 angry_ball_ .png 0 0 25 3 0 T
+End
+
+Background
+1
+baseBackground.jpg 0 0 F
+End

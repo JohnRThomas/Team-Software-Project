@@ -10,7 +10,6 @@ public class ChangeStage {
 		currentStage +=1;
 		String stageName = "stage" + currentStage;
 
-		System.out.println(stageName + currentStage + " max:"+ max);
 		if (currentStage > max){
 			stageName =null;
 		}

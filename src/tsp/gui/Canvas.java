@@ -166,7 +166,11 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void end(boolean death){
-
+		
+		if (death == true){
+			gameOver = true;
+			mainWindow.endGame(death);
+		}
 		String stageName = null;
 		stageName = stageChanger.getNextStage(currentStage, totalStages);
 		if (stageName == null){
@@ -174,10 +178,11 @@ public class Canvas extends JPanel implements KeyListener{
 			mainWindow.endGame(death);
 		}
 		currentStage +=1;
-		
+		if(stageName != null){
 		objectMaker = stageMaker.getFile(stageName,objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
+		}
 		player.setX(0);
 		// TODO: Remove player oval from screen, then present EndScreen
 		// TODO: Get fancy by adding a death sound/animation
