@@ -11,9 +11,9 @@ import java.util.Scanner;
  *
  */
 public class BuildImages {
-	
+
 	public int imageCount = 0;
-	
+
 	/**
 	 * 
 	 * @param name			name of file to load (does not need res/stages/)
@@ -40,15 +40,15 @@ public class BuildImages {
 		int gravity[];
 		String imageNames[];
 		boolean collide[];
-		
+
 		while(wordScanner.hasNext()){
-			
+
 			int i = 0;
 			String word = wordScanner.nextLine();
-			
+
 			if (word.compareTo("Enemy")==0){
 				word = wordScanner.next();
-				
+
 				imageCount = Integer.parseInt(word);
 				x  = new int[imageCount];
 				y  = new int[imageCount];
@@ -62,21 +62,23 @@ public class BuildImages {
 				int enemyAnimations =0;
 				while(true){
 					word = wordScanner.next();
-					
+
 					if(word.compareTo("End") ==0)break;
-					
+
 					if (i == 0){
 						enemyAnimations = Integer.parseInt(word);
-						enemyImages = new String[imageCount][enemyAnimations];
-						
+						if (enemyImages ==null){
+							enemyImages = new String[imageCount][enemyAnimations];
+						}
+
 					}
 					else if (i == 1){
 						tempEnemyImage = word;
 					}
 					else if (i == 2){
 						for (int k =0; k<enemyAnimations; k++){
-						enemyImages[j][k] = (tempEnemyImage + k + word);
-						System.out.println(enemyImages[j][k]);
+							enemyImages[j][k] = (tempEnemyImage + k + word);
+
 						}
 					}
 					else if (i == 3){
@@ -106,35 +108,36 @@ public class BuildImages {
 						j+=1;
 					}
 					i+=1;
-					
+
 				}
 				MakeEnemies enemies = new MakeEnemies();
 				enemies.setSize(imageCount);
-				for(int k =0; k <j; k++){
+				for(int k =0; k <j; k+=1){
+
+
 					enemies.setEnemy(k, x[k], y[k], damage[k], health[k], gravity[k], enemyImages[k], collide[k]);
 				}
 
 				objects.setEnemies(enemies);
-				
+
 			}//end of if
 			j=0;
 			i=0;
 			if (word.compareTo("Background")==0){
 				word = wordScanner.next();
-				
+
 				imageCount = Integer.parseInt(word);
 				x  = new int[imageCount];
 				y  = new int[imageCount];
 				imageNames = new String[imageCount];
 				collide = new boolean[imageCount];
-				
+
 				while(true){
 					word = wordScanner.next();
-					
+
 					if(word.compareTo("End") ==0)break;
-					
+
 					if (i == 0){
-						System.out.println("here" + imageNames.length + word);
 						imageNames[j] = word;
 					}
 					else if (i == 1){
@@ -155,7 +158,7 @@ public class BuildImages {
 						j+=1;
 					}
 					i+=1;
-					
+
 				}
 				MakeImages images = new MakeImages();
 				images.setSize(imageCount);
@@ -164,14 +167,14 @@ public class BuildImages {
 				}
 
 				objects.setImages(images);
-				
+
 			}//end of if
-			
+
 		}// end of scanner
-		
+
 		wordScanner.close();
 		return objects;	
-		
+
 
 	}
 

@@ -138,11 +138,15 @@ public class MainWindow extends JFrame implements KeyListener{
 		}
 		if (counter >25){
 			counter =0;
-			canvas.enemyList.getEnemy(0).incrementImage();
+			for(int i =0; i < canvas.enemyList.getSize();i +=1){
+			canvas.enemyList.getEnemy(i).incrementImage();
+			}
 		}
 		canvas.movePlayer();
 		canvas.moveEnemy();
 		canvas.moveProjectile();
+		
+		canvas.shoot() ;
 		
 		//test code for movement
 		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
