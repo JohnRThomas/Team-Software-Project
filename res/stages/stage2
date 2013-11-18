@@ -1,0 +1,10 @@
+Enemy
+1
+2 angry_ball_ .png 0 0 25 3 0 T
+End
+
+Background
+2
+baseBackground.jpg 0 0 F
+basePlatform.jpg 0 400 T
+End

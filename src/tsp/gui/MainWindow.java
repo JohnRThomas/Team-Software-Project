@@ -40,6 +40,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	//Audio
 	private MusicDirector music;
 
+	private int counter = 0;
 	Collisions colider = new Collisions();
 
 	public MainWindow() {
@@ -95,7 +96,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		container.remove(0);
 		container.add(canvas);
 		revalidate();
-		music.playMusic(SoundConstants.SONG_01);
+		music.playMusic(SoundConstants.SONG_02);
 		gamer.start();
 	}
 
@@ -136,23 +137,26 @@ public class MainWindow extends JFrame implements KeyListener{
 			canvas.end(true); // death
 		}
 		canvas.player.regenerate();
-
+		counter +=1;
+		if (counter >25){
+			counter =0;
+			for(int i =0; i < canvas.enemyList.getSize();i +=1){
+			canvas.enemyList.getEnemy(i).incrementImage();
+			}
+		}
 		canvas.movePlayer();
 		canvas.moveEnemy();
 		canvas.moveProjectile();
-
+		
+		canvas.shoot() ;
+		
+		//test code for movement
+		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
+		
 		if (canvas.player.hitTimer == 0) {
 			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
 			
 				Collisions.runCollisions(canvas.player);
-				
-//				if (canvas.player.x+ canvas.player.width >= canvas.enemyList.getEnemy(i).getX() && canvas.player.x <= canvas.enemyList.getEnemy(i).getX()+100){
-//					if (canvas.player.y+ canvas.player.width >= canvas.enemyList.getEnemy(i).getY() && canvas.player.y <= canvas.enemyList.getEnemy(i).getY()+100){
-//						canvas.player.health = canvas.player.health - 25; //TODO add damage values for enemies
-//						System.out.println(canvas.player.health);
-//						canvas.player.hitTimer = 60;
-//					}
-//				}
 			
 		}
 

@@ -21,10 +21,8 @@ public class MoveUnit {
 				else player.setX(0);
 			}
 		}
-		
-		if (right){
-			//System.out.println(imageX +" " + player.getX() + " " +getBounds().width/2);
 
+		if (right){
 
 			if ((player.getX()+player.getWidth()/2 > boundsWidth/2 )
 					&& (imageList.getBaseBackground().getX() > -800) ){
@@ -37,12 +35,12 @@ public class MoveUnit {
 				else player.setX(boundsWidth - player.getWidth());
 			}
 		}
-		
+
 		return playerDirection;
 	}
 
-	
-	
+
+
 	public void moveEnemy(boolean gameOver, Player player, Enemy evilRedBox, boolean playerMovePosX, boolean playerMoveNegX){
 		//		counter += 1;
 		if (gameOver) return;
@@ -54,7 +52,6 @@ public class MoveUnit {
 			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
 			playerMoveNegX =false;
 		}
-		else{
 		if (player.getX()+10 >= evilRedBox.getX() + 50){
 			evilRedBox.setX(evilRedBox.getX() + 1) ;
 		}
@@ -67,34 +64,14 @@ public class MoveUnit {
 		else{
 			evilRedBox.setY(evilRedBox.getY() - 1) ;
 		}
-		}
-		
-		// TODO Hey, look, I can make the enemy grow
-		//		if (counter > 120){
-		//			counter = 0;
-		//			evilRedBox.width += 10;
-		//			evilRedBox.height += 10;
-		//		}
-
-		//		if (evilRedBox.x > 700){
-		//			evilRedBox.x = 700;
-		//		}
-		//		if (evilRedBox.x < 0){
-		//			evilRedBox.x = 0;
-		//		}
-		//		if (evilRedBox.y > 500){
-		//			evilRedBox.y = 500;
-		//		}
-		//		if (evilRedBox.y < 0){
-		//			evilRedBox.y = 0;
-		//		}
 	}
 
 	public void moveProjectile(boolean gameOver, Projectile projectile) {
 		if (gameOver) return;
 		
 		projectile.setX(projectile.getX() + projectile.getXSpeed()) ;
+		projectile.setY(projectile.getY() + projectile.getYSpeed()) ;
 	}
-	
-	
+
+
 }

@@ -1,12 +1,12 @@
 Enemy
 2
-angry_ball_1.png 0 0 25 3 0 T
-angry_ball_0.png 0 0 25 3 0 T
+2 angry_ball_ .png 0 0 25 3 0 T
+2 angry_ball_ .png 500 0 25 3 0 T
 End
 
 Background
 3
-baseBackground.jpg 0 0 F
-basePlatform.jpg 0 400 T
-basePlatform.jpg 0 0 T
+backS.png 0 0 F
+platform.png 0 400 T
+platform.png 0 0 T
 End
