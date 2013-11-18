@@ -24,7 +24,7 @@ import tsp.sound.SoundConstants;
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
-	Player player = new Player(0, 400, 20, 20, -1, 100, 5, 60, Color.GREEN);
+	Player player = new Player(0, 400, 20, 20, -1, 100, 100, 5, 60, Color.GREEN);
 
 	private boolean /*up = false, down = false,*/ left = false, right = false, shoot = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
@@ -169,7 +169,7 @@ public class Canvas extends JPanel implements KeyListener{
 		// TODO make more visible
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));
-		g.drawString(player.health.toString(), this.getWidth()-40, 20);
+		g.drawString(player.currentHealth.toString(), this.getWidth()-40, 20);
 
 	}
 

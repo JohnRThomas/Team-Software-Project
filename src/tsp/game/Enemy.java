@@ -22,8 +22,7 @@ public class Enemy extends BaseImage {
 	@Override
 	public void collideWith(BaseImage entity) {
 		if(entity instanceof Player){
-			((Player)entity).health = ((Player)entity).health - 25;
-			((Player)entity).hitTimer = 60;
+			((Player)entity).takeDamage(damage);
 		}else if(entity instanceof Enemy){
 			
 		}

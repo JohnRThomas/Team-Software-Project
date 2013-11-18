@@ -74,6 +74,7 @@ public class MainWindow extends JFrame implements KeyListener{
 			public void windowDeactivated(WindowEvent e) {}
 
 		});
+		titleScreenMusic();
 	}
 
 	private void makeMenu() {
@@ -98,6 +99,10 @@ public class MainWindow extends JFrame implements KeyListener{
 		gamer.start();
 	}
 
+	protected void titleScreenMusic(){
+		music.playMusic(SoundConstants.TITLE_SONG);
+	}
+	
 	protected void endGame(boolean death){
 		container.remove(0);
 		gamer.interrupt();
@@ -127,9 +132,10 @@ public class MainWindow extends JFrame implements KeyListener{
 
 	public void tick() {
 
-		if (canvas.player.health <= 0) {
+		if (canvas.player.currentHealth <= 0) {
 			canvas.end(true); // death
 		}
+		canvas.player.regenerate();
 
 		canvas.movePlayer();
 		canvas.moveEnemy();

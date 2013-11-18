@@ -2,7 +2,7 @@ package tsp.sound;
 
 public class SoundConstants {
 	// Title Theme
-	// TODO make something for this
+	public static final String TITLE_SONG = new String("res/music/SpaceTitleWhoa.wav/");
 	
 	// Level Themes
 	public static final String SONG_01 = new String("res/music/empire.wav/");
