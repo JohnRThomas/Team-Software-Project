@@ -22,7 +22,7 @@ public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
 	Player player = new Player(0, 400, 20, 20, -1, 100, 5, 60, Color.GREEN);
-
+	
 	private boolean /*up = false, down = false,*/ left = false, right = false, shoot = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
@@ -54,6 +54,9 @@ public class Canvas extends JPanel implements KeyListener{
 	int gravCounter = 0;
 	int jumpCount = 0;
 	int shotCount = 0;
+
+	private HUD myHUD;
+	
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
@@ -66,6 +69,7 @@ public class Canvas extends JPanel implements KeyListener{
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
 		projectileList = new Projectile[20];
+		myHUD = new HUD();
 	}
 
 	@Override
@@ -162,7 +166,7 @@ public class Canvas extends JPanel implements KeyListener{
 		g.setFont(new Font("default", Font.BOLD, 16));
 		g.drawString(player.health.toString(), this.getWidth()-40, 20);
 		
-		HUD.draw(g, this);
+		myHUD.draw(g, this);
 	}
 
 	public void end(boolean death){
