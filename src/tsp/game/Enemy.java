@@ -29,17 +29,19 @@ public class Enemy extends BaseImage {
 		}
 		super.setImage(enemyImages[usedImage]);
 	}
-	
+
 	@Override
 	public void collideWith(BaseImage entity) {
 		if(entity instanceof Player){
-			((Player)entity).health = ((Player)entity).health - 25;
-			((Player)entity).hitTimer = 60;
+			if (((Player)entity).hitTimer == 0) {
+				((Player)entity).health = ((Player)entity).health - 25;
+				((Player)entity).hitTimer = 60;
+			}
 		}else if(entity instanceof Enemy){
-			
+
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return damage

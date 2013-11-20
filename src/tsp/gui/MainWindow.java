@@ -41,7 +41,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	private MusicDirector music;
 
 	private int counter = 0;
-	Collisions colider = new Collisions();
+	Collisions collider = new Collisions();
 
 	public MainWindow() {
 		super("TSP Game");
@@ -151,12 +151,9 @@ public class MainWindow extends JFrame implements KeyListener{
 		//test code for movement
 		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
 		
-		if (canvas.player.hitTimer == 0) {
-			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
-			
-				Collisions.runCollisions(canvas.player);
-			
-		}
+		
+		Collisions.runCollisions(canvas.player);
+		
 
 		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
 			canvas.end(false);
@@ -170,10 +167,10 @@ public class MainWindow extends JFrame implements KeyListener{
 			canvas.player.gravity = -1; // reset gravity
 		}
 
-		if(canvas.player.getY() > canvas.getBounds().height - 169) { // if at bottom of screen
-			canvas.player.setY(canvas.getBounds().height - 170); // reset position
+		if(canvas.player.getY() > canvas.getBounds().height - 51) { // if at bottom of screen
+			canvas.player.setY(canvas.getBounds().height - 50); // reset position
 			canvas.player.gravity = -1; // reset gravity
-			canvas.jumpCount = 0; // reset jumps
+			canvas.player.jumpCount = 0; // reset jumps
 		}
 
 		if (canvas.player.gravity > -10) { // if not at terminal velocity
@@ -181,7 +178,6 @@ public class MainWindow extends JFrame implements KeyListener{
 		}
 
 		if (canvas.player.hitTimer > 0) { // if in hit invulnerability
-			canvas.player.color = Color.BLUE; // change color 
 			canvas.player.hitTimer--; // decrease time remaining
 		}
 

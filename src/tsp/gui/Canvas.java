@@ -24,12 +24,12 @@ public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
 
-	Player player = new Player(0, 400, -1, 100, 5, 60, Color.GREEN);
+	Player player = new Player(0, 250, 20, 20, -1, 100, 5, 60, 0, 2);
+
 
 	private boolean leftShoot = false, rightShoot = false, upShoot = false, downShoot = false, left = false, right = false, shoot = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
-	private int jumpMax = 2;
 	MoveUnit mover = new MoveUnit();
 	Shoot shooter = new Shoot() ;
 
@@ -52,7 +52,6 @@ public class Canvas extends JPanel implements KeyListener{
 
 	//int enemyX = -40, enemyY = -40;
 	int gravCounter = 0;
-	int jumpCount = 0;
 	int shotCount = 0;
 
 	private HUD myHUD;
@@ -86,10 +85,10 @@ public class Canvas extends JPanel implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		//MOVEMENT KEYS
 		if (e.getKeyCode() == KeyEvent.VK_W){
-			if (jumpCount < jumpMax) {
+			if (player.jumpCount < player.jumpMax) {
 				player.gravity = 20;
 				player.setY(player.getY() - 10);
-				jumpCount++;
+				player.jumpCount++;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_A){
