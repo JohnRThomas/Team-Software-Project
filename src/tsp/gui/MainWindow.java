@@ -41,7 +41,8 @@ public class MainWindow extends JFrame implements KeyListener{
 	private MusicDirector music;
 
 	private int counter = 0;
-	Collisions collider = new Collisions();
+	private int shootTimer = 15;
+	Collisions colider = new Collisions();
 
 	public MainWindow() {
 		super("TSP Game");
@@ -83,7 +84,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		close.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false); //you can't see me!
+				setVisible(false); //you can't see me!0
 				dispose(); //Destroy the JFrame object
 			}
 		});
@@ -98,7 +99,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		music.playMusic(SoundConstants.SONG_01);
 		gamer.start();
 	}	
-	
+
 	protected void endGame(boolean death){
 		container.remove(0);
 		gamer.interrupt();
@@ -133,27 +134,28 @@ public class MainWindow extends JFrame implements KeyListener{
 
 	public void tick() {
 		counter +=1;
+		shootTimer += 1;
 		if (canvas.player.health <= 0) {
 			canvas.end(true); // death
 		}
 		if (counter >25){
 			counter =0;
 			for(int i =0; i < canvas.enemyList.getSize();i +=1){
-			canvas.enemyList.getEnemy(i).incrementImage();
+				canvas.enemyList.getEnemy(i).incrementImage();
 			}
 		}
 		canvas.movePlayer();
 		canvas.moveEnemy();
 		canvas.moveProjectile();
-		
-		canvas.shoot() ;
-		
+
+		if(canvas.shoot(shootTimer)) {
+			shootTimer = 0 ;
+		}
+
 		//test code for movement
 		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
 		
-		
 		Collisions.runCollisions(canvas.player);
-		
 
 		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
 			canvas.end(false);

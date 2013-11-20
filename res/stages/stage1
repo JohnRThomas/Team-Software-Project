@@ -5,8 +5,7 @@ Enemy
 End
 
 Background
-3
+2
 backS.png 0 0 F
 platform.png 0 400 T
-platform.png 0 0 T
 End

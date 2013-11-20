@@ -1,11 +1,14 @@
 package tsp.gui;
 
+import imageBase.BaseImage;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -44,7 +47,7 @@ public class Canvas extends JPanel implements KeyListener{
 	BuildImages stageMaker;
 	MakeImages imageList;
 	MakeEnemies enemyList;
-	Projectile[] projectileList;
+	ArrayList<Projectile> projectileList;
 	AllObjects objectMaker;
 	ChangeStage stageChanger;
 
@@ -52,10 +55,9 @@ public class Canvas extends JPanel implements KeyListener{
 
 	//int enemyX = -40, enemyY = -40;
 	int gravCounter = 0;
-	int shotCount = 0;
 
 	private HUD myHUD;
-	
+
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
@@ -67,7 +69,7 @@ public class Canvas extends JPanel implements KeyListener{
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
-		projectileList = new Projectile[20];
+		projectileList = new ArrayList<Projectile>();
 		myHUD = new HUD();
 
 	}
@@ -103,24 +105,17 @@ public class Canvas extends JPanel implements KeyListener{
 
 		//SHOOT KEYS
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (shotCount < projectileList.length) {
-				leftShoot = true ;
-			}
+			leftShoot = true ;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (shotCount < projectileList.length) {
-				rightShoot = true ;
-			}
+			rightShoot = true ;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			if (shotCount < projectileList.length) {
-				upShoot = true ;
-			}
+			upShoot = true ;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (shotCount < projectileList.length) {
-				downShoot = true ;
-			}
+			downShoot = true ;
+
 		}
 	}
 
@@ -178,8 +173,8 @@ public class Canvas extends JPanel implements KeyListener{
 
 		background.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
-		for(int i =0; i< shotCount; i++){
-			background.drawImage(projectileList[i].getImage(), projectileList[i].getX(), projectileList[i].getY(), this);
+		for(int i =0; i < projectileList.size(); i++){
+			background.drawImage(projectileList.get(i).getImage(), projectileList.get(i).getX(), projectileList.get(i).getY(), this);
 		}
 
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
@@ -221,10 +216,11 @@ public class Canvas extends JPanel implements KeyListener{
 		// TODO: Get fancy by adding a death sound/animation
 	}
 
-	public void shoot() {
-		if(shooter.shoot(player, projectileList, shotCount, leftShoot, rightShoot, upShoot, downShoot)) {
-			shotCount++ ;
+	public boolean shoot(int timer) {
+		if(timer > 15) {
+			return shooter.shoot(player, projectileList, leftShoot, rightShoot, upShoot, downShoot) ;
 		}
+		return false ;
 	}
 
 	public void movePlayer(){ // TODO Commit this when convenient
@@ -251,8 +247,8 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void moveProjectile() {
-		for(int i =0; i < shotCount; i++){
-			mover.moveProjectile(gameOver, projectileList[i]);
+		for(int i =0; i < projectileList.size(); i++){
+			mover.moveProjectile(gameOver, projectileList.get(i));
 		}
 	}
 }
