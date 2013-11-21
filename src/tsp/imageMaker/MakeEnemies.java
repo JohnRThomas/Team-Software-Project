@@ -54,11 +54,31 @@ public class MakeEnemies {
 		return listOfEnemies[layerPosition].getImage();
 	}
 
+//	/**
+//	 * 
+//	 * @param index
+//	 * 				index of enemy to be removed
+//	 * @return
+//	 * 				the enemy removed
+//	 */
+//	public Enemy remove(int index){
+//		Enemy old = listOfEnemies[index];
+//		listOfEnemies[index] = null;
+//		int tmp = index;
+//		while(tmp + 1 < getSize()){
+//			listOfEnemies[tmp] = listOfEnemies[tmp+1];
+//			listOfEnemies[tmp+1] = null;
+//			tmp++;
+//		}
+//		setSize(getSize() - 1) ;
+//		return old;
+//	}
+
 	/**
 	 * 
 	 * @return number of images
 	 */
-	public int getSize(){
+	 public int getSize(){
 		return listOfEnemies.length;
 	}
 

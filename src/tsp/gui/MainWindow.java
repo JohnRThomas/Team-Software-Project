@@ -154,8 +154,12 @@ public class MainWindow extends JFrame implements KeyListener{
 
 		//test code for movement
 		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
-		
+
 		Collisions.runCollisions(canvas.player);
+
+		for(int i = 0; i < canvas.enemyList.getSize(); i++) {
+			Collisions.runCollisions(canvas.enemyList.getEnemy(i)) ;
+		}
 
 		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
 			canvas.end(false);

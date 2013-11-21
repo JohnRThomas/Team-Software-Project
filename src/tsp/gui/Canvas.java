@@ -165,16 +165,32 @@ public class Canvas extends JPanel implements KeyListener{
 		//draws images
 		for(int i =0; i< imageList.getSize(); i++){
 			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
-
 		}
+		//draws enemies
 		for(int i =0; i< enemyList.getSize(); i++){
-			background.drawImage(enemyList.getEnemyImage(i), enemyList.getEnemy(i).getX(), enemyList.getEnemy(i).getY(), this);
+			if(enemyList.getEnemy(i).getHealth() <= 0) {
+				enemyList.getEnemy(i).setCanCollide(false) ;
+				//This is a major hack and is really, really, REALLY stupid but it works
+				enemyList.getEnemy(i).setX(-enemyList.getEnemy(i).getWidth()) ;
+				enemyList.getEnemy(i).setY(-enemyList.getEnemy(i).getHeight()) ;
+			}
+			else {
+				background.drawImage(enemyList.getEnemyImage(i), enemyList.getEnemy(i).getX(), enemyList.getEnemy(i).getY(), this);
+			}
 		}
 
 		background.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
+		//draws projectiles
 		for(int i =0; i < projectileList.size(); i++){
-			background.drawImage(projectileList.get(i).getImage(), projectileList.get(i).getX(), projectileList.get(i).getY(), this);
+			if(projectileList.get(i).getHit()) {
+				projectileList.get(i).setCanCollide(false) ;
+				projectileList.remove(i) ;
+				i--;
+			}
+			else {
+				background.drawImage(projectileList.get(i).getImage(), projectileList.get(i).getX(), projectileList.get(i).getY(), this);
+			}
 		}
 
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
@@ -183,8 +199,6 @@ public class Canvas extends JPanel implements KeyListener{
 		g.setColor(Color.black);
 		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
 
-		// draw health value
-		// TODO make more visible
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));
 		g.drawString(player.health.toString(), this.getWidth()-40, 20);		
@@ -223,7 +237,7 @@ public class Canvas extends JPanel implements KeyListener{
 		return false ;
 	}
 
-	public void movePlayer(){ // TODO Commit this when convenient
+	public void movePlayer(){
 
 		int direction = mover.movePlayer(player, imageList, left, right, getBounds().width);
 		if (direction ==0 ){
