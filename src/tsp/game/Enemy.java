@@ -43,6 +43,7 @@ public abstract class Enemy extends BaseImage{
 	
 	public abstract void takeDamage(int damage);
 	
+
 	/**
 	 * 
 	 * @return damage

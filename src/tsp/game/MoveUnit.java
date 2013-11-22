@@ -62,6 +62,14 @@ public class MoveUnit {
 		
 		projectile.setX(projectile.getX() + projectile.getXSpeed()) ;
 		projectile.setY(projectile.getY() + projectile.getYSpeed()) ;
+		
+		//Check if out of bounds... Not sure if its correct bounds but its pretty close
+		if(projectile.getX() < 0 || projectile.getX() > 1600) {
+			projectile.setHit(true) ;
+		}
+		if(projectile.getY() < 0 || projectile.getY() > 600) {
+			projectile.setHit(true) ;
+		}
 	}
 
 

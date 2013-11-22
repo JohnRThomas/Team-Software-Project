@@ -11,18 +11,23 @@ import imageBase.BaseImage;
 public class Projectile extends BaseImage {
 	private int xSpeed ;
 	private int ySpeed ;
+	private boolean hit ;
 
-	public Projectile(int xStart, int yStart, int xSpeed, int ySpeed, String imageName, boolean collide) {
+	public Projectile(int xStart, int yStart, int xSpeed, int ySpeed, boolean hit, String imageName, boolean collide) {
 		super(xStart, yStart, imageName, collide);
-		
+
 		this.xSpeed = xSpeed ;
 		this.ySpeed = ySpeed ;
+		this.hit = hit ;
 	}
 
 	@Override
 	public void collideWith(BaseImage entity) {
-		// TODO Auto-generated method stub
-		
+		if(entity instanceof Enemy) {
+			((Enemy)entity).setHealth(((Enemy)entity).getHealth() - 1) ;
+			this.setHit(true) ;
+			//System.out.println(((Enemy)entity).getHealth());
+		}
 	}
 
 	/**
@@ -52,11 +57,28 @@ public class Projectile extends BaseImage {
 
 	/**
 	 * 
-	 * @param d
+	 * @param y
 	 * @return the new y speed
 	 */
 	public int setYSpeed(int y) {
 		return ySpeed = y;
+	}
+
+	/**
+	 * 
+	 * @return if the projectile hit an enemy
+	 */
+	public boolean getHit() {
+		return hit;
+	}
+
+	/**
+	 * 
+	 * @param h
+	 * @return the new value of hit
+	 */
+	public boolean setHit(boolean h) {
+		return hit = h;
 	}
 
 }

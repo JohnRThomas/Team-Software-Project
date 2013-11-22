@@ -41,6 +41,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	private MusicDirector music;
 
 	private int counter = 0;
+	private int shootTimer = 15;
 	Collisions colider = new Collisions();
 
 	public MainWindow() {
@@ -84,7 +85,7 @@ public class MainWindow extends JFrame implements KeyListener{
 		close.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false); //you can't see me!
+				setVisible(false); //you can't see me!0
 				dispose(); //Destroy the JFrame object
 			}
 		});
@@ -107,7 +108,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	protected void endGame(boolean death){
 		container.remove(0);
 		gamer.interrupt();
-		final EndScreen endScreen = new EndScreen(this, death);
+		final EndScreen endScreen = new EndScreen(this, death,canvas.player);
 		container.add(endScreen);
 		revalidate();
 		endScreen.repaint();
@@ -132,7 +133,8 @@ public class MainWindow extends JFrame implements KeyListener{
 	}
 
 	public void tick() {
-
+		counter +=1;
+		shootTimer += 1;
 		if (canvas.player.currentHealth <= 0) {
 			canvas.end(true); // death
 		}
@@ -141,23 +143,24 @@ public class MainWindow extends JFrame implements KeyListener{
 		if (counter >25){
 			counter =0;
 			for(int i =0; i < canvas.enemyList.getSize();i +=1){
-			canvas.enemyList.getEnemy(i).incrementImage();
+				canvas.enemyList.getEnemy(i).incrementImage();
 			}
 		}
 		canvas.movePlayer();
 		canvas.moveEnemy();
 		canvas.moveProjectile();
-		
-		canvas.shoot() ;
-		
+
+		if(canvas.shoot(shootTimer)) {
+			shootTimer = 0 ;
+		}
+
 		//test code for movement
 		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
-		
-		if (canvas.player.hitTimer == 0) {
-			canvas.player.color = Color.GREEN; // resets color to show hit invulnerability has worn off
-			
-				Collisions.runCollisions(canvas.player);
-			
+
+		Collisions.runCollisions(canvas.player);
+
+		for(int i = 0; i < canvas.enemyList.getSize(); i++) {
+			Collisions.runCollisions(canvas.enemyList.getEnemy(i)) ;
 		}
 
 		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
@@ -172,10 +175,10 @@ public class MainWindow extends JFrame implements KeyListener{
 			canvas.player.gravity = -1; // reset gravity
 		}
 
-		if(canvas.player.getY() > canvas.getBounds().height - 169) { // if at bottom of screen
-			canvas.player.setY(canvas.getBounds().height - 170); // reset position
+		if(canvas.player.getY() > canvas.getBounds().height - 51) { // if at bottom of screen
+			canvas.player.setY(canvas.getBounds().height - 50); // reset position
 			canvas.player.gravity = -1; // reset gravity
-			canvas.jumpCount = 0; // reset jumps
+			canvas.player.jumpCount = 0; // reset jumps
 		}
 
 		if (canvas.player.gravity > -10) { // if not at terminal velocity
@@ -183,7 +186,6 @@ public class MainWindow extends JFrame implements KeyListener{
 		}
 
 		if (canvas.player.hitTimer > 0) { // if in hit invulnerability
-			canvas.player.color = Color.BLUE; // change color 
 			canvas.player.hitTimer--; // decrease time remaining
 		}
 

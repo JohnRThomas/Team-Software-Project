@@ -19,6 +19,11 @@ public class Player extends BaseImage {
 	public int speed;
 	public int regenSpeed = 30;
 	private int regenCounter = 0;
+	public int jumpMax;
+	public int jumpCount;
+	public int victoryCount;
+	public int deathCount;
+	public String name;
 	
 	/**
 	 * 
@@ -33,9 +38,11 @@ public class Player extends BaseImage {
 	 * @param hitTimer
 	 * @param color
 	 */
+	
 
-	public Player(int x, int y, int gravity, int health, int max, int speed, int hitTimer, Color color) {
-		
+	public Player(int x, int y, int gravity, int health, int max, int speed, int hitTimer, int jumpCount,
+			int jumpMax, int victoryCount, int deathCount, String name) {
+
 		super(x, y, "res/images/player0.png", true);
 		
 		this.gravity = gravity;
@@ -43,7 +50,10 @@ public class Player extends BaseImage {
 		this.maxHealth = max;
 		this.speed = speed;	
 		this.hitTimer = hitTimer;
-		this.color = color;
+		this.jumpCount = jumpCount;
+		this.jumpMax = jumpMax;
+		this.victoryCount = victoryCount;
+		this.deathCount = deathCount;
 	}
 
 	@Override
@@ -52,6 +62,7 @@ public class Player extends BaseImage {
 		
 	}
 	
+
 	public void takeDamage(Integer damageTaken){
 		if (hitTimer == 0){
 			currentHealth -= damageTaken;
@@ -69,6 +80,15 @@ public class Player extends BaseImage {
 			regenCounter = 0;
 		}
 	}
+
+	public int getGravity() {
+		return gravity;
+	}
+
+	public void setGravity(int gravity) {
+		this.gravity = gravity;
+	}
+
 	
 }
 
