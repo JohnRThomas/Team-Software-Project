@@ -3,9 +3,11 @@ package tsp.game;
 import imageBase.BaseImage;
 
 public class Background extends BaseImage{
-
+	String name;
 	public Background(int xStart, int yStart, String imageName, boolean collide) {
 		super(xStart, yStart, imageName, collide);
+		name = imageName;
+		System.out.println(name);
 	}
 
 	@Override
@@ -53,6 +55,13 @@ public class Background extends BaseImage{
 				//right is closest side
 				entity.setX(this.getX() + this.getWidth());
 				//((Player) entity).setGravity(-1); enable for wall-slide mechanic
+			}
+			
+			if(name.compareTo("res/images/killBlock.png")==0){
+				((Player)entity).currentHealth =0;
+			}
+			if(name.compareTo("res/images/endZone.png")==0){
+				((Player)entity).gameEnd =true;
 			}
 		}
 	}

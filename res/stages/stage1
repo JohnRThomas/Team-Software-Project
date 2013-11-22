@@ -5,7 +5,10 @@ Enemy
 End
 
 Background
-2
+5
 backS.png 0 0 F
 platform.png 0 400 T
+basicWall.png 500 300 T
+basicWall.png 600 200 T
+endZone.png 1500 300 T
 End

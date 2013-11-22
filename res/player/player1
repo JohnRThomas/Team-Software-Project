@@ -1,2 +1,2 @@
-gravity,health,max,speed,hitTimer,jumpCount,jumpMax,victoryCount,deathCount
-1 player .png -1 100 100 5 0 2 2 0 0
+null
+1 player .png -2 100 100 5 0 2 0 0 7

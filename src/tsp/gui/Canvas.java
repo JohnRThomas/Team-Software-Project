@@ -234,6 +234,7 @@ public class Canvas extends JPanel implements KeyListener{
 		}
 		currentStage +=1;
 		if(stageName != null){
+			player.gameEnd = false;
 			Collisions.clearCollisions();
 			objectMaker = stageMaker.getFile(stageName,objectMaker);
 			imageList = objectMaker.getImages();

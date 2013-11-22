@@ -24,6 +24,7 @@ public class Player extends BaseImage {
 	public int victoryCount;
 	public int deathCount;
 	public String name;
+	public boolean gameEnd =false;
 	
 	/**
 	 * 

@@ -4,7 +4,8 @@ Enemy
 End
 
 Background
-2
+3
 baseBackground.jpg 0 0 F
 basePlatform.jpg 0 400 T
+endZone.png 1500 300 T
 End

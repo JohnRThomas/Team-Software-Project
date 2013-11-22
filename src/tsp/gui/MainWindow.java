@@ -163,7 +163,7 @@ public class MainWindow extends JFrame implements KeyListener{
 			Collisions.runCollisions(canvas.enemyList.getEnemy(i)) ;
 		}
 
-		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
+		if (canvas.player.gameEnd){
 			canvas.end(false);
 		}
 
