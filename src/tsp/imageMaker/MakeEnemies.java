@@ -1,7 +1,11 @@
 package tsp.imageMaker;
 import java.awt.Image;
 
+import tsp.game.Bumbler;
 import tsp.game.Enemy;
+import tsp.game.Floater;
+import tsp.game.Jumper;
+import tsp.game.Patrol;
 
 
 public class MakeEnemies {
@@ -32,7 +36,7 @@ public class MakeEnemies {
 		for (int i =0; i< name.length; i++){
 			namePath[i] = "res/images/" + name[i];
 		}
-		listOfEnemies[layerPosition] = new Enemy(x, y, damage, health, gravity, namePath, canColide);
+		listOfEnemies[layerPosition] = new Jumper(x, y, damage, health, gravity, namePath, canColide);
 		return listOfEnemies[layerPosition];
 	}
 

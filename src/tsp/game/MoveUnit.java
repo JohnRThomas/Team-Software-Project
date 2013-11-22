@@ -1,5 +1,7 @@
 package tsp.game;
 
+import java.awt.Point;
+
 import imageBase.BaseImage;
 import tsp.imageMaker.MakeImages;
 
@@ -52,18 +54,7 @@ public class MoveUnit {
 			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
 			playerMoveNegX =false;
 		}
-		if (player.getX()+10 >= evilRedBox.getX() + 50){
-			evilRedBox.setX(evilRedBox.getX() + 1) ;
-		}
-		else{
-			evilRedBox.setX(evilRedBox.getX() - 1) ;
-		}
-		if (player.getY()+10 >= evilRedBox.getY() + 50){
-			evilRedBox.setY(evilRedBox.getY() + 1) ;
-		}
-		else{
-			evilRedBox.setY(evilRedBox.getY() - 1) ;
-		}
+		evilRedBox.move(new Point(player.getX()+player.getWidth()/2, player.getY()+player.getHeight()/2));
 	}
 
 	public void moveProjectile(boolean gameOver, Projectile projectile) {

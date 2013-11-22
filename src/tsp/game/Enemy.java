@@ -1,5 +1,7 @@
 package tsp.game;
 
+import java.awt.Point;
+
 import imageBase.BaseImage;
 
 
@@ -7,14 +9,15 @@ import imageBase.BaseImage;
  * Basic Enemy class that can be extended and stuff
  *
  */
-public class Enemy extends BaseImage {
-	private int damage ;
-	private int health ;
-	private int gravity ;
+public abstract class Enemy extends BaseImage{
+	protected int damage ;
+	protected int health ;
+	protected int gravity ;
 	private String enemyImages[];
 	private int usedImage = 0;
+	
 	public Enemy(int xStart, int yStart, int d, int h, int g, String imageName[], boolean collide) {
-		super(xStart, yStart, imageName[0], collide);
+		super                                   (xStart, yStart, imageName[0], collide);
 		enemyImages = imageName;
 		damage = d ;
 		health = h ;
@@ -30,14 +33,15 @@ public class Enemy extends BaseImage {
 		super.setImage(enemyImages[usedImage]);
 	}
 	
-	@Override
-	public void collideWith(BaseImage entity) {
-		if(entity instanceof Player){
-			((Player)entity).takeDamage(damage);
-		}else if(entity instanceof Enemy){
-			
-		}
-	}
+	public abstract void collideWith(BaseImage entity);
+	
+	public abstract void move(Point playerCenter);
+	
+	public abstract void attack(BaseImage entity);
+	
+	public abstract void die();
+	
+	public abstract void takeDamage(int damage);
 	
 	/**
 	 * 

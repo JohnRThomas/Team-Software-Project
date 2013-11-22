@@ -16,8 +16,6 @@ public class Player extends BaseImage {
 	public Integer maxHealth;
 	public Color color;
 	public int hitTimer;
-	public int width;
-	public int height;
 	public int speed;
 	public int regenSpeed = 30;
 	private int regenCounter = 0;
@@ -36,7 +34,8 @@ public class Player extends BaseImage {
 	 * @param color
 	 */
 
-	public Player(int x, int y, int width, int height, int gravity, int health, int max, int speed, int hitTimer, Color color) {
+	public Player(int x, int y, int gravity, int health, int max, int speed, int hitTimer, Color color) {
+		
 		super(x, y, "res/images/player0.png", true);
 		
 		this.gravity = gravity;

@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import tsp.game.Collisions;
 import tsp.game.Enemy;
 import tsp.game.MoveUnit;
 import tsp.game.Player;
@@ -25,7 +26,7 @@ import tsp.sound.SoundConstants;
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
-	Player player = new Player(0, 400, 20, 20, -1, 100, 100, 5, 60, Color.GREEN);
+	Player player = new Player(0, 400, -1, 100, 100, 5, 60, Color.GREEN);
 
 	private boolean leftShoot = false, rightShoot = false, upShoot = false, downShoot = false, left = false, right = false, shoot = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
@@ -43,20 +44,23 @@ public class Canvas extends JPanel implements KeyListener{
 
 	private int currentStage;
 	private int totalStages;
-	
+
 	BuildImages stageMaker;
 	MakeImages imageList;
 	MakeEnemies enemyList;
 	Projectile[] projectileList;
 	AllObjects objectMaker;
 	ChangeStage stageChanger;
-	
+
 	Image offScreenImage;
-	
+
 	//int enemyX = -40, enemyY = -40;
 	int gravCounter = 0;
 	int jumpCount = 0;
 	int shotCount = 0;
+
+	private HUD myHUD;
+	
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
@@ -69,7 +73,9 @@ public class Canvas extends JPanel implements KeyListener{
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
-		projectileList = new Projectile[1000];
+		projectileList = new Projectile[20];
+		myHUD = new HUD();
+
 	}
 
 	@Override
@@ -101,7 +107,7 @@ public class Canvas extends JPanel implements KeyListener{
 		if (e.getKeyCode() == KeyEvent.VK_D){
 			right = true;
 		}
-		
+
 		//SHOOT KEYS
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			if (shotCount < projectileList.length) {
@@ -140,7 +146,7 @@ public class Canvas extends JPanel implements KeyListener{
 		if (e.getKeyCode() == KeyEvent.VK_D){
 			right = false;
 		}
-		
+
 		//SHOOT KEYS
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			leftShoot = false ;
@@ -176,16 +182,16 @@ public class Canvas extends JPanel implements KeyListener{
 		for(int i =0; i< enemyList.getSize(); i++){
 			background.drawImage(enemyList.getEnemyImage(i), enemyList.getEnemy(i).getX(), enemyList.getEnemy(i).getY(), this);
 		}
-		
+
 		background.drawImage(player.getImage(), player.getX(), player.getY(), this);
-		
+
 		for(int i =0; i< shotCount; i++){
 			background.drawImage(projectileList[i].getImage(), projectileList[i].getX(), projectileList[i].getY(), this);
 		}
 
 		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
 
-	
+
 		g.setColor(Color.black);
 		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
 
@@ -193,12 +199,12 @@ public class Canvas extends JPanel implements KeyListener{
 		// TODO make more visible
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));
-		g.drawString(player.currentHealth.toString(), this.getWidth()-40, 20);
-		HUD.draw(g, this);
+		g.drawString(player.currentHealth.toString(), this.getWidth()-40, 20);		
+		myHUD.draw(g, this);
 	}
 
 	public void end(boolean death){
-		
+
 		if (death == true){
 			gameOver = true;
 			mainWindow.endGame(death);
@@ -211,15 +217,16 @@ public class Canvas extends JPanel implements KeyListener{
 		}
 		currentStage +=1;
 		if(stageName != null){
-		objectMaker = stageMaker.getFile(stageName,objectMaker);
-		imageList = objectMaker.getImages();
-		enemyList = objectMaker.getEnemies();
+			Collisions.clearCollisions();
+			objectMaker = stageMaker.getFile(stageName,objectMaker);
+			imageList = objectMaker.getImages();
+			enemyList = objectMaker.getEnemies();
 		}
 		player.setX(0);
 		// TODO: Remove player oval from screen, then present EndScreen
 		// TODO: Get fancy by adding a death sound/animation
 	}
-	
+
 	public void shoot() {
 		if(shooter.shoot(player, projectileList, shotCount, leftShoot, rightShoot, upShoot, downShoot)) {
 			shotCount++ ;
