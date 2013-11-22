@@ -20,14 +20,16 @@ import tsp.game.Projectile;
 import tsp.game.Shoot;
 import tsp.imageMaker.AllObjects;
 import tsp.imageMaker.BuildImages;
+import tsp.imageMaker.BuildPlayer;
 import tsp.imageMaker.MakeEnemies;
 import tsp.imageMaker.MakeImages;
+import tsp.imageMaker.SavePlayer;
 
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
 
-	Player player = new Player(0, 250, 20, 20, -1, 100, 5, 60, 0, 2);
+	Player player;
 
 
 	private boolean leftShoot = false, rightShoot = false, upShoot = false, downShoot = false, left = false, right = false, shoot = false; // should be taken care of in Player
@@ -50,6 +52,8 @@ public class Canvas extends JPanel implements KeyListener{
 	ArrayList<Projectile> projectileList;
 	AllObjects objectMaker;
 	ChangeStage stageChanger;
+	BuildPlayer playerBuilder;
+	SavePlayer playerSaver;
 
 	Image offScreenImage;
 
@@ -69,6 +73,9 @@ public class Canvas extends JPanel implements KeyListener{
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
+		playerBuilder = new BuildPlayer();
+		playerSaver = new SavePlayer();
+		player = playerBuilder.playerBuilder(player, 1);
 		projectileList = new ArrayList<Projectile>();
 		myHUD = new HUD();
 
@@ -208,14 +215,18 @@ public class Canvas extends JPanel implements KeyListener{
 
 	public void end(boolean death){
 
-		if (death == true){
-			gameOver = true;
-			mainWindow.endGame(death);
-		}
+		
 		String stageName = null;
 		stageName = stageChanger.getNextStage(currentStage, totalStages);
-		if (stageName == null){
+		if (death == true){
 			gameOver = true;
+			player.deathCount += 1;
+			playerSaver.playerSaver(player);
+			mainWindow.endGame(death);
+		}
+		else if (stageName == null){
+			gameOver = true;
+			player.victoryCount +=1;
 			mainWindow.endGame(death);
 		}
 		currentStage +=1;

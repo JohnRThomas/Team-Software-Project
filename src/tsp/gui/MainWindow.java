@@ -103,7 +103,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	protected void endGame(boolean death){
 		container.remove(0);
 		gamer.interrupt();
-		final EndScreen endScreen = new EndScreen(this, death);
+		final EndScreen endScreen = new EndScreen(this, death,canvas.player);
 		container.add(endScreen);
 		revalidate();
 		endScreen.repaint();

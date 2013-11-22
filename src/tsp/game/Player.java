@@ -19,9 +19,13 @@ public class Player extends BaseImage {
 	public int speed;
 	public int jumpMax;
 	public int jumpCount;
+	public int victoryCount;
+	public int deathCount;
+	public String name;
 	
 
-	public Player(int x, int y, int width, int height, int gravity, int health, int speed, int hitTimer, int jumpCount, int jumpMax) {
+	public Player(int x, int y, int gravity, int health, int speed, int hitTimer, int jumpCount,
+			int jumpMax, int victoryCount, int deathCount, String name) {
 
 		super(x, y, "res/images/player0.png", true);
 		
@@ -31,6 +35,8 @@ public class Player extends BaseImage {
 		this.hitTimer = hitTimer;
 		this.jumpCount = jumpCount;
 		this.jumpMax = jumpMax;
+		this.victoryCount = victoryCount;
+		this.deathCount = deathCount;
 	}
 
 	@Override
