@@ -10,7 +10,7 @@ public class Patrol extends Enemy{
 	int patrolEnd = 200;
 	int speed = 2;
 	int direction = 1;
-	int YBound = 400;
+	int YBound = 420;
 	
 	public Patrol(int xStart, int yStart, int d, int h, int g,
 			String[] imageName, boolean collide) {

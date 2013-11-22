@@ -10,7 +10,7 @@ public class Jumper extends Enemy{
 
 	private int jumpTimer = 120;
 	private int countdown = jumpTimer;
-	private int YBound = 400;
+	private int YBound = 420;
 	private int horizontalVelocity = 0;
 	private int gravWait = 3;
 	private int gravCounter = gravWait;

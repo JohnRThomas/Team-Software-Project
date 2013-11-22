@@ -17,7 +17,7 @@ public class SavePlayer {
 		}
 		out.println(player.name);
 		out.println(1 + " " + "player" + " " + ".png"
-				+ " " + player.gravity + " " + 100 
+				+ " " + player.gravity + " " + 100 + " " + 100
 				+ " " + player.speed + " " + 0
 				+ " " + player.jumpMax + " " + player.jumpCount
 				+ " " + player.victoryCount + " " + player.deathCount);
