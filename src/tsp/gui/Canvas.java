@@ -38,6 +38,7 @@ public class Canvas extends JPanel implements KeyListener{
 	boolean gameOver = false;
 	MoveUnit mover = new MoveUnit();
 	Shoot shooter = new Shoot() ;
+	boolean gameEnd =true;
 
 	//Audio
 	private SFXDirector soundEffects;
@@ -175,6 +176,9 @@ public class Canvas extends JPanel implements KeyListener{
 
 		//draws images
 		for(int i =0; i< imageList.getSize(); i++){
+			if(i ==0){
+				background.drawImage(imageList.getImageBase(i).getImage(), 0, 0, this);
+			}
 			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
 		}
 		//draws enemies
@@ -218,18 +222,25 @@ public class Canvas extends JPanel implements KeyListener{
 
 	public void end(boolean death){
 
-		
+
 		String stageName = null;
 		stageName = stageChanger.getNextStage(currentStage, totalStages);
 		if (death == true){
 			gameOver = true;
-			player.deathCount += 1;
+			if(gameEnd){
+				gameEnd =false;
+				player.deathCount += 1;
+			}
 			playerSaver.playerSaver(player);
 			mainWindow.endGame(death);
 		}
 		else if (stageName == null){
 			gameOver = true;
-			player.victoryCount +=1;
+			if(gameEnd){
+				player.victoryCount +=1;
+				gameEnd =false;
+			}
+			playerSaver.playerSaver(player);
 			mainWindow.endGame(death);
 		}
 		currentStage +=1;

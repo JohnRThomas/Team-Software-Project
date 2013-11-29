@@ -60,8 +60,53 @@ public class Background extends BaseImage{
 			if(name.compareTo("res/images/killBlock.png")==0){
 				((Player)entity).currentHealth =0;
 			}
+			
 			if(name.compareTo("res/images/endZone.png")==0){
 				((Player)entity).gameEnd =true;
+			}
+		}
+		else if (entity instanceof Enemy) {
+			int top = 9999;
+			int left = 9999;
+			int right = 9999;
+			int bottom = 9999;
+
+			// top collision
+			top = Math.abs(entity.getY() + entity.getHeight() - this.getY());
+
+			// bottom collision
+			bottom = Math.abs(entity.getY() - this.getY() - this.getHeight());	
+
+			// left collision
+			left = Math.abs(entity.getX() + entity.getWidth() - this.getX());
+
+			// right collision
+			right = Math.abs(entity.getX() - this.getX() - this.getWidth());
+
+
+
+			if (top < left && top < right && top < bottom) {
+				//top is closest side
+				entity.setY(this.getY() - entity.getHeight());
+				((Enemy) entity).setGravity(-1);
+			}
+
+			if (bottom < top && bottom < left && bottom < right) {
+				//bottom is closest side
+				entity.setY(this.getY() + this.getHeight());
+				((Enemy) entity).setGravity(-1);
+			}
+
+			if (left < top && left < right && left < bottom) {
+				//left is closest side
+				entity.setX(this.getX() - entity.getWidth());
+				//((Player) entity).setGravity(-1); enable for wall-slide mechanic
+			}
+
+			if (right < top && right < left && right < bottom) {
+				//right is closest side
+				entity.setX(this.getX() + this.getWidth());
+				//((Player) entity).setGravity(-1); enable for wall-slide mechanic
 			}
 		}
 	}

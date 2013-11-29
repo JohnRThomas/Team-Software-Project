@@ -9,6 +9,7 @@ public class MoveUnit {
 
 	public int movePlayer(Player player, MakeImages imageList, boolean left, boolean right, int boundsWidth ){ // TODO Commit this when convenient
 		int playerDirection = 0; //if 0 not in center, if 1 center right, if -1 center left
+		System.out.println(player.getX());
 		if (left){
 
 			if ((player.getX() + player.getWidth()/2+imageList.getBaseBackground().getX() < boundsWidth/2)
@@ -34,7 +35,7 @@ public class MoveUnit {
 			}
 			else{ 
 				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed); // player width is 20
-				else player.setX(boundsWidth - player.getWidth());
+				
 			}
 		}
 

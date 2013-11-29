@@ -25,6 +25,8 @@ public class Player extends BaseImage {
 	public int deathCount;
 	public String name;
 	public boolean gameEnd =false;
+	public int oldX=0;
+	public int oldY=0;
 	
 	/**
 	 * 
@@ -90,6 +92,36 @@ public class Player extends BaseImage {
 		this.gravity = gravity;
 	}
 
+
+	/**
+	 * @return old X position
+	 */
+	public int getOldX(){
+		return oldX;
+	}
+	/**
+	 * @return old y position
+	 */
+	public int getOldY(){
+		return oldY;
+	}
+	/**
+	 * @param int y: new y position
+	 * @return y position
+	 */
+	public int setY(int y){
+		oldY = super.getY();
+		return super.setY(y);
+	}
+	/**y+50
+	 * @param int x: new x position
+	 * @return x position
+	 */
+	public int setX(int x){
+		oldX = super.getX();
+		return super.setX(x);
+		
+	}
 	
 }
 
