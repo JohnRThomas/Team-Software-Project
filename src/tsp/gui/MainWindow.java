@@ -147,29 +147,29 @@ public class MainWindow extends JFrame implements KeyListener{
 			}
 		}
 		canvas.movePlayer();
-		canvas.moveEnemy();
-		canvas.moveProjectile();
-
-		if(canvas.shoot(shootTimer)) {
-			shootTimer = 0 ;
-		}
-
-		//test code for movement
-		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
-
+		
 		int playerX= canvas.player.getX();
 		Collisions.runCollisions(canvas.player);
 		if(playerX !=canvas.player.getX()){
 			if(playerX<canvas.player.getX()){
 				//case plater hit right wall
-				canvas.imageList.getBaseBackground().setX(
-						canvas.imageList.getBaseBackground().getX()-canvas.player.speed);
+				canvas.imageList.setBaseX(
+						canvas.imageList.getBaseX()-canvas.player.speed);
 			}
 			else{
 				//case player hit left wall
-				canvas.imageList.getBaseBackground().setX(
-						canvas.imageList.getBaseBackground().getX() +canvas.player.speed);
+				canvas.imageList.setBaseX(
+						canvas.imageList.getBaseX() +canvas.player.speed);
 			}
+			canvas.playerMovePosX =false;
+			canvas.playerMoveNegX =false;
+		}
+		
+		canvas.moveEnemy();
+		canvas.moveProjectile();
+
+		if(canvas.shoot(shootTimer)) {
+			shootTimer = 0 ;
 		}
 		
 		for(int i = 0; i < canvas.enemyList.getSize(); i++) {

@@ -208,11 +208,7 @@ public class Canvas extends JPanel implements KeyListener{
 			}
 		}
 
-		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
-
-
-		g.setColor(Color.black);
-		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
+		g.drawImage(offScreenImage, imageList.getBaseX(), imageList.getBaseY(),this); 
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));

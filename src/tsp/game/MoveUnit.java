@@ -12,9 +12,9 @@ public class MoveUnit {
 		System.out.println(player.getX());
 		if (left){
 
-			if ((player.getX() + player.getWidth()/2+imageList.getBaseBackground().getX() < boundsWidth/2)
-					&& (imageList.getBaseBackground().getX() < 0) ){
-				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() +player.speed);
+			if ((player.getX() + player.getWidth()/2+imageList.getBaseX() < boundsWidth/2)
+					&& (imageList.getBaseX() < 0) ){
+				imageList.setBaseX(imageList.getBaseX() +player.speed);
 				if(player.getX() >= player.speed)player.setX(player.getX() - player.speed);
 				else player.setX(0);
 				playerDirection = -1;
@@ -28,21 +28,18 @@ public class MoveUnit {
 		if (right){
 
 			if ((player.getX()+player.getWidth()/2 > boundsWidth/2 )
-					&& (imageList.getBaseBackground().getX() > -800) ){
-				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() -player.speed);
+					&& (imageList.getBaseX() > -800) ){
+				imageList.setBaseX(imageList.getBaseX() -player.speed);
 				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed ); // player width is 20
 				playerDirection = 1;
 			}
 			else{ 
 				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed); // player width is 20
-				
 			}
 		}
-
+		
 		return playerDirection;
 	}
-
-
 
 	public void moveEnemy(boolean gameOver, Player player, Enemy evilRedBox, boolean playerMovePosX, boolean playerMoveNegX){
 		//		counter += 1;
@@ -72,6 +69,4 @@ public class MoveUnit {
 			projectile.setHit(true) ;
 		}
 	}
-
-
 }

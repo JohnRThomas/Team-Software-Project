@@ -9,6 +9,8 @@ import java.awt.Image;
  *
  */
 public class MakeImages {
+	int baseX =0;
+	int baseY =0;
 	Background listOfImages [];
 	
 //	/**
@@ -111,5 +113,20 @@ public class MakeImages {
 		return listOfImages.length;
 	}
 	
+	public int setBaseX(int i){
+		baseX = i;
+		return baseX;
+	}
+	public int getBaseX(){
+		return baseX;
+	}
+	
+	public int setBaseY(int i){
+		baseY = i;
+		return baseY;
+	}
+	public int getBaseY(){
+		return baseY;
+	}
 	
 }
