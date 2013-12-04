@@ -78,6 +78,7 @@ public class StartScreen extends JPanel {
 			}
 			g.fillRect(stars[i].pt.x-1, stars[i].pt.y-1, 2, 2);
 		}
+		
 	}
 
 	private class Star{
