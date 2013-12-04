@@ -1,6 +1,5 @@
 package tsp.game;
 
-import imageBase.BaseImage;
 import tsp.imageMaker.MakeImages;
 
 public class MoveUnit {

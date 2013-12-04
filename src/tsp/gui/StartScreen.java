@@ -1,7 +1,9 @@
 package tsp.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,10 +23,12 @@ public class StartScreen extends JPanel {
 	private MainWindow mainWindow;
 	final Drawer drawer;
 	BufferedImage title;
+	BufferedImage playerSprite;
 
 	public StartScreen(MainWindow window){
 		super();
 		try {
+			playerSprite = ImageIO.read(new File("./res/images/player.png"));
 			title = ImageIO.read(new File("./res/images/title.png"));
 		} catch (IOException e1) {
 		}
@@ -60,7 +64,9 @@ public class StartScreen extends JPanel {
 	}
 
 	Star[] stars = new Star[200];
-
+	float animCount = 0f;
+	Point loc = new Point();
+	int mod = -1;
 	@Override
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
@@ -79,10 +85,23 @@ public class StartScreen extends JPanel {
 			g.fillRect(stars[i].pt.x-1, stars[i].pt.y-1, 2, 2);
 		}
 		
+		
+		if(mod > 0 && animCount >= 255){
+			mod = -mod;
+		}else if(mod < 0 && animCount <= 0){
+			loc = new Point((int)(Math.random()*this.getHeight()), (int)(Math.random()*this.getWidth()));
+			mod = -mod;
+		}
+		
+		animCount += mod;
+
+		Graphics2D g2d = (Graphics2D)g.create();
+		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, animCount/255.0f);
+		g2d.setComposite(ac);
+		g2d.drawImage(playerSprite, loc.x, loc.y, null);
 	}
 
 	private class Star{
-
 		int speed;
 		Point pt;
 		public Star(Point pt, int speed){
