@@ -37,7 +37,7 @@ public class EndScreen extends JPanel{
 		Font font = gameOver.getFont();
 		gameOver.setFont(font.deriveFont((float)72.0));
 		stats.setFont(font.deriveFont((float)24.0));
-		this.add(gameOver, BorderLayout.CENTER);
+		this.add(gameOver, BorderLayout.NORTH);
 		this.add(stats, BorderLayout.SOUTH);
 		this.setBackground(Color.BLACK);
 	}

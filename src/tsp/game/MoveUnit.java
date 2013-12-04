@@ -1,11 +1,7 @@
 package tsp.game;
 
-<<<<<<< HEAD
-=======
 import java.awt.Point;
 
-import imageBase.BaseImage;
->>>>>>> a2b4578da75a9681f7d6cdcc1f12db4d70ea8749
 import tsp.imageMaker.MakeImages;
 
 public class MoveUnit {
