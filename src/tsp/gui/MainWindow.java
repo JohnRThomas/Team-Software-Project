@@ -76,6 +76,7 @@ public class MainWindow extends JFrame implements KeyListener{
 			public void windowDeactivated(WindowEvent e) {}
 
 		});
+		titleScreenMusic();
 	}
 
 	private void makeMenu() {
@@ -96,25 +97,24 @@ public class MainWindow extends JFrame implements KeyListener{
 		container.remove(0);
 		container.add(canvas);
 		revalidate();
-		music.playMusic(SoundConstants.SONG_01);
+		music.playMusic(SoundConstants.SONG_02);
 		gamer.start();
-	}	
+	}
 
+	protected void titleScreenMusic(){
+		music.playMusic(SoundConstants.TITLE_SONG);
+	}
+	
 	protected void endGame(boolean death){
 		container.remove(0);
 		gamer.interrupt();
-		final EndScreen endScreen = new EndScreen(this, death);
+		final EndScreen endScreen = new EndScreen(this, death,canvas.player);
 		container.add(endScreen);
 		revalidate();
 		endScreen.repaint();
 		if (death){
 			music.playMusic(SoundConstants.END_SONG_DEATH);
 		}
-		//		long startTime = System.currentTimeMillis();
-		//		while(!endScreen.isLabelWhite){
-		//			endScreen.lighterLabel(startTime, System.currentTimeMillis());
-		//			endScreen.repaint();
-		//		}
 	}
 
 	@Override
@@ -135,9 +135,11 @@ public class MainWindow extends JFrame implements KeyListener{
 	public void tick() {
 		counter +=1;
 		shootTimer += 1;
-		if (canvas.player.health <= 0) {
+		if (canvas.player.currentHealth <= 0) {
 			canvas.end(true); // death
 		}
+		canvas.player.regenerate();
+		counter +=1;
 		if (counter >25){
 			counter =0;
 			for(int i =0; i < canvas.enemyList.getSize();i +=1){
@@ -145,23 +147,36 @@ public class MainWindow extends JFrame implements KeyListener{
 			}
 		}
 		canvas.movePlayer();
+		
+		int playerX= canvas.player.getX();
+		Collisions.runCollisions(canvas.player);
+		if(playerX !=canvas.player.getX()){
+			if(playerX<canvas.player.getX()){
+				//case plater hit right wall
+				canvas.imageList.setBaseX(
+						canvas.imageList.getBaseX()-canvas.player.speed);
+			}
+			else{
+				//case player hit left wall
+				canvas.imageList.setBaseX(
+						canvas.imageList.getBaseX() +canvas.player.speed);
+			}
+			canvas.playerMovePosX =false;
+			canvas.playerMoveNegX =false;
+		}
+		
 		canvas.moveEnemy();
 		canvas.moveProjectile();
 
 		if(canvas.shoot(shootTimer)) {
 			shootTimer = 0 ;
 		}
-
-		//test code for movement
-		//System.out.println("platform" + canvas.imageList.getImageBase(0).getX());
-
-		Collisions.runCollisions(canvas.player);
-
+		
 		for(int i = 0; i < canvas.enemyList.getSize(); i++) {
 			Collisions.runCollisions(canvas.enemyList.getEnemy(i)) ;
 		}
 
-		if (canvas.player.getX()+ canvas.player.getWidth()  >= 1500 && canvas.player.getX() <= 1500+100){
+		if (canvas.player.gameEnd){
 			canvas.end(false);
 		}
 

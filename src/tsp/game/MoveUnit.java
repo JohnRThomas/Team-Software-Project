@@ -1,16 +1,23 @@
 package tsp.game;
 
+<<<<<<< HEAD
+=======
+import java.awt.Point;
+
+import imageBase.BaseImage;
+>>>>>>> a2b4578da75a9681f7d6cdcc1f12db4d70ea8749
 import tsp.imageMaker.MakeImages;
 
 public class MoveUnit {
 
 	public int movePlayer(Player player, MakeImages imageList, boolean left, boolean right, int boundsWidth ){ // TODO Commit this when convenient
 		int playerDirection = 0; //if 0 not in center, if 1 center right, if -1 center left
+		System.out.println(player.getX());
 		if (left){
 
-			if ((player.getX() + player.getWidth()/2+imageList.getBaseBackground().getX() < boundsWidth/2)
-					&& (imageList.getBaseBackground().getX() < 0) ){
-				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() +player.speed);
+			if ((player.getX() + player.getWidth()/2+imageList.getBaseX() < boundsWidth/2)
+					&& (imageList.getBaseX() < 0) ){
+				imageList.setBaseX(imageList.getBaseX() +player.speed);
 				if(player.getX() >= player.speed)player.setX(player.getX() - player.speed);
 				else player.setX(0);
 				playerDirection = -1;
@@ -24,21 +31,18 @@ public class MoveUnit {
 		if (right){
 
 			if ((player.getX()+player.getWidth()/2 > boundsWidth/2 )
-					&& (imageList.getBaseBackground().getX() > -800) ){
-				imageList.getBaseBackground().setX(imageList.getBaseBackground().getX() -player.speed);
+					&& (imageList.getBaseX() > -800) ){
+				imageList.setBaseX(imageList.getBaseX() -player.speed);
 				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed ); // player width is 20
 				playerDirection = 1;
 			}
 			else{ 
 				if(player.getX() + player.getWidth() + player.speed <= 1600)player.setX(player.getX() + player.speed); // player width is 20
-				else player.setX(boundsWidth - player.getWidth());
 			}
 		}
-
+		
 		return playerDirection;
 	}
-
-
 
 	public void moveEnemy(boolean gameOver, Player player, Enemy evilRedBox, boolean playerMovePosX, boolean playerMoveNegX){
 		//		counter += 1;
@@ -51,18 +55,7 @@ public class MoveUnit {
 			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
 			playerMoveNegX =false;
 		}
-		if (player.getX()+10 >= evilRedBox.getX() + 50){
-			evilRedBox.setX(evilRedBox.getX() + 1) ;
-		}
-		else{
-			evilRedBox.setX(evilRedBox.getX() - 1) ;
-		}
-		if (player.getY()+10 >= evilRedBox.getY() + 50){
-			evilRedBox.setY(evilRedBox.getY() + 1) ;
-		}
-		else{
-			evilRedBox.setY(evilRedBox.getY() - 1) ;
-		}
+		evilRedBox.move(new Point(player.getX()+player.getWidth()/2, player.getY()+player.getHeight()/2));
 	}
 
 	public void moveProjectile(boolean gameOver, Projectile projectile) {
@@ -79,6 +72,4 @@ public class MoveUnit {
 			projectile.setHit(true) ;
 		}
 	}
-
-
 }

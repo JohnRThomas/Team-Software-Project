@@ -89,7 +89,7 @@ public class StartScreen extends JPanel {
 		if(mod > 0 && animCount >= 255){
 			mod = -mod;
 		}else if(mod < 0 && animCount <= 0){
-			loc = new Point((int)(Math.random()*this.getHeight()), (int)(Math.random()*this.getWidth()));
+			loc = new Point((int)(Math.random()*(this.getHeight()-100)), (int)(Math.random()*(this.getWidth()-300)));
 			mod = -mod;
 		}
 		

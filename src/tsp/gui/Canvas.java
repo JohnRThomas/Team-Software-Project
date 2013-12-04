@@ -20,22 +20,28 @@ import tsp.game.Projectile;
 import tsp.game.Shoot;
 import tsp.imageMaker.AllObjects;
 import tsp.imageMaker.BuildImages;
+import tsp.imageMaker.BuildPlayer;
 import tsp.imageMaker.MakeEnemies;
 import tsp.imageMaker.MakeImages;
+import tsp.sound.MusicDirector;
+import tsp.sound.SFXDirector;
+import tsp.sound.SoundConstants;
+import tsp.imageMaker.SavePlayer;
 
 public class Canvas extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
-
-	Player player = new Player(0, 250, 20, 20, -1, 100, 5, 60, 0, 2);
-
+	Player player;
 
 	private boolean leftShoot = false, rightShoot = false, upShoot = false, downShoot = false, left = false, right = false, shoot = false; // should be taken care of in Player
 	boolean playerMovePosX =false, playerMoveNegX = false;
 	boolean gameOver = false;
 	MoveUnit mover = new MoveUnit();
 	Shoot shooter = new Shoot() ;
+	boolean gameEnd =true;
 
+	//Audio
+	private SFXDirector soundEffects;
 
 	private MainWindow mainWindow;
 
@@ -50,6 +56,8 @@ public class Canvas extends JPanel implements KeyListener{
 	ArrayList<Projectile> projectileList;
 	AllObjects objectMaker;
 	ChangeStage stageChanger;
+	BuildPlayer playerBuilder;
+	SavePlayer playerSaver;
 
 	Image offScreenImage;
 
@@ -61,6 +69,7 @@ public class Canvas extends JPanel implements KeyListener{
 	public Canvas(MainWindow mainWindow){
 		super();
 		this.mainWindow = mainWindow;
+		soundEffects = new SFXDirector(this.mainWindow);
 		currentStage=1;
 		stageChanger = new ChangeStage();
 		totalStages = stageChanger.getKeyInfo();
@@ -69,6 +78,9 @@ public class Canvas extends JPanel implements KeyListener{
 		objectMaker = stageMaker.getFile("stage1",objectMaker);
 		imageList = objectMaker.getImages();
 		enemyList = objectMaker.getEnemies();
+		playerBuilder = new BuildPlayer();
+		playerSaver = new SavePlayer();
+		player = playerBuilder.playerBuilder(player, 1);
 		projectileList = new ArrayList<Projectile>();
 		myHUD = new HUD();
 
@@ -164,6 +176,9 @@ public class Canvas extends JPanel implements KeyListener{
 
 		//draws images
 		for(int i =0; i< imageList.getSize(); i++){
+			if(i ==0){
+				background.drawImage(imageList.getImageBase(i).getImage(), 0, 0, this);
+			}
 			background.drawImage(imageList.getImageBase(i).getImage(), imageList.getImageBase(i).getX(), imageList.getImageBase(i).getY(), this);
 		}
 		//draws enemies
@@ -193,33 +208,40 @@ public class Canvas extends JPanel implements KeyListener{
 			}
 		}
 
-		g.drawImage(offScreenImage, imageList.getBaseBackground().getX(), imageList.getBaseBackground().getY(),this); 
-
-
-		g.setColor(Color.black);
-		g.fillRect(1500+imageList.getBaseBackground().getX(), 300, 100, 100);
+		g.drawImage(offScreenImage, imageList.getBaseX(), imageList.getBaseY(),this); 
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 16));
-		g.drawString(player.health.toString(), this.getWidth()-40, 20);		
+		g.drawString(player.currentHealth.toString(), this.getWidth()-40, 20);		
 		myHUD.draw(g, this);
-
 	}
 
 	public void end(boolean death){
 
-		if (death == true){
-			gameOver = true;
-			mainWindow.endGame(death);
-		}
+
 		String stageName = null;
 		stageName = stageChanger.getNextStage(currentStage, totalStages);
-		if (stageName == null){
+		if (death == true){
 			gameOver = true;
+			if(gameEnd){
+				gameEnd =false;
+				player.deathCount += 1;
+			}
+			playerSaver.playerSaver(player);
+			mainWindow.endGame(death);
+		}
+		else if (stageName == null){
+			gameOver = true;
+			if(gameEnd){
+				player.victoryCount +=1;
+				gameEnd =false;
+			}
+			playerSaver.playerSaver(player);
 			mainWindow.endGame(death);
 		}
 		currentStage +=1;
 		if(stageName != null){
+			player.gameEnd = false;
 			Collisions.clearCollisions();
 			objectMaker = stageMaker.getFile(stageName,objectMaker);
 			imageList = objectMaker.getImages();
