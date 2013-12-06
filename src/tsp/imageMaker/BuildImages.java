@@ -48,7 +48,7 @@ public class BuildImages {
 
 			if (word.compareTo("Enemy")==0){
 				word = wordScanner.next();
-
+				word = wordScanner.next();
 				imageCount = Integer.parseInt(word);
 				x  = new int[imageCount];
 				y  = new int[imageCount];
@@ -65,39 +65,39 @@ public class BuildImages {
 
 					if(word.compareTo("End") ==0)break;
 
-					if (i == 0){
+					if (i == 1){
 						enemyAnimations = Integer.parseInt(word);
 						if (enemyImages ==null){
 							enemyImages = new String[imageCount][enemyAnimations];
 						}
 
 					}
-					else if (i == 1){
+					else if (i == 3){
 						tempEnemyImage = word;
 					}
-					else if (i == 2){
+					else if (i == 5){
 						for (int k =0; k<enemyAnimations; k++){
 							enemyImages[j][k] = (tempEnemyImage + k + word);
 
 						}
 					}
-					else if (i == 3){
+					else if (i == 7){
 						x[j] = Integer.parseInt(word);
 					}
-					else if (i == 4){
+					else if (i == 9){
 						y[j] = Integer.parseInt(word);
 
 					}
-					else if (i == 5){
+					else if (i == 11){
 						damage[j] = Integer.parseInt(word);
 					}
-					else if (i == 6){
+					else if (i == 13){
 						health[j] = Integer.parseInt(word);
 					}
-					else if (i == 7){
+					else if (i == 15){
 						gravity[j] = Integer.parseInt(word);
 					}
-					else if (i == 8){
+					else if (i == 17){
 						if(word.compareTo("T") == 0){
 							collide[j] = true;
 						}
@@ -125,7 +125,7 @@ public class BuildImages {
 			i=0;
 			if (word.compareTo("Background")==0){
 				word = wordScanner.next();
-
+				word = wordScanner.next();
 				imageCount = Integer.parseInt(word);
 				x  = new int[imageCount];
 				y  = new int[imageCount];
@@ -137,17 +137,17 @@ public class BuildImages {
 
 					if(word.compareTo("End") ==0)break;
 
-					if (i == 0){
+					if (i == 1){
 						imageNames[j] = word;
 					}
-					else if (i == 1){
+					else if (i == 3){
 						x[j] = Integer.parseInt(word);
 					}
-					else if (i == 2){
+					else if (i == 5){
 						y[j] = Integer.parseInt(word);
 
 					}
-					else if (i == 3){
+					else if (i == 7){
 						if(word.compareTo("T") == 0){
 							collide[j] = true;
 						}
