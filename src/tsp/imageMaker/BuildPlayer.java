@@ -41,50 +41,50 @@ public class BuildPlayer {
 		while(wordScanner.hasNext()){
 
 			String word = wordScanner.next();
-			if(j ==0){
+			if(j ==1){
 				playerName = word;
 			}
-			if (j == 1){
+			if (j == 3){
 				animations = Integer.parseInt(word);
 				if (playerImage ==null){
 					playerImage = new String[animations];
 				}
 
 			}
-			else if (j == 2){
+			else if (j == 5){
 				partImageName = word;
 			}
-			else if (j == 3){
+			else if (j == 7){
 				for (int k =0; k<animations; k++){
 					playerImage[k] = (partImageName + k + word);
 
 				}
 			}
-			if(j ==4){
+			if(j ==9){
 				gravity = Integer.parseInt(word);
 			}
-			if(j ==5){
+			if(j ==11){
 				health = Integer.parseInt(word);
 			}
-			if (j ==6){
+			if (j ==13){
 				max = Integer.parseInt(word);
 			}
-			if(j ==7){
+			if(j ==15){
 				speed = Integer.parseInt(word);
 			}
-			if(j ==8){
+			if(j ==17){
 				hitTimer = Integer.parseInt(word);
 			}
-			if(j ==9){
+			if(j ==19){
 				jumpMax = Integer.parseInt(word);
 			}
-			if(j ==10){
+			if(j ==21){
 				jumpCount = Integer.parseInt(word);
 			}
-			if(j ==11){
+			if(j ==23){
 				victoryCount = Integer.parseInt(word);
 			}
-			if(j ==12){
+			if(j ==25){
 				deathCount = Integer.parseInt(word);
 			}
 			
