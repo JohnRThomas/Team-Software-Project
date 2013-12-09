@@ -15,12 +15,12 @@ public class SavePlayer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		out.println(player.name);
-		out.println(1 + " " + "player" + " " + ".png"
-				+ " " + player.gravity + " " + 100 + " " + 100
-				+ " " + player.speed + " " + 0
-				+ " " + player.jumpMax + " " + player.jumpCount
-				+ " " + player.victoryCount + " " + player.deathCount);
+		out.println("PlayerName: "+player.name);
+		out.println("Animations: "+ 1 + " ImageName: " + "player" + " FileType: " + ".png"
+				+ " Gravity: " + player.gravity + " Health: " + 100 + " MaxHealth: " + 100
+				+ " Speed: " + player.speed + " HitTimer: " + 0
+				+ " JumpMax: " + player.jumpMax + " JumpCount: " + player.jumpCount
+				+ " DeathCount: " + player.victoryCount + " VictoryCount: " + player.deathCount);
 
 		out.close();
 	}

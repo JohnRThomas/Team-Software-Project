@@ -7,7 +7,6 @@ public class Background extends BaseImage{
 	public Background(int xStart, int yStart, String imageName, boolean collide) {
 		super(xStart, yStart, imageName, collide);
 		name = imageName;
-		System.out.println(name);
 	}
 
 	@Override

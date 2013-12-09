@@ -8,7 +8,6 @@ public class MoveUnit {
 
 	public int movePlayer(Player player, MakeImages imageList, boolean left, boolean right, int boundsWidth ){ // TODO Commit this when convenient
 		int playerDirection = 0; //if 0 not in center, if 1 center right, if -1 center left
-		System.out.println(player.getX());
 		if (left){
 
 			if ((player.getX() + player.getWidth()/2+imageList.getBaseX() < boundsWidth/2)

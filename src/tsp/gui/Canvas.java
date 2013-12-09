@@ -260,8 +260,13 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void movePlayer(){
-
-		int direction = mover.movePlayer(player, imageList, left, right, getBounds().width);
+		int direction = 0;
+		if(left &&right){
+			direction=0;
+		}                 
+		else{
+			direction = mover.movePlayer(player, imageList, left, right, getBounds().width);
+		}
 		if (direction ==0 ){
 			playerMovePosX = false;
 			playerMoveNegX = false;
