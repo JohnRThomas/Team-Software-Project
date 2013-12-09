@@ -3,7 +3,10 @@ package tsp.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,12 +16,13 @@ public class EndScreen extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	private JLabel gameOver;
+	private JPanel buttons;
 	private JLabel stats;
 	
 	protected boolean isLabelWhite;
 //	private int red, green, blue;
 	
-	public EndScreen(MainWindow mainWindow, boolean death,Player player){
+	public EndScreen(final MainWindow mainWindow, boolean death, Player player){
 		super();
 		this.setLayout(new BorderLayout());
 //		red = 0;
@@ -26,9 +30,47 @@ public class EndScreen extends JPanel{
 //		green = 0;
 		if (death){
 			gameOver = new JLabel("GAME OVER", JLabel.CENTER);
-		}
-		else{
+			buttons = new JPanel();
+			JButton home = new JButton("Main Menu");
+			final EndScreen THIS = this;
+			home.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					mainWindow.container.add(mainWindow.startScreen);
+					mainWindow.container.remove(THIS);
+					mainWindow.container.repaint();
+				}
+			});
+			
+			JButton reset = new JButton("Retry Level");
+			reset.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
+			buttons.add(home);
+			buttons.add(reset);
+			buttons.setOpaque(false);
+		}else{
 			gameOver = new JLabel("VICTORY", JLabel.CENTER);
+			buttons = new JPanel();
+			final EndScreen THIS = this;
+			JButton home = new JButton("Main Menu");
+			home.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					mainWindow.container.add(mainWindow.startScreen);
+					mainWindow.container.remove(THIS);
+					mainWindow.container.repaint();
+					mainWindow.startScreen.startDrawing();
+				}
+			});
+			buttons.add(home);
+			buttons.setOpaque(false);
+			
 		}
 		String data ="Death:" + player.deathCount + " Victory:" + player.victoryCount;
 		stats = new JLabel(data, JLabel.CENTER);
@@ -38,6 +80,7 @@ public class EndScreen extends JPanel{
 		gameOver.setFont(font.deriveFont((float)72.0));
 		stats.setFont(font.deriveFont((float)24.0));
 		this.add(gameOver, BorderLayout.NORTH);
+		this.add(buttons, BorderLayout.CENTER);
 		this.add(stats, BorderLayout.SOUTH);
 		this.setBackground(Color.BLACK);
 	}

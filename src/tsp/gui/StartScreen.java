@@ -15,11 +15,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import tsp.game.Player;
 import tsp.game.threads.Drawer;
 
 public class StartScreen extends JPanel {
 	private static final long serialVersionUID = 80085L;
-
 	private MainWindow mainWindow;
 	final Drawer drawer;
 	BufferedImage title;
@@ -41,28 +41,29 @@ public class StartScreen extends JPanel {
 				g.drawImage(title, 0,0, null);
 			}
 		};
-
+		drawer = new Drawer(this, 30);
 		this.setLayout(null);		
 		start.setFocusable(false);
-
 		start.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawer.interrupt();
+				//drawer.interrupt();
 				mainWindow.startGame();
 			}
 		});
 
-		drawer = new Drawer(this, 30);
-		drawer.start();
 
 		add(titleLabel);
 		titleLabel.setBounds(0,0,800,100);
 
 		add(start);
 		start.setBounds(275,150,250,25);
+		startDrawing();
 	}
-
+	public void startDrawing() {
+		drawer.start();		
+	}
+	
 	Star[] stars = new Star[200];
 	float animCount = 0f;
 	Point loc = new Point();

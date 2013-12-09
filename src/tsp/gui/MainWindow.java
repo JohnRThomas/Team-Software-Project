@@ -1,6 +1,7 @@
 package tsp.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,10 +30,11 @@ public class MainWindow extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1L;
 
 	//GUI components
-	private final JPanel container = new JPanel();
+	static MainWindow me;
+	final JPanel container = new JPanel();
 	private final JMenuBar menu = new JMenuBar();
 	private final Canvas canvas = new Canvas(this);
-
+	
 	//Game threads
 	private Drawer drawer;
 	private Gamer gamer;
@@ -44,8 +46,11 @@ public class MainWindow extends JFrame implements KeyListener{
 	private int shootTimer = 15;
 	Collisions colider = new Collisions();
 
+	StartScreen startScreen;
+
 	public MainWindow() {
 		super("TSP Game");
+		me = this;
 		drawer = new Drawer(canvas);
 		gamer = new Gamer(this);
 		drawer.start();
@@ -56,7 +61,8 @@ public class MainWindow extends JFrame implements KeyListener{
 		this.getContentPane().add(container, BorderLayout.CENTER);
 		this.getContentPane().add(menu, BorderLayout.NORTH);
 		container.setLayout(new GridLayout(1,1));
-		container.add(new StartScreen(this));
+		startScreen = new StartScreen(this);
+		container.add(startScreen);
 		this.addKeyListener(this);
 		setSize(800,600);
 		setLocationRelativeTo(this.getParent());
@@ -106,9 +112,9 @@ public class MainWindow extends JFrame implements KeyListener{
 	}
 	
 	protected void endGame(boolean death){
-		container.remove(0);
 		gamer.interrupt();
 		final EndScreen endScreen = new EndScreen(this, death,canvas.player);
+		container.remove(0);
 		container.add(endScreen);
 		revalidate();
 		endScreen.repaint();
