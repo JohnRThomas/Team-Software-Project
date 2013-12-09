@@ -33,7 +33,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	static MainWindow me;
 	final JPanel container = new JPanel();
 	private final JMenuBar menu = new JMenuBar();
-	private final Canvas canvas = new Canvas(this);
+	public final Canvas canvas = new Canvas(this);
 	
 	//Game threads
 	private Drawer drawer;

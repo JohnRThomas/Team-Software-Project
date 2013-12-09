@@ -46,8 +46,10 @@ public class EndScreen extends JPanel{
 			reset.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
+					mainWindow.canvas.player.currentHealth = 100;
+					mainWindow.canvas.player.setX(0);
+					mainWindow.container.remove(THIS);
+					mainWindow.add(mainWindow.canvas);
 				}
 			});
 			
