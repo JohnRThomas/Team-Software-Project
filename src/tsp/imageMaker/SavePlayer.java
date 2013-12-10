@@ -16,7 +16,7 @@ public class SavePlayer {
 			e.printStackTrace();
 		}
 		out.println("PlayerName: "+player.name);
-		out.println("Animations: "+ 1 + " ImageName: " + "player" + " FileType: " + ".png"
+		out.println("Animations: "+ player.totalAnimations + " ImageName: " + "player" + " FileType: " + ".png"
 				+ " Gravity: " + player.gravity + " Health: " + 100 + " MaxHealth: " + 100
 				+ " Speed: " + player.speed + " HitTimer: " + 0
 				+ " JumpMax: " + player.jumpMax + " JumpCount: " + player.jumpCount

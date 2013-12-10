@@ -56,7 +56,7 @@ public class BuildPlayer {
 			}
 			else if (j == 7){
 				for (int k =0; k<animations; k++){
-					playerImage[k] = (partImageName + k + word);
+					playerImage[k] = ("res/images/"+partImageName + k + word);
 
 				}
 			}
@@ -90,7 +90,7 @@ public class BuildPlayer {
 			
 			j+=1;
 		}// end of scanner
-		player = new Player(0, 400 ,gravity,health,max,speed,hitTimer,jumpCount,jumpMax, victoryCount, deathCount,playerName);
+		player = new Player(0, 400 ,gravity,health,max,speed,hitTimer,jumpCount,jumpMax, victoryCount, deathCount,playerName,playerImage);
 		wordScanner.close();
 		return player;	
 

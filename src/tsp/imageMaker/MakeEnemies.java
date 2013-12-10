@@ -36,7 +36,19 @@ public class MakeEnemies {
 		for (int i =0; i< name.length; i++){
 			namePath[i] = "res/images/" + name[i];
 		}
-		listOfEnemies[layerPosition] = new Jumper(x, y, damage, health, gravity, namePath, canColide);
+		if(name[0].compareTo("Jumper_0.png")==0){
+			listOfEnemies[layerPosition] = new Jumper(x, y, damage, health, gravity, namePath, canColide);
+		}
+		else if(name[0].compareTo("Bumbler_0.png")==0){
+			listOfEnemies[layerPosition] = new Bumbler(x, y, damage, health, gravity, namePath, canColide);
+		}
+		else if(name[0].compareTo("Floater_0.png")==0){
+			listOfEnemies[layerPosition] = new Floater(x, y, damage, health, gravity, namePath, canColide);
+		}
+		else if(name[0].compareTo("Patrol_0.png")==0){
+			listOfEnemies[layerPosition] = new Patrol(x, y, damage, health, gravity, namePath, canColide);
+		}
+		else listOfEnemies[layerPosition] = new Jumper(x, y, damage, health, gravity, namePath, canColide);
 		return listOfEnemies[layerPosition];
 	}
 

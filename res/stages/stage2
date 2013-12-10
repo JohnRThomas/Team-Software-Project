@@ -1,11 +1,15 @@
 Enemy
-1
-2 angry_ball_ .png 0 0 25 3 0 T
+EnemyCount: 2
+Animations: 2 ImageName: Jumper_ FileType: .png StartX: 0 StartY: 0 Damage: 25 StartHP: 28 Gravity: 0 Collide: T
+Animations: 2 ImageName: Floater_ FileType: .png StartX: 100 StartY: 0 Damage: 25 StartHP: 3 Gravity: 0 Collide: T
 End
 
 Background
-3
-baseBackground.jpg 0 0 F
-basePlatform.jpg 0 400 T
-endZone.png 1500 300 T
+BackgroundCount: 6
+FullName: backS.png StartX: 0 StartY: 0 CanCollide: F
+FullName: platform.png StartX: 0 StartY: 400 CanCollide: T
+FullName: basicWall.png StartX: 500 StartY: 300 CanCollide: T
+FullName: basicWall.png StartX: 600 StartY: 200 CanCollide: T
+FullName: endZone.png StartX: 1500 StartY: 300 CanCollide: T
+FullName: killBlock.png StartX: 1000 StartY: 300 CanCollide: T
 End

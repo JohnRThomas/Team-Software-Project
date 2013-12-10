@@ -151,6 +151,7 @@ public class MainWindow extends JFrame implements KeyListener{
 			for(int i =0; i < canvas.enemyList.getSize();i +=1){
 				canvas.enemyList.getEnemy(i).incrementImage();
 			}
+			canvas.player.incrementImage();
 		}
 		canvas.movePlayer();
 		

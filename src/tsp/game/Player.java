@@ -27,6 +27,9 @@ public class Player extends BaseImage {
 	public boolean gameEnd =false;
 	public int oldX=0;
 	public int oldY=0;
+	public String nameAnimations[];
+	public int usedAnimations =0;
+	public int totalAnimations =0;
 	
 	/**
 	 * 
@@ -44,10 +47,10 @@ public class Player extends BaseImage {
 	
 
 	public Player(int x, int y, int gravity, int health, int max, int speed, int hitTimer, int jumpCount,
-			int jumpMax, int victoryCount, int deathCount, String name) {
+			int jumpMax, int victoryCount, int deathCount, String name,String names[]) {
 
-		super(x, y, "res/images/player0.png", true);
-		
+		super(x, y, names[0], true);
+		this.nameAnimations =names;
 		this.gravity = gravity;
 		this.currentHealth = health;
 		this.maxHealth = max;
@@ -57,6 +60,7 @@ public class Player extends BaseImage {
 		this.jumpMax = jumpMax;
 		this.victoryCount = victoryCount;
 		this.deathCount = deathCount;
+		totalAnimations = names.length;
 	}
 
 	@Override
@@ -121,6 +125,14 @@ public class Player extends BaseImage {
 		oldX = super.getX();
 		return super.setX(x);
 		
+	}
+	public void incrementImage(){
+
+		usedAnimations+=1;
+		if(usedAnimations >= totalAnimations){
+			usedAnimations =0;
+		}
+		super.setImage(nameAnimations[usedAnimations]);
 	}
 	
 }

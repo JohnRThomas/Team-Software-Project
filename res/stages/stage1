@@ -1,7 +1,9 @@
 Enemy
-EnemyCount: 2
-Animations: 2 ImageName: angry_ball_ FileType: .png StartX: 0 StartY: 0 Damage: 25 StartHP: 28 Gravity: 0 Collide: T
-Animations: 2 ImageName: angry_ball_ FileType: .png StartX: 100 StartY: 0 Damage: 25 StartHP: 3 Gravity: 0 Collide: T
+EnemyCount: 4
+Animations: 2 ImageName: Jumper_ FileType: .png StartX: 0 StartY: 0 Damage: 1 StartHP: 1 Gravity: 0 Collide: T
+Animations: 2 ImageName: Bumbler_ FileType: .png StartX: 1000 StartY: 0 Damage: 25 StartHP: 3 Gravity: 0 Collide: T
+Animations: 2 ImageName: Floater_ FileType: .png StartX: 500 StartY: 50 Damage: 25 StartHP: 3 Gravity: 0 Collide: T
+Animations: 2 ImageName: Patrol_ FileType: .png StartX: 250 StartY: 50 Damage: 25 StartHP: 1000 Gravity: 0 Collide: T
 End
 
 Background

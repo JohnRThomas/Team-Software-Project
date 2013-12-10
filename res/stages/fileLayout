@@ -20,3 +20,9 @@ End
 
 //extra note, put images in order of layer
 //			  Enemies are always drawn above background	
+//			  keyInfo contains a single int that indicates number of stages
+//			  Stages are to be named stage# with # being replaced with a number 1 greater than the last stage
+//			  with the first stage being named stage1
+//			  enemies must have one of the following names: Jumper_ Bumbler_ Patrol_ Floater_
+//			  names determin enemy types.
+//			  if enemy is named something else it will look for an image of that name and if it exists in the image folder it will make the enemy a Jumper with that new image. 
