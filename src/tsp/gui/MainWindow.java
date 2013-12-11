@@ -33,7 +33,7 @@ public class MainWindow extends JFrame implements KeyListener{
 	static MainWindow me;
 	final JPanel container = new JPanel();
 	private final JMenuBar menu = new JMenuBar();
-	public final Canvas canvas = new Canvas(this);
+	public Canvas canvas;
 	
 	//Game threads
 	private Drawer drawer;
@@ -51,9 +51,6 @@ public class MainWindow extends JFrame implements KeyListener{
 	public MainWindow() {
 		super("TSP Game");
 		me = this;
-		drawer = new Drawer(canvas);
-		gamer = new Gamer(this);
-		drawer.start();
 		this.setResizable(false);
 		music = new MusicDirector(this);
 		makeMenu();
@@ -63,7 +60,6 @@ public class MainWindow extends JFrame implements KeyListener{
 		container.setLayout(new GridLayout(1,1));
 		startScreen = new StartScreen(this);
 		container.add(startScreen);
-		this.addKeyListener(this);
 		setSize(800,600);
 		setLocationRelativeTo(this.getParent());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -100,10 +96,16 @@ public class MainWindow extends JFrame implements KeyListener{
 	}
 
 	protected void startGame(){
+		this.requestFocus();
+		canvas = new Canvas(this);
+		drawer = new Drawer(canvas);
+		drawer.start();
 		container.remove(0);
 		container.add(canvas);
+		this.addKeyListener(this);
 		revalidate();
 		music.playMusic(SoundConstants.SONG_02);
+		gamer = new Gamer(this);
 		gamer.start();
 	}
 

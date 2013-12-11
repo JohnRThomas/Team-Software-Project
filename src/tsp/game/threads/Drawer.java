@@ -20,7 +20,7 @@ public class Drawer extends Thread{
 			if(speed == 0){
 				//Draw at most x60 per second
 				long time = System.currentTimeMillis();
-				canvas.repaint();
+				if(canvas != null)canvas.repaint();
 				if(System.currentTimeMillis() - time < 17){
 					try {
 						sleep(System.currentTimeMillis() - time);

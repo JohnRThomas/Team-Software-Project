@@ -217,8 +217,6 @@ public class Canvas extends JPanel implements KeyListener{
 	}
 
 	public void end(boolean death){
-
-
 		String stageName = null;
 		stageName = stageChanger.getNextStage(currentStage, totalStages);
 		if (death == true){
