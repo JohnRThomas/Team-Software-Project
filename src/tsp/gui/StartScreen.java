@@ -61,7 +61,7 @@ public class StartScreen extends JPanel {
 		startDrawing();
 	}
 	public void startDrawing() {
-		drawer.start();		
+		drawer.start();	
 	}
 	
 	Star[] stars = new Star[200];

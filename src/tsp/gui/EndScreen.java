@@ -42,7 +42,7 @@ public class EndScreen extends JPanel{
 				}
 			});
 			
-			JButton reset = new JButton("Retry Level");
+			/*JButton reset = new JButton("Retry Level");
 			reset.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -51,10 +51,10 @@ public class EndScreen extends JPanel{
 					mainWindow.container.remove(THIS);
 					mainWindow.add(mainWindow.canvas);
 				}
-			});
+			});*/
 			
 			buttons.add(home);
-			buttons.add(reset);
+			//buttons.add(reset);
 			buttons.setOpaque(false);
 		}else{
 			gameOver = new JLabel("VICTORY", JLabel.CENTER);
