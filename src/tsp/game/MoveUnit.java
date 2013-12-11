@@ -41,15 +41,6 @@ public class MoveUnit {
 
 	public void moveEnemy(boolean gameOver, Player player, Enemy evilRedBox, boolean playerMovePosX, boolean playerMoveNegX){
 		//		counter += 1;
-		if (gameOver) return;
-		if (playerMovePosX){
-			evilRedBox.setX(evilRedBox.getX() - player.speed) ;
-			playerMovePosX =false;
-		}
-		else if (playerMoveNegX){
-			evilRedBox.setX(evilRedBox.getX() + player.speed) ;
-			playerMoveNegX =false;
-		}
 		evilRedBox.move(new Point(player.getX()+player.getWidth()/2, player.getY()+player.getHeight()/2));
 	}
 

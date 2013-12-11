@@ -8,8 +8,8 @@ public class Bumbler extends Enemy{
 
 	private int horizontalVelocity = 1;
 	private int verticalVelocity = 1;
-	private int velocityCap = 5;
-	private int accel = 1;
+	private int velocityCap = 7;
+	private int accel = 2;
 	private int accelFrequency = 30;
 	private int accelCountdown = accelFrequency;
 	

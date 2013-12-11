@@ -7,10 +7,9 @@ import imageBase.BaseImage;
 public class Patrol extends Enemy{
 
 	int patrolStart = 0;
-	int patrolEnd = 200;
+	int patrolEnd = 1000000;
 	int speed = 2;
 	int direction = 1;
-	int YBound = 420;
 	
 	public Patrol(int xStart, int yStart, int d, int h, int g,
 			String[] imageName, boolean collide) {
@@ -22,7 +21,11 @@ public class Patrol extends Enemy{
 	public void collideWith(BaseImage entity) {
 		if(entity instanceof Player){
 			attack(entity);
-		}else if(entity instanceof Enemy){
+		}
+		else if(entity instanceof Background){
+			collide(this, entity);
+		}
+		else if(entity instanceof Enemy){
 			
 		}
 	}
@@ -53,18 +56,57 @@ public class Patrol extends Enemy{
 //		TODO add in the take damage animation if the enemy doesn't die
 	}
 	
+	private void collide(Enemy thisEnemy, BaseImage entity) {
+		int top = 9999;
+		int left = 9999;
+		int right = 9999;
+		int bottom = 9999;
+
+		// top collision
+		top = Math.abs(thisEnemy.getY() + thisEnemy.getHeight() - entity.getY());
+
+		// bottom collision
+		bottom = Math.abs(thisEnemy.getY() - entity.getY() - entity.getHeight());	
+
+		// left collision
+		left = Math.abs(thisEnemy.getX() + thisEnemy.getWidth() - entity.getX());
+
+		// right collision
+		right = Math.abs(thisEnemy.getX() - entity.getX() - entity.getWidth());
+
+
+
+		if (top < left && top < right && top < bottom) {
+			//top is closest side
+			thisEnemy.setY(entity.getY() - thisEnemy.getHeight());
+			((Enemy) thisEnemy).setGravity(-1);
+		}
+
+		if (bottom < top && bottom < left && bottom < right) {
+			//bottom is closest side
+			thisEnemy.setY(entity.getY() + entity.getHeight());
+			((Enemy) thisEnemy).setGravity(-1);
+		}
+
+		if (left < top && left < right && left < bottom) {
+			//left is closest side
+			thisEnemy.setX(entity.getX() - thisEnemy.getWidth());
+			direction *= -1;
+		}
+
+		if (right < top && right < left && right < bottom) {
+			//right is closest side
+			thisEnemy.setX(entity.getX() + entity.getWidth());
+			direction *= -1;
+		}
+	}
+	
 	private void gravity(){
 		setY(getY()-gravity); // fall according to gravity
 
 		if (getY() < 10) { // if at top of screen
 			setY(10); // reset position
 			gravity = -1; // reset gravity
-		}
-
-		// TODO Can't have just one static YBound, since there could be many platforms
-		if(getY() + getHeight() >= YBound) { // if at bottom of screen
-			setY(YBound - getHeight()); // reset position
-			gravity = 0; // reset gravity
 		}
 
 		if (gravity > -10) { // if not at terminal velocity

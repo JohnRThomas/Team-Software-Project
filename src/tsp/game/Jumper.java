@@ -10,7 +10,6 @@ public class Jumper extends Enemy{
 
 	private int jumpTimer = 120;
 	private int countdown = jumpTimer;
-	private int YBound = 420;
 	private int horizontalVelocity = 0;
 	private int gravWait = 3;
 	private int gravCounter = gravWait;
@@ -31,7 +30,11 @@ public class Jumper extends Enemy{
 	public void collideWith(BaseImage entity) {
 		if(entity instanceof Player){
 			attack(entity);
-		}else if(entity instanceof Enemy){
+		}
+		else if(entity instanceof Background){
+			collide(this, entity);
+		}
+		else if(entity instanceof Enemy){
 			attack(entity);
 		}
 	}
@@ -45,9 +48,7 @@ public class Jumper extends Enemy{
 		else {
 			countdown = jumpTimer;
 			gravity = 10;
-			horizontalVelocity = 4;
-			if (playerCenter.x < getX()) horizontalVelocity = -2;
-			if (playerCenter.x == getX()) horizontalVelocity = 0;
+			horizontalVelocity = (playerCenter.x-(getX()+getWidth()/2))/70;
 		}
 		gravity();
 		
@@ -58,10 +59,57 @@ public class Jumper extends Enemy{
 		if (entity instanceof Player){
 			((Player)entity).takeDamage(damage);
 		}
+		else if (entity instanceof Background){
+			collide(this, entity);
+		}
 		else if (entity instanceof Enemy){
 			((Enemy)entity).takeDamage(damage);
 		}
 		
+	}
+
+	private void collide(Enemy thisEnemy, BaseImage entity) {
+		int top = 9999;
+		int left = 9999;
+		int right = 9999;
+		int bottom = 9999;
+
+		// top collision
+		top = Math.abs(thisEnemy.getY() + thisEnemy.getHeight() - entity.getY());
+
+		// bottom collision
+		bottom = Math.abs(thisEnemy.getY() - entity.getY() - entity.getHeight());	
+
+		// left collision
+		left = Math.abs(thisEnemy.getX() + thisEnemy.getWidth() - entity.getX());
+
+		// right collision
+		right = Math.abs(thisEnemy.getX() - entity.getX() - entity.getWidth());
+
+
+
+		if (top < left && top < right && top < bottom) {
+			//top is closest side
+			thisEnemy.setY(entity.getY() - thisEnemy.getHeight());
+			((Enemy) thisEnemy).setGravity(-1);
+			horizontalVelocity = 0;
+		}
+
+		if (bottom < top && bottom < left && bottom < right) {
+			//bottom is closest side
+			thisEnemy.setY(entity.getY() + entity.getHeight());
+			((Enemy) thisEnemy).setGravity(-1);
+		}
+
+		if (left < top && left < right && left < bottom) {
+			//left is closest side
+			thisEnemy.setX(entity.getX() - thisEnemy.getWidth());
+		}
+
+		if (right < top && right < left && right < bottom) {
+			//right is closest side
+			thisEnemy.setX(entity.getX() + entity.getWidth());
+		}
 	}
 
 	@Override
@@ -84,13 +132,6 @@ public class Jumper extends Enemy{
 		if (getY() < 10) { // if at top of screen
 			setY(10); // reset position
 			gravity = -1; // reset gravity
-		}
-
-		// TODO Can't have just one static YBound, since there could be many platforms
-		if(getY() + getHeight() >= YBound) { // if at bottom of screen
-			setY(YBound - getHeight()); // reset position
-			horizontalVelocity = 0;
-			gravity = 0; // reset gravity
 		}
 
 		if (gravity > -10) { // if not at terminal velocity
