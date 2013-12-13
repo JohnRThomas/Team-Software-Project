@@ -1,2 +1,2 @@
 PlayerName: null
-Animations: 1 ImageName: player FileType: .png Gravity: -10 Health: 100 MaxHealth: 100 Speed: 5 HitTimer: 0 JumpMax: 2 JumpCount: 2 DeathCount: 19 VictoryCount: 29
+Animations: 1 ImageName: player FileType: .png Gravity: -2 Health: 100 MaxHealth: 100 Speed: 5 HitTimer: 0 JumpMax: 2 JumpCount: 0 DeathCount: 20 VictoryCount: 30
